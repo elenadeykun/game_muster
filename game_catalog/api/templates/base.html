@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Muster</title>
+    {% load staticfiles %}
+    <link href="{% static 'css/reset.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+<header>
+    <a href="/" class="unstyled-link">
+        <h1 class="logo">Game Muster</h1>
+    </a>
+    <div class="dropdown-menu">
+        <div class="profile-circle">
+            <i class="profile-icon"></i>
+        </div>
+        <nav class="dropdown-container">
+            <a href="#" class="dropdown-item">USERNAME</a>
+            <a href="#login-modal" class="dropdown-item">Log in</a>
+            <a href="#register-modal" class="dropdown-item">Sign up</a>
+            <a href="#profile-modal" class="dropdown-item">Profile</a>
+            <a name="logout" class="dropdown-item">Sign out</a>
+        </nav>
+    </div>
+</header>
+
+{% block content %}
+{% endblock %}
+
+<div class="blackout" id="filter">
+    <div class="modal-window">
+        <a href="#" class="close" name="close">
+            <i class="close-icon"></i>
+        </a>
+        <form name="filter-form" method="get">
+            {% csrf_token %}
+            <div class="input-group filter-form-body">
+                <label for="platform" class="filter-label">Platforms</label>
+                <input id="platform" type="text"/>
+                <label for="genres" class="filter-label">Genres</label>
+                <input id="genres" type="text"/>
+                <label for="rating" class="filter-label">User rating</label>
+                <input id="rating" type="range" min="0.0" max="10.0" step="0.1"/>
+                <button type="submit" class="input btn-input">Apply</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="blackout" id="login-modal">
+    <div class="modal-window login-form">
+        <div class="profile-circle">
+            <i class="profile-icon"></i>
+        </div>
+        <a href="#" class="close" name="close">
+            <i class="close-icon"></i>
+        </a>
+        <form name="login-form" method="post">
+            {% csrf_token %}
+            <div class="input-group">
+                <div class="input-div">
+                    <input name="login" class="input" placeholder="Login..."/>
+                </div>
+                <div class="input-div">
+                    <input name="password" class="input" type="password" placeholder="Password...">
+                </div>
+                <div class="input-div">
+                    <button class="input btn-input" type="submit">Log in</button>
+                </div>
+            </div>
+        </form>
+        <a href="#register-modal" class="link">Create account</a>
+    </div>
+</div>
+
+<div class="blackout" id="register-modal">
+    <div class="modal-window registration-form">
+        <div class="profile-circle">
+            <i class="profile-icon"></i>
+        </div>
+        <a href="#" class="close" name="close">
+            <i class="close-icon"></i>
+        </a>
+        <form name="register-form" method="post">
+            {% csrf_token %}
+            <div class="input-group">
+                <div class="input-div">
+                    <input name="login" class="input" placeholder="Username..."/>
+                </div>
+                <div class="input-div">
+                    <input name="login" class="input" type="email" placeholder="Email..."/>
+                </div>
+                <div class="input-div">
+                    <input name="login" class="input" placeholder="First name..."/>
+                </div>
+                <div class="input-div">
+                    <input name="login" class="input" placeholder="Last name..."/>
+                </div>
+                <div class="input-div">
+                    <input name="password" class="input" type="password" placeholder="Password...">
+                </div>
+                <div class="input-div">
+                    <input name="password" class="input" type="password" placeholder="Confirm password...">
+                </div>
+                <div class="input-div">
+                    <button class="input btn-input" type="submit">Sign me up</button>
+                </div>
+            </div>
+        </form>
+
+        <a href="#login-modal" class="link">Already have an account?</a>
+
+
+    </div>
+</div>
+
+<div class="blackout" id="profile-modal">
+    <div class="modal-window profile-form">
+        <div class="profile-circle">
+            <i class="profile-icon"></i>
+        </div>
+        <a href="#" class="close" name="close">
+            <i class="close-icon"></i>
+        </a>
+        <form name="profile-form" method="post">
+            {% csrf_token %}
+            <div class="input-group">
+                <div class="input-div">
+                    <input name="login" class="input" placeholder="Username..." value="username" disabled/>
+                </div>
+                <div class="input-div">
+                    <input name="login" class="input" type="email" placeholder="Email..." value="username@gmail.com" disabled/>
+                </div>
+                <div class="input-div">
+                    <input name="login" class="input" placeholder="First name..." value="Lena" disabled/>
+                </div>
+                <div class="input-div">
+                    <input name="login" class="input" placeholder="Last name..." value="Dejkun" disabled/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

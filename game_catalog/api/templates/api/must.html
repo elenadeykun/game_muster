@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+<main>
+    <h3 class="article-header">My MUST</h3>
+    <div class="games-container">
+        {% for i in i|rjust:5 %}
+        <div class="game-div">
+                <span class="game-span">
+                   <h4>PACMAN</h4>
+                   <p>Action</p>
+                   <p>Users added: 25</p>
+                   <p>
+                      <a href="#" class="game-link must-link">UnMUST</a>
+                   </p>
+                 </span>
+            <img src="{% static 'media/pacman.jpg' %}" class="game-img" alt="pacman"/>
+        </div>
+        <div class="game-div">
+                <span class="game-span">
+                   <h4>PACMAN</h4>
+                   <p>Action</p>
+                   <p>Users added: 25</p>
+                   <p>
+                      <a href="#" class="game-link remust-link">ReMUST</a>
+                   </p>
+                 </span>
+            <img src="{% static 'media/pacman.jpg' %}" class="game-img" alt="pacman"/>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}
