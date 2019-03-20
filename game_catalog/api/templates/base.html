@@ -6,6 +6,7 @@
     {% load staticfiles %}
     <link href="{% static 'css/reset.css' %}" rel="stylesheet">
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/modal.css' %}" rel="stylesheet">
 </head>
 <body>
 <header>
@@ -14,14 +15,14 @@
     </a>
     <div class="dropdown-menu">
         <div class="profile-circle">
-            <i class="profile-icon"></i>
+            <i class="profile__icon"></i>
         </div>
-        <nav class="dropdown-container">
-            <a href="#" class="dropdown-item">USERNAME</a>
-            <a href="#login-modal" class="dropdown-item">Log in</a>
-            <a href="#register-modal" class="dropdown-item">Sign up</a>
-            <a href="#profile-modal" class="dropdown-item">Profile</a>
-            <a name="logout" class="dropdown-item">Sign out</a>
+        <nav class="dropdown-menu__container">
+            <a href="#" class="dropdown-menu__item">USERNAME</a>
+            <a href="#login-modal" class="dropdown-menu__item">Log in</a>
+            <a href="#register-modal" class="dropdown-menu__item">Sign up</a>
+            <a href="#profile-modal" class="dropdown-menu__item">Profile</a>
+            <a name="logout" class="dropdown-menu__item">Sign out</a>
         </nav>
     </div>
 </header>
@@ -32,18 +33,18 @@
 <div class="blackout" id="filter">
     <div class="modal-window">
         <a href="#" class="close" name="close">
-            <i class="close-icon"></i>
+            <i class="close__icon"></i>
         </a>
         <form name="filter-form" method="get">
             {% csrf_token %}
-            <div class="input-group filter-form-body">
-                <label for="platform" class="filter-label">Platforms</label>
+            <div class="form__field-group filter-form__body">
+                <label for="platform" class="filter-form__label">Platforms</label>
                 <input id="platform" type="text"/>
-                <label for="genres" class="filter-label">Genres</label>
+                <label for="genres" class="filter-form__label">Genres</label>
                 <input id="genres" type="text"/>
-                <label for="rating" class="filter-label">User rating</label>
+                <label for="rating" class="filter-form__label">User rating</label>
                 <input id="rating" type="range" min="0.0" max="10.0" step="0.1"/>
-                <button type="submit" class="input btn-input">Apply</button>
+                <button type="submit" class="form__field submit-button">Apply</button>
             </div>
         </form>
     </div>
@@ -52,22 +53,22 @@
 <div class="blackout" id="login-modal">
     <div class="modal-window login-form">
         <div class="profile-circle">
-            <i class="profile-icon"></i>
+            <i class="profile__icon"></i>
         </div>
         <a href="#" class="close" name="close">
-            <i class="close-icon"></i>
+            <i class="close__icon"></i>
         </a>
         <form name="login-form" method="post">
             {% csrf_token %}
             <div class="input-group">
-                <div class="input-div">
-                    <input name="login" class="input" placeholder="Login..."/>
+                <div class="form__field-container">
+                    <input name="login" class="form__field" placeholder="Login..."/>
                 </div>
-                <div class="input-div">
-                    <input name="password" class="input" type="password" placeholder="Password...">
+                <div class="form__field-container">
+                    <input name="password" type="password" class="form__field" placeholder="Password..."/>
                 </div>
-                <div class="input-div">
-                    <button class="input btn-input" type="submit">Log in</button>
+                <div class="form__field-container">
+                    <button class="form__field submit-button" type="form_field">Log in</button>
                 </div>
             </div>
         </form>
@@ -78,34 +79,34 @@
 <div class="blackout" id="register-modal">
     <div class="modal-window registration-form">
         <div class="profile-circle">
-            <i class="profile-icon"></i>
+            <i class="profile__icon"></i>
         </div>
         <a href="#" class="close" name="close">
-            <i class="close-icon"></i>
+            <i class="close__icon"></i>
         </a>
         <form name="register-form" method="post">
             {% csrf_token %}
-            <div class="input-group">
-                <div class="input-div">
-                    <input name="login" class="input" placeholder="Username..."/>
+            <div class="form__field-group">
+                <div class="form__field-container">
+                    <input name="login" class="form__field" placeholder="Username..."/>
                 </div>
-                <div class="input-div">
-                    <input name="login" class="input" type="email" placeholder="Email..."/>
+                <div class="form__field-container">
+                    <input name="login" class="form__field" type="email" placeholder="Email..."/>
                 </div>
-                <div class="input-div">
-                    <input name="login" class="input" placeholder="First name..."/>
+                <div class="form__field-container">
+                    <input name="login" class="form__field" placeholder="First name..."/>
                 </div>
-                <div class="input-div">
-                    <input name="login" class="input" placeholder="Last name..."/>
+                <div class="form__field-container">
+                    <input name="login" class="form__field" placeholder="Last name..."/>
                 </div>
-                <div class="input-div">
-                    <input name="password" class="input" type="password" placeholder="Password...">
+                <div class="form__field-container">
+                    <input name="password" class="form__field" type="password" placeholder="Password...">
                 </div>
-                <div class="input-div">
-                    <input name="password" class="input" type="password" placeholder="Confirm password...">
+                <div class="form__field-container">
+                    <input name="password" class="form__field" type="password" placeholder="Confirm password...">
                 </div>
-                <div class="input-div">
-                    <button class="input btn-input" type="submit">Sign me up</button>
+                <div class="form__field-container">
+                    <button class="form__field submit-button" type="submit">Sign me up</button>
                 </div>
             </div>
         </form>
@@ -119,25 +120,25 @@
 <div class="blackout" id="profile-modal">
     <div class="modal-window profile-form">
         <div class="profile-circle">
-            <i class="profile-icon"></i>
+            <i class="profile__icon"></i>
         </div>
         <a href="#" class="close" name="close">
-            <i class="close-icon"></i>
+            <i class="close__icon"></i>
         </a>
         <form name="profile-form" method="post">
             {% csrf_token %}
-            <div class="input-group">
-                <div class="input-div">
-                    <input name="login" class="input" placeholder="Username..." value="username" disabled/>
+            <div class="form__field-group">
+                <div class="form__field-container">
+                    <input name="login" class="form__field" placeholder="Username..." value="username" disabled/>
                 </div>
-                <div class="input-div">
-                    <input name="login" class="input" type="email" placeholder="Email..." value="username@gmail.com" disabled/>
+                <div class="form__field-container">
+                    <input name="login" class="form__field" type="email" placeholder="Email..." value="username@gmail.com" disabled/>
                 </div>
-                <div class="input-div">
-                    <input name="login" class="input" placeholder="First name..." value="Lena" disabled/>
+                <div class="form__field-container">
+                    <input name="login" class="form__field" placeholder="First name..." value="Lena" disabled/>
                 </div>
-                <div class="input-div">
-                    <input name="login" class="input" placeholder="Last name..." value="Dejkun" disabled/>
+                <div class="form__field-container">
+                    <input name="login" class="form__field" placeholder="Last name..." value="Dejkun" disabled/>
                 </div>
             </div>
         </form>
