@@ -1,34 +1,41 @@
-.article-header {
+.game-article  {
+    padding: 20px;
+}
+
+.game-article__header {
   font-size: 25px;
   display: inline;
   font-weight: bold;
 }
 
-.article-description {
+.game-article__description {
   margin-top: 20px;
   font-weight: bold;
 }
 
-.article-toast {
+.game-article__toast {
   padding: 5px;
   background: rgba(110, 154, 253, 0.38);
   border-radius: 10%;
+  margin-left: 15px;
 }
 
 .screen-img {
   max-width: 100%;
   height: auto;
-  max-width: 150px;
-  max-height: 150px;
+  width: 150px;
+  height: 150px;
   margin: 5px;
 }
 
 .game-description {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .game-description__section {
   padding-right: 20px;
+  min-width: 180px;
   flex: 1;
 }
 
@@ -54,6 +61,7 @@
 
 .main-game-section {
   flex: 3;
+  min-width: 350px;
 }
 
 .critics-rating {
@@ -85,4 +93,19 @@
 
 .tweet__text {
   margin-bottom: 10px;
+}
+
+@media only screen and (max-width : 320px) {
+
+    .main-game-section {
+        min-width: 150px;
+    }
+
+    .game-article {
+        padding: 0;
+    }
+
+    .game-description__section {
+        min-width: 150px;
+    }
 }

@@ -25,6 +25,8 @@
       margin: auto;
       background: white;
       border-radius:2%;
+      min-height: 300px;
+      min-width: 250px;
 }
 
 .close {
@@ -56,10 +58,13 @@
 
 .registration-form {
     height:60%;
+    min-height: 550px;
+
 }
 
 .profile-form {
     height: 40%;
+    min-height: 350px;
 }
 
 .filter-form__body {
@@ -84,7 +89,9 @@
     margin-bottom: 10px;
     position: relative;
     text-align: center;
-    width: 272px;
+    max-width: 272px;
+    min-width: 150px;
+    min-height: 30px;
     margin: auto;
     margin-top: 20px;
 }
@@ -102,6 +109,20 @@
     font-size: 15px;
     position: relative;
     width: 236px;
+}
+
+.form__icon {
+    background: rgb(70, 110, 171);
+    border-radius: 50%;
+    padding: 10px;
+    padding-top: 5px;
+    right: 0;
+    height: 20px;
+    width: 20px;
+
+    position: relative;
+    margin: auto;
+    display: block;
 }
 
 .submit-button {

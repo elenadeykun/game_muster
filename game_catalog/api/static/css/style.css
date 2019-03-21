@@ -1,6 +1,10 @@
+* {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
 header {
   background: rgb(7, 71, 166);
-  padding: 10px;
+  padding: 5px;
 }
 
 main {
@@ -12,6 +16,16 @@ main {
 .logo {
   color: white;
   font-size: 30px;
+  display: table-caption;
+  width: 210px;
+}
+
+.icon {
+     background-image: url('/static/media/icon.png');
+     background-size: contain;
+     height: 40px;
+     width: 40px;
+     display: inline-block;
 }
 
 .profile-circle {
@@ -86,6 +100,7 @@ main {
    display: flex;
    flex-direction: row;
    flex-wrap: wrap;
+   justify-content: center;
 }
 
 .game__container {
@@ -102,10 +117,10 @@ main {
 }
 
 .game__img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
-  max-width: 150px;
-  max-height: 150px;
+  width: 150px;
+  height: 150px;
 }
 
 .game__body {
@@ -133,7 +148,8 @@ main {
 }
 
 .game__title {
-  margin-bottom: 10px;
+  margin-top:  15px;
+  margin-bottom: 20px;
 }
 
 .game__link {
@@ -192,35 +208,47 @@ main {
     color: rgb(70, 110, 171);
 }
 
+
+@media only screen and (max-width : 1824px) {
+
+
+}
+
+@media only screen and (max-width : 1224px) {
+
+    main {
+        width: 90%;
+    }
+
+}
+
+@media only screen and (max-width : 890px) {
+    main {
+        width: 100%;
+    }
+}
+
+
+@media only screen and (max-width : 480px)  {
+    main {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width : 321px)  {
+    main {
+        width: 100%;
+    }
+
+}
+
 @media only screen and (max-width : 320px) {
 
     main {
         width: 100%;
     }
-  }
 
-@media only screen and (min-width : 321px) and (max-width: 480px) {
-    main {
-        width: 100%;
+    .logo {
+        font-size: 25px;
     }
-
-}
-
-@media only screen and (min-width : 480px) and (max-width: 890px) {
-    main {
-        width: 100%;
-    }
-}
-
-@media only screen and (min-width : 890px) and (max-width: 1224px) {
-    main {
-        width: 80%;
-    }
-}
-
-@media only screen and (min-width : 1224px) and (max-width: 1824px) {
-
-}
-@media only screen and (min-width : 1824px) {
-
 }
