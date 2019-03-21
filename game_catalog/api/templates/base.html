@@ -4,13 +4,18 @@
     <meta charset="UTF-8">
     <title>Game Muster</title>
     {% load staticfiles %}
-    <link href="{% static 'css/reset.css' %}" rel="stylesheet">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
-    <link href="{% static 'css/modal.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet"/>
+    <link href="{% static 'css/reset.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/modal.css' %}" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    {% block head %}
+    {% endblock %}
 </head>
 <body>
 <header>
     <a href="/" class="unstyled-link">
+        <i class="icon"></i>
         <h1 class="logo">Game Muster</h1>
     </a>
     <div class="dropdown-menu">
@@ -52,7 +57,7 @@
 
 <div class="blackout" id="login-modal">
     <div class="modal-window login-form">
-        <div class="profile-circle">
+        <div class="profile-circle form__icon">
             <i class="profile__icon"></i>
         </div>
         <a href="#" class="close" name="close">
@@ -60,7 +65,7 @@
         </a>
         <form name="login-form" method="post">
             {% csrf_token %}
-            <div class="input-group">
+            <div class="form__field-group">
                 <div class="form__field-container">
                     <input name="login" class="form__field" placeholder="Login..."/>
                 </div>
@@ -68,7 +73,7 @@
                     <input name="password" type="password" class="form__field" placeholder="Password..."/>
                 </div>
                 <div class="form__field-container">
-                    <button class="form__field submit-button" type="form_field">Log in</button>
+                    <button class="form__field submit-button" type="form__field">Log in</button>
                 </div>
             </div>
         </form>
@@ -78,7 +83,7 @@
 
 <div class="blackout" id="register-modal">
     <div class="modal-window registration-form">
-        <div class="profile-circle">
+        <div class="profile-circle form__icon">
             <i class="profile__icon"></i>
         </div>
         <a href="#" class="close" name="close">
@@ -86,7 +91,6 @@
         </a>
         <form name="register-form" method="post">
             {% csrf_token %}
-            <div class="form__field-group">
                 <div class="form__field-container">
                     <input name="login" class="form__field" placeholder="Username..."/>
                 </div>
@@ -108,7 +112,6 @@
                 <div class="form__field-container">
                     <button class="form__field submit-button" type="submit">Sign me up</button>
                 </div>
-            </div>
         </form>
 
         <a href="#login-modal" class="link">Already have an account?</a>
@@ -119,7 +122,7 @@
 
 <div class="blackout" id="profile-modal">
     <div class="modal-window profile-form">
-        <div class="profile-circle">
+        <div class="profile-circle form__icon">
             <i class="profile__icon"></i>
         </div>
         <a href="#" class="close" name="close">
@@ -144,6 +147,4 @@
         </form>
     </div>
 </div>
-
 </body>
-</html>

@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% block head %}
+    <script src="{% static 'js/home.js' %}"></script>
+{% endblock%}
+
 {% block content %}
 <main>
     <div class="filter-container">
@@ -9,17 +13,22 @@
       <input type="text" class="search-field" placeholder="Search..."/>
     </div>
     <div class="game">
-        {% for i in i|rjust:10 %}
+        {% for game in games %}
         <div class="game__container">
                 <span class="game__body">
-                   <h4 class="game__title">PACMAN</h4>
-                   <p class="game__title">arcade oldschool</p>
+                   <h4 class="game__title">{{ game.name }}</h4>
+                   <!--<p class="game__title">arcade oldschool</p>-->
                    <p>
-                      <a href="#" class="game__link">Open</a>
+                      <a href="game/{{game.id}}" class="game__link">Open</a>
                       <a href="#" class="game__link">Must</a>
                    </p>
                  </span>
-            <img src="{% static 'media/pacman.jpg' %}" class="game__img"/>
+            {% if game.screenshots %}
+                <img data-url="{{ game.screenshots.0.url }}" class="game__img"/>
+            {% else %}
+                <img src="{% static 'media/pacman.jpg' %}" class="game__img" alt="pacman"/>
+            {% endif %}
+
         </div>
         {% endfor %}
     </div>
