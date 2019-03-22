@@ -9,6 +9,7 @@
     <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/modal.css' %}" rel="stylesheet"/>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
     {% block head %}
     {% endblock %}
 </head>
@@ -37,18 +38,28 @@
 
 <div class="blackout" id="filter">
     <div class="modal-window">
-        <a href="#" class="close" name="close">
+        <a href="#" class="close" name="close" id="close-filter">
             <i class="close__icon"></i>
         </a>
-        <form name="filter-form" method="get">
+        <form name="filter-form">
             {% csrf_token %}
             <div class="form__field-group filter-form__body">
-                <label for="platform" class="filter-form__label">Platforms</label>
-                <input id="platform" type="text"/>
+                <label for="platforms" class="filter-form__label">Platforms</label>
+                <select id="platforms" name="platforms" multiple size="4">
+                    {% for platform in platforms %}
+                      <option value="{{ platform.id }}">{{ platform.abbreviation }}</option>
+                    {% endfor %}
+                </select>
+
                 <label for="genres" class="filter-form__label">Genres</label>
-                <input id="genres" type="text"/>
+                <select id="genres" name="genres" multiple size="4">
+                    {% for genre in genres %}
+                        <option value="{{genre.id}}">{{genre.name}}</option>
+                    {% endfor %}
+                </select>
+
                 <label for="rating" class="filter-form__label">User rating</label>
-                <input id="rating" type="range" min="0.0" max="10.0" step="0.1"/>
+                <input id="rating" name="rating" type="range" min="0.0" max="10.0" step="0.1"/>
                 <button type="submit" class="form__field submit-button">Apply</button>
             </div>
         </form>
@@ -67,7 +78,7 @@
             {% csrf_token %}
             <div class="form__field-group">
                 <div class="form__field-container">
-                    <input name="login" class="form__field" placeholder="Login..."/>
+                    <input name="username" class="form__field" placeholder="Login..."/>
                 </div>
                 <div class="form__field-container">
                     <input name="password" type="password" class="form__field" placeholder="Password..."/>
