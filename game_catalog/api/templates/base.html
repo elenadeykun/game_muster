@@ -8,8 +8,10 @@
     <link href="{% static 'css/reset.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/style.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/modal.css' %}" rel="stylesheet"/>
+
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/forms.js' %}"></script>
     {% block head %}
     {% endblock %}
 </head>
@@ -36,126 +38,11 @@
 {% block content %}
 {% endblock %}
 
-<div class="blackout" id="filter">
-    <div class="modal-window">
-        <a href="#" class="close" name="close" id="close-filter">
-            <i class="close__icon"></i>
-        </a>
-        <form name="filter-form">
-            {% csrf_token %}
-            <div class="form__field-group filter-form__body">
-                <label for="platforms" class="filter-form__label">Platforms</label>
-                <select id="platforms" name="platforms" multiple size="4">
-                    {% for platform in platforms %}
-                      <option value="{{ platform.id }}">{{ platform.abbreviation }}</option>
-                    {% endfor %}
-                </select>
 
-                <label for="genres" class="filter-form__label">Genres</label>
-                <select id="genres" name="genres" multiple size="4">
-                    {% for genre in genres %}
-                        <option value="{{genre.id}}">{{genre.name}}</option>
-                    {% endfor %}
-                </select>
+{% include 'includes/filter.html' %}
+{% include 'includes/profile.html' %}
+{% include 'includes/login.html' %}
+{% include 'includes/registration.html' %}
 
-                <label for="rating" class="filter-form__label">User rating</label>
-                <input id="rating" name="rating" type="range" min="0.0" max="10.0" step="0.1"/>
-                <button type="submit" class="form__field submit-button">Apply</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<div class="blackout" id="login-modal">
-    <div class="modal-window login-form">
-        <div class="profile-circle form__icon">
-            <i class="profile__icon"></i>
-        </div>
-        <a href="#" class="close" name="close">
-            <i class="close__icon"></i>
-        </a>
-        <form name="login-form" method="post">
-            {% csrf_token %}
-            <div class="form__field-group">
-                <div class="form__field-container">
-                    <input name="username" class="form__field" placeholder="Login..."/>
-                </div>
-                <div class="form__field-container">
-                    <input name="password" type="password" class="form__field" placeholder="Password..."/>
-                </div>
-                <div class="form__field-container">
-                    <button class="form__field submit-button" type="form__field">Log in</button>
-                </div>
-            </div>
-        </form>
-        <a href="#register-modal" class="link">Create account</a>
-    </div>
-</div>
-
-<div class="blackout" id="register-modal">
-    <div class="modal-window registration-form">
-        <div class="profile-circle form__icon">
-            <i class="profile__icon"></i>
-        </div>
-        <a href="#" class="close" name="close">
-            <i class="close__icon"></i>
-        </a>
-        <form name="register-form" method="post">
-            {% csrf_token %}
-                <div class="form__field-container">
-                    <input name="login" class="form__field" placeholder="Username..."/>
-                </div>
-                <div class="form__field-container">
-                    <input name="login" class="form__field" type="email" placeholder="Email..."/>
-                </div>
-                <div class="form__field-container">
-                    <input name="login" class="form__field" placeholder="First name..."/>
-                </div>
-                <div class="form__field-container">
-                    <input name="login" class="form__field" placeholder="Last name..."/>
-                </div>
-                <div class="form__field-container">
-                    <input name="password" class="form__field" type="password" placeholder="Password...">
-                </div>
-                <div class="form__field-container">
-                    <input name="password" class="form__field" type="password" placeholder="Confirm password...">
-                </div>
-                <div class="form__field-container">
-                    <button class="form__field submit-button" type="submit">Sign me up</button>
-                </div>
-        </form>
-
-        <a href="#login-modal" class="link">Already have an account?</a>
-
-
-    </div>
-</div>
-
-<div class="blackout" id="profile-modal">
-    <div class="modal-window profile-form">
-        <div class="profile-circle form__icon">
-            <i class="profile__icon"></i>
-        </div>
-        <a href="#" class="close" name="close">
-            <i class="close__icon"></i>
-        </a>
-        <form name="profile-form" method="post">
-            {% csrf_token %}
-            <div class="form__field-group">
-                <div class="form__field-container">
-                    <input name="login" class="form__field" placeholder="Username..." value="username" disabled/>
-                </div>
-                <div class="form__field-container">
-                    <input name="login" class="form__field" type="email" placeholder="Email..." value="username@gmail.com" disabled/>
-                </div>
-                <div class="form__field-container">
-                    <input name="login" class="form__field" placeholder="First name..." value="Lena" disabled/>
-                </div>
-                <div class="form__field-container">
-                    <input name="login" class="form__field" placeholder="Last name..." value="Dejkun" disabled/>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
 </body>
+

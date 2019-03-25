@@ -8,15 +8,14 @@
       </a>
       <input type="text" class="search-field" placeholder="Search..."/>
     </div>
-    <div class="game" id="games">
+    <div class="game" id="games" data-page="2">
         {% for game in games %}
         <div class="game__container">
                 <span class="game__body">
                    <h4 class="game__title">{{ game.name }}</h4>
-                   <!--<p class="game__title">arcade oldschool</p>-->
                    <p>
                       <a href="game/{{game.id}}" class="game__link">Open</a>
-                      <a href="#" class="game__link">Must</a>
+                      <a href="create-must/{{game.id}}" name="create" class="game__link">Must</a>
                    </p>
                  </span>
             {% if game.screenshots %}
@@ -30,3 +29,4 @@
     </div>
 </main>
 {% endblock %}
+

@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block head %}
-    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/must.js' %}"></script>
 {% endblock%}
 {% block content %}
 <main>
     <h3 class="article-header">My MUST</h3>
-    <div class="gamfe">
+    <div class="game">
+        {% if not games %}
+            <p>Collection is empty.</p>
+        {% endif %}
         {% for game in games %}
         <div class="game__container">
                 <span class="game__body">
@@ -14,25 +17,10 @@
                    <p>Action</p>
                    <p>Users added: 25</p>
                    <p>
-                      <a href="#" class="game__link must-link">UnMUST</a>
+                      <a href="/remove-must/{{game.id}}" name="remove" class="game__link must-link">UnMUST</a>
                    </p>
                  </span>
            {% if game.screenshots %}
-                <img data-url="{{ game.screenshots.0.url }}" class="game__img"/>
-            {% else %}
-                <img src="{% static 'media/pacman.jpg' %}" class="game__img" alt="pacman"/>
-            {% endif %}
-        </div>
-        <div class="game__container">
-                <span class="game__body">
-                   <h4>PACMAN</h4>
-                   <p>Action</p>
-                   <p>Users added: 25</p>
-                   <p>
-                      <a href="#" class="game__link remust-link">ReMUST</a>
-                   </p>
-                 </span>
-            {% if game.screenshots %}
                 <img data-url="{{ game.screenshots.0.url }}" class="game__img"/>
             {% else %}
                 <img src="{% static 'media/pacman.jpg' %}" class="game__img" alt="pacman"/>
@@ -42,3 +30,4 @@
     </div>
 </main>
 {% endblock %}
+

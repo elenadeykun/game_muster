@@ -1,0 +1,40 @@
+<div class="blackout" id="register-modal">
+    <div class="modal-window registration-form">
+        <div class="profile-circle form__icon">
+            <i class="profile__icon"></i>
+        </div>
+        <a href="#" class="close" name="close">
+            <i class="close__icon"></i>
+        </a>
+        <p class="error" id="register-errors"></p>
+        <form name="register-form" method="POST" action="/registration">
+            {% csrf_token %}
+
+                <div class="form__field-container">
+                    <input name="{{ register_form.username.name }}" class="form__field" placeholder="Username..."/>
+                </div>
+                <div class="form__field-container">
+                    <input name="{{ register_form.email.name }}" class="form__field" type="email" placeholder="Email..."/>
+                </div>
+                <div class="form__field-container">
+                    <input name="{{ register_form.first_name.name }}" class="form__field" placeholder="First name..."/>
+                </div>
+                <div class="form__field-container">
+                    <input name="{{ register_form.last_name.name }}" class="form__field" placeholder="Last name..."/>
+                </div>
+                <div class="form__field-container">
+                    <input name="{{ register_form.password1.name }}" class="form__field" minlength="5" type="password" placeholder="Password...">
+                </div>
+                <div class="form__field-container">
+                    <input name="{{ register_form.password2.name }}" class="form__field" minlength="5" type="password" placeholder="Confirm password...">
+                </div>
+                <div class="form__field-container">
+                    <button class="form__field submit-button" type="submit">Sign me up</button>
+                </div>
+        </form>
+
+        <a href="#login-modal" class="link">Already have an account?</a>
+
+
+    </div>
+</div>

@@ -8,7 +8,9 @@
 {% block content %}
 <main class="game-article">
     <h3 class="game-article__header">{{game.name}}</h3>
-    <span class="game-article__toast">MUST</span>
+    <a href="/create-must/{{ game.id }}" name="create" class="unstyled-link">
+        <span class="game-article__toast">MUST</span>
+    </a>
     <p class="game-article__description">arcade oldschool</p>
     <div class="game-description">
         <div class="game-description__section main-game-section">
@@ -27,11 +29,11 @@
             <h4 class="game-description__title">Rating</h4>
             <div class="game-description__rating">
                 <span>Users</span>
-                <span class="game-description__title_right">{{game.rating }} ( {{game.rating_count}} views)</span>
+                <span class="game-description__title_right">{{game.rating|floatformat  }} ( {{game.rating_count}} views)</span>
             </div>
             <div class="game-description__rating critics-rating">
                 <span>Critics</span>
-                <span class="game-description__title_right">{{ game.aggregated_rating }} ({{game.rating_count}} views)</span>
+                <span class="game-description__title_right">{{ game.aggregated_rating|floatformat  }} ({{game.rating_count}} views)</span>
             </div>
             <h4 class="game-description__title">Genres</h4>
             {% for genre in game.genres %}
@@ -58,3 +60,4 @@
     </div>
 </main>
 {% endblock %}
+
