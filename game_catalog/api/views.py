@@ -1,11 +1,16 @@
-from django.http import JsonResponse
-from django.shortcuts import render
+import json
+
 from django.contrib import auth
 from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.shortcuts import render
 
+from .forms import UserCreationForm
 from .igdb_api import IgdbApi
+from .models import Must, User
 
-# ???????
+
 igdb = IgdbApi("abc48a8eab1764bc6ce6791e6cb1ab9f")
 
 
@@ -13,12 +18,39 @@ def home(request):
     games = igdb.get_games()
     platforms = igdb.get_platforms()
     genres = igdb.get_genres()
+    register_form = UserCreationForm()
     return render(request, "api/home.html", locals())
 
 
+def get_particle_games(request, offset):
+    games = igdb.get_games(offset=offset)
+    return JsonResponse({'games': games})
+
+
+@login_required(login_url='/#login-modal')
 def must(request):
-    games = igdb.get_games()
+    user = User.objects.get(username=request.user)
+    must_games = [str(elem.game_id) for elem in Must.objects.filter(owner=user)]
+    if must_games:
+        games = igdb.get_games({'id': must_games})
+
     return render(request, "api/must.html", locals())
+
+
+@login_required(login_url='/#login-modal')
+def create_must(request, game_id):
+    user = User.objects.get(username=request.user)
+    must_game = Must(owner=user, game_id=game_id)
+    must_game.save()
+    return JsonResponse({'Status': 'OK'})
+
+
+@login_required(login_url='/#login-modal')
+def remove_must(request, game_id):
+    user = User.objects.get(username=request.user)
+    must_game = Must.objects.filter(owner=user, game_id=game_id)
+    must_game.delete()
+    return JsonResponse({'Status': 'OK'})
 
 
 def game_description(request, game_id):
@@ -38,17 +70,50 @@ def filtered_games(request):
 
 
 def login(request):
-    username = request.POST['username']
-    password = request.POST['password']
-    user = auth.authenticate(username=username, password=password)
-    if user is not None and user.is_active:
-        auth.login(request, user)
-        return JsonResponse({'Status': 'OK'})
-    else:
-        return JsonResponse({'Status': 'Failed'})
+    if request.POST:
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                auth.login(request, user)
+
+                return JsonResponse({'Status': 'OK',
+                                     'user': {'username': user.username,
+                                              'email': user.email,
+                                              'last_name': user.last_name,
+                                              'first_name': user.first_name}
+                                     })
+
+        return JsonResponse({'Errors': 'Password or login are incorrect'})
+
+    return JsonResponse({'Status': 'Failed'})
 
 
 def logout(request):
     auth.logout(request)
     return JsonResponse({"Status": "OK"})
+
+
+def registration(request):
+    form = UserCreationForm(request.POST)
+
+    if form.is_valid():
+        form.save()
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password1']
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            if user.is_active:
+                auth.login(request, user)
+                return JsonResponse({'Status': 'OK',
+                                     'user': {'username': user.username,
+                                              'email': user.email,
+                                              'last_name': user.last_name,
+                                              'first_name': user.first_name}
+                                     })
+
+    return JsonResponse({'Errors': list(form.error_messages.values())})
+
 
