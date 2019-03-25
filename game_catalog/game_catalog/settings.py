@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'static_precompiler',
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+AUTH_USER_MODEL = 'api.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,7 +53,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-SCSS_EXECUTABLE = '/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+SASS_EXECUTABLE = 'C:/Users/Alena.Dzeikun/AppData/Roaming/npm'
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -87,8 +88,12 @@ WSGI_APPLICATION = 'game_catalog.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'xcjtgyoz',
+        'USER': 'xcjtgyoz',
+        'PASSWORD': 'Qd0Kijp5w84Z_1E3ia9uA0H1oUpnVRKZ',
+        'HOST': 'dumbo.db.elephantsql.com',
+        'POST': '5432'
     }
 }
 
@@ -130,3 +135,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
