@@ -5,54 +5,37 @@ $(document).ready(function(){
         }
     });
 
-    $('form[name=login-form]').submit(function(event){
+
+    $('a[name=create]').click(function(event){
         event.preventDefault();
-
         $.ajax({
-            url: '/login',
-            method: 'POST',
-            data: $('form[name=login-form]').serialize(),
-            dataType: 'json',
-            success: function (data) {
-               $('a[name=close]')[0].click();
-            }
-         });
-    });
-
-    $('a[name=logout').click( function(){
-
-        $.ajax({
-          url: '/logout',
+          url: $(this).attr('href'),
           dataType: 'json',
           success: function (data) {
-              alert(data.stat);
-            }
+              showMessage(data.Status);
+          }
          });
     });
 
-    $('form[name=filter-form]').submit(function(event){
-        event.preventDefault();
-
-        $.ajax({
-            url: '/ajax/filter',
-            method: "GET",
-            data: $('form[name=filter-form]').serialize(),
-            dataType: 'json',
-            success: function (data) {
-               games = data.games;
-               games_container = document.getElementById("games");
-               // ???
-               games_container.innerHTML= "";
-               fragment = document.createDocumentFragment();
-               games.forEach(function(elem, i){
-                    game = createGameElement(elem);
-                    fragment.appendChild(game);
-               })
-               games_container.appendChild(fragment);
-            }
-         });
-    });
 });
+
+function showMessage(text){
+    var message = document.createElement('div');
+    message.classList.add("message-box");
+    message.classList.add("tooltip");
+
+    var messageText = document.createElement('h4');
+    messageText.textContent = text;
+    message.appendChild(messageText);
+
+    var main = document.getElementsByTagName('main');
+    main[0].appendChild(message);
+    setTimeout(function (message){
+               message.parentNode.removeChild(message);
+               }, 3000, message);
+}
+
+
 
 function createGameElement(gameData){
     game = document.createElement('div');
@@ -87,7 +70,30 @@ function createGameElement(gameData){
        img.src = "/static/media/pacman.jpg";
     }
 
-    console.log(gameData.id);
     game.appendChild(img);
     return game;
+}
+
+window.onscroll = function() {
+    if($(window).scrollTop()+$(window).height()>=$(document).height()){
+        var gamesContainer = document.getElementById('games');
+        var page = parseInt(gamesContainer.dataset.page);
+
+         $.ajax({
+            url: '/get-particle-games/' + page,
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+               games = data.games;
+               fragment = document.createDocumentFragment();
+               games.forEach(function(elem, i){
+                    game = createGameElement(elem);
+                    fragment.appendChild(game);
+               })
+               gamesContainer.appendChild(fragment);
+            }
+         });
+
+         gamesContainer.dataset.page = page + 1;
+    }
 }
