@@ -22,7 +22,7 @@ class IgdbApi:
 
         return json.loads(requests.post(url, headers=self.__query_header, data=data).text)
 
-    def get_games(self, filter_dict={}, offset=1):
+    def get_games(self, filter_dict={}, offset=1, limit=30,  search_name=''):
         url = self.__api_url + "games/"
         fields = ['name', 'screenshots.url']
         data = "fields " + ",".join(fields) + "; "
@@ -31,10 +31,13 @@ class IgdbApi:
             value = ",".join(filter_dict[key]) if filter_dict[key] else None
             value = '(' + value + ')' if filter_dict[key] and len(filter_dict[key]) > 1 else value
 
-            data += (IgdbApi.__get_parameter(data, key, value, '>') if key is "rating"
-                     else IgdbApi.__get_parameter(data, key, value))
+            data += (IgdbApi.__get_parameter(key, value, '>') if key is "rating"
+                     else IgdbApi.__get_parameter(key, value))
 
-        data += " sort release_dates.date desc; limit 30; offset {offset};".format(offset=offset)
+        if search_name:
+            data += ' search "{name}";'.format(name=search_name)
+        else:
+            data += " sort release_dates.date desc; limit {limit}; offset {offset};".format(limit=limit, offset=offset)
 
         return json.loads(requests.post(url, headers=self.__query_header, data=data).text)
 
