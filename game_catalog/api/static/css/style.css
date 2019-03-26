@@ -28,6 +28,17 @@ main {
      display: inline-block;
 }
 
+.username {
+    color: white;
+    font-size: 15px;
+    position: absolute;
+    right: 2%;
+    margin-top: 15px;
+    margin-right: 20px;
+    display: inline;
+    opacity: 0.7;
+}
+
 .profile-circle {
     background: rgb(70, 110, 171);
     border-radius: 50%;
@@ -172,7 +183,7 @@ main {
 }
 
 .must-link:hover {
-  background: #84f37ccf;
+  background: rgb(255, 92, 92);
 }
 
 .remust-link {
@@ -182,7 +193,7 @@ main {
 }
 
 .remust-link:hover {
-  background: rgb(255, 92, 92);
+  background:  #84f37ccf;
 }
 
 .filter-container__icon {
@@ -208,9 +219,40 @@ main {
     color: rgb(70, 110, 171);
 }
 
+.message-box {
+    position: fixed;
+    background: rgb(7, 71, 166);
+    right: 20px;
+    bottom: 20px;
+    padding: 20px;
+    color: white;
+    font-family:  'Source Sans Pro', cursive;
+    opacity: 0.8;
+    border-radius: 5%;
+}
+
+.error {
+    color: red;
+    padding-top: 10px;
+}
+
+
+.search-icon {
+    background: url('/static/media/search-icon.png');
+    background-size: contain;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+
+.hidden {
+    display: none;
+}
 
 @media only screen and (max-width : 1824px) {
-
+    .username {
+        right: 4%;
+    }
 
 }
 
@@ -220,11 +262,19 @@ main {
         width: 90%;
     }
 
+     .username {
+        right: 5%;
+    }
+
 }
 
 @media only screen and (max-width : 890px) {
     main {
         width: 100%;
+    }
+
+    .username {
+        right: 7%;
     }
 }
 

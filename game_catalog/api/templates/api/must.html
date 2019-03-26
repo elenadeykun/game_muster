@@ -17,13 +17,13 @@
                    <p>Action</p>
                    <p>Users added: 25</p>
                    <p>
-                      <a href="/remove-must/{{game.id}}" name="remove" class="game__link must-link">UnMUST</a>
+                      <a href="remove-must/{{ game.id }}" name="remove" class="game__link must-link">UnMUST</a>
                    </p>
                  </span>
            {% if game.screenshots %}
                 <img data-url="{{ game.screenshots.0.url }}" class="game__img"/>
             {% else %}
-                <img src="{% static 'media/pacman.jpg' %}" class="game__img" alt="pacman"/>
+                <img src="{% static 'media/no-image.png' %}" class="game__img" alt="no image"/>
             {% endif %}
         </div>
         {% endfor %}

@@ -72,8 +72,10 @@
   padding: 8px;
   padding-top: 5px;
   padding-top: 5px;
+  margin-bottom:10px;
   background: rgba(110, 154, 253, 0.38);
   border-radius: 10%;
+  display: inline-block;
 }
 
 .tweet {
@@ -109,3 +111,4 @@
         min-width: 150px;
     }
 }
+

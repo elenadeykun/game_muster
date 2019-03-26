@@ -1,12 +1,20 @@
 {% extends "base.html" %}
-{% load staticfiles %}
+
+{% block head %}
+    {% load staticfiles %}
+    <script src="{% static 'js/home.js' %}"></script>
+{% endblock%}
+
 {% block content %}
 <main>
     <div class="filter-container">
       <a href="#filter" class="unstyled-link" id="close">
           <i class="filter-container__icon"></i>
       </a>
-      <input type="text" class="search-field" placeholder="Search..."/>
+      <input type="text" class="search-field" id="search-field" placeholder="Search..."/>
+      <a class="" href="{% url 'search' %}" name="search">
+          <i class="search-icon"></i>
+      </a>
     </div>
     <div class="game" id="games" data-page="2">
         {% for game in games %}
@@ -14,14 +22,14 @@
                 <span class="game__body">
                    <h4 class="game__title">{{ game.name }}</h4>
                    <p>
-                      <a href="game/{{game.id}}" class="game__link">Open</a>
-                      <a href="create-must/{{game.id}}" name="create" class="game__link">Must</a>
+                      <a href="{% url 'game' game.id %}" class="game__link">Open</a>
+                      <a href="{% url 'create-must' game.id %}" name="create" class="game__link">Must</a>
                    </p>
                  </span>
             {% if game.screenshots %}
                 <img data-url="{{ game.screenshots.0.url }}" class="game__img"/>
             {% else %}
-                <img src="{% static 'media/pacman.jpg' %}" class="game__img" alt="pacman"/>
+                <img src="{% static 'media/no-image.png' %}" class="game__img" alt="no image"/>
             {% endif %}
 
         </div>
