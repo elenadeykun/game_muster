@@ -1,5 +1,7 @@
-$(document).ready(function(){
-    $('.screen-img').each(function(i,elem){
-        elem.src = $(this).data("url");
-    });
-});
+document.addEventListener("DOMContentLoaded", function(){
+    var images = document.getElementsByClassName("screen-img");
+
+    for (var i = 0; i < images.length; i++) {
+        images[i].src = images[i].dataset.url;
+    }
+})
