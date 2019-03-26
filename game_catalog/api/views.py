@@ -1,5 +1,6 @@
 import json
 
+from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
@@ -11,7 +12,7 @@ from .igdb_api import IgdbApi
 from .models import Must, User
 
 
-igdb = IgdbApi("abc48a8eab1764bc6ce6791e6cb1ab9f")
+igdb = IgdbApi(settings.USER_KEY)
 
 
 def home(request):
@@ -31,9 +32,7 @@ def get_particle_games(request, offset):
 def must(request):
     user = User.objects.get(username=request.user)
     must_games = [str(elem.game_id) for elem in Must.objects.filter(owner=user)]
-    if must_games:
-        games = igdb.get_games({'id': must_games})
-
+    games = igdb.get_games({'id': must_games}) if must_games else None
     return render(request, "api/must.html", locals())
 
 
@@ -57,6 +56,11 @@ def game_description(request, game_id):
     result = igdb.get_game(game_id)
     game = result[0] if result else None
     return render(request, "api/game.html", locals())
+
+
+def search(request):
+    games = igdb.get_games(search_name=request.GET.get('search_string'))
+    return JsonResponse({'games': games})
 
 
 def filtered_games(request):

@@ -54,7 +54,7 @@ MIDDLEWARE = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-SASS_EXECUTABLE = 'C:/Users/Alena.Dzeikun/AppData/Roaming/npm'
+
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
