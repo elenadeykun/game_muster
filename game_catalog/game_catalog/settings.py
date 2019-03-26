@@ -19,8 +19,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-u#yvohfv3@ec0pi61at!olh&!enreo2o_-1^fw0we%n*jsk^='
+SECRET_KEY = os.environ.get("SECRET_KEY")
+USER_KEY = os.environ.get("USER_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -89,9 +89,9 @@ WSGI_APPLICATION = 'game_catalog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'xcjtgyoz',
-        'USER': 'xcjtgyoz',
-        'PASSWORD': 'Qd0Kijp5w84Z_1E3ia9uA0H1oUpnVRKZ',
+        'NAME': os.environ.get("DB_USER"),
+        'USER': os.environ.get("DB_USER"),
+        'PASSWORD': os.environ.get("DB_PASS"),
         'HOST': 'dumbo.db.elephantsql.com',
         'POST': '5432'
     }
