@@ -12,9 +12,9 @@
           <i class="filter-container__icon"></i>
       </a>
       <input type="text" class="search-field" id="search-field" placeholder="Search..."/>
-      <a class="" href="{% url 'search' %}" name="search">
+      <button class="unstyled" name="search">
           <i class="search-icon"></i>
-      </a>
+      </button>
     </div>
     <div class="game" id="games" data-page="2">
         {% for game in games %}
@@ -23,7 +23,7 @@
                    <h4 class="game__title">{{ game.name }}</h4>
                    <p>
                       <a href="{% url 'game' game.id %}" class="game__link">Open</a>
-                      <a href="{% url 'create-must' game.id %}" name="create" class="game__link">Must</a>
+                      <button data-action="{% url 'create-must' game.id %}" name="create" class="game__link">Must</button>
                    </p>
                  </span>
             {% if game.screenshots %}

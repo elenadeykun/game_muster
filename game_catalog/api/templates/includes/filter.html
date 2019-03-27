@@ -6,6 +6,18 @@
         <form name="filter-form">
             {% csrf_token %}
             <div class="form__field-group filter-form__body">
+                <div class="select">
+                    <div class="select__container">
+                        <select>
+                            <option>Choose platforms...</option>
+                        </select>
+                    </div>
+                    <div id="checkboxes" class="select__checkboxes">
+                        <label for="one" class="select__label"><input type="checkbox" id="one">One</label>
+                        <label for="one1" class="select__label"><input type="checkbox" id="one1">One</label>
+                        <label for="one2" class="select__label"><input type="checkbox" id="one2">One</label>
+                    </div>
+                </div>
                 <label for="platforms" class="filter-form__label">Platforms</label>
                 <select id="platforms" name="platforms" multiple size="4">
                     {% for platform in platforms %}

@@ -8,9 +8,9 @@
 {% block content %}
 <main class="game-article">
     <h3 class="game-article__header">{{game.name}}</h3>
-    <a href="{% url 'create-must' game.id %}" name="create" class="unstyled-link">
+    <button action="{% url 'create-must' game.id %}" name="create" class="unstyled">
         <span class="game-article__toast">MUST</span>
-    </a>
+    </button>
     <p class="game-article__description">arcade oldschool</p>
     <div class="game-description">
         <div class="game-description__section main-game-section">

@@ -219,6 +219,14 @@ main {
     color: rgb(70, 110, 171);
 }
 
+.unstyled {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+}
+
 .message-box {
     position: fixed;
     background: rgb(7, 71, 166);
@@ -248,6 +256,33 @@ main {
 .hidden {
     display: none;
 }
+
+.select {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.select__container {
+     position: relative;
+}
+
+.select__container select {
+    width: 100%;
+}
+
+.select__checkboxes {
+    display: none;
+    border: 1px #dadada solid;
+}
+
+.select__label {
+    display: block;
+}
+
+.select__label:hover {
+    background-color:  rgba(70, 110, 171, 0.16);
+}
+
 
 @media only screen and (max-width : 1824px) {
     .username {
