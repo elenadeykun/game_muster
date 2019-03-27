@@ -1,0 +1,96 @@
+"use strict";
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    var gameImages = document.getElementsByClassName("game__img");
+
+    for (var i = 0; i < gameImages.length; i++) {
+        if(gameImages[i].dataset.url){
+            gameImages[i].src = gameImages[i].dataset.url;
+        }
+    }
+
+    var createLinks = document.querySelectorAll("button[name=create]");
+
+    for (var i = 0; i < createLinks.length; i++) {
+        createLinks[i].addEventListener("click", function(event){
+             createMust(this);
+        });
+    }
+});
+
+function showMessage(text){
+    var message = document.createElement("div");
+    message.classList.add("message-box");
+    message.classList.add("tooltip");
+
+    var messageText = document.createElement("h4");
+    messageText.textContent = text;
+    message.appendChild(messageText);
+
+    var main = document.getElementsByTagName("main");
+    main[0].appendChild(message);
+    setTimeout(function (message){
+               message.parentNode.removeChild(message);
+               }, 3000, message);
+}
+
+function createGameElement(gameData){
+    var game = document.createElement("div");
+    game.classList.add("game__container");
+    var description = document.createElement("span");
+    description.classList.add("game__body");
+
+    var title = document.createElement("h4");
+    title.classList.add("game__title")
+    title.textContent = gameData.name;
+
+    var linkContainer = document.createElement("p");
+    var link = document.createElement("a");
+    link.classList.add("game__link");
+    link.href = "game/" + gameData.id;
+    link.textContent = "Open";
+    linkContainer.appendChild(link);
+    var mustLink = document.createElement("button");
+    mustLink.classList.add("game__link");
+    mustLink.dataset.action = "/create-must/" + gameData.id ;
+    mustLink.textContent = "Must";
+    mustLink.name = "create";
+    mustLink.addEventListener("click", function(event){
+        createMust(this);
+    });
+    linkContainer.appendChild(mustLink);
+
+    description.appendChild(title);
+    description.appendChild(linkContainer);
+    game.appendChild(description);
+    var img = document.createElement("img");
+    img.classList.add("game__img");
+
+    if(!!gameData.screenshots){
+       img.src = gameData.screenshots[0].url;
+    } else {
+       img.src = "/static/media/no-image.png";
+    }
+
+    game.appendChild(img);
+    return game;
+}
+
+function createMust(must){
+    createQuery("GET", must.dataset.action, function(response){
+        showMessage(response.Status);
+    });
+}
+
+var expanded = false;
+function showCheckboxes(){
+    var checkboxes = document.getElementById("checkboxes");
+    if (!expanded){
+        checkboxes.style.display = "block";
+        expanded = true;
+    } else {
+        checkboxes.style.display = "none";
+        expanded = false;
+    }
+}

@@ -1,3 +1,5 @@
+"use strict";
+
 document.addEventListener("DOMContentLoaded", function(){
 
     var removeLinks = document.querySelectorAll("a[name=remove]");
@@ -5,14 +7,20 @@ document.addEventListener("DOMContentLoaded", function(){
     for (var i = 0; i < removeLinks.length; i++) {
         removeLinks[i].addEventListener("click", function(event){
             event.preventDefault();
-            var link = $(this);
-            var href = $(this).attr("href");
-            $.ajax({
-                url: $(this).attr("href"),
-                dataType: "json",
-                success: function (data) {
 
-               if (href.match("remove-must")){
+            var link = $(this);
+            var href = this.href;
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", this.href, true);
+            xhr.send();
+
+            xhr.onreadystatechange = function() {
+            if (xhr.readyState != 4) {return;}
+
+            if (xhr.status == 200) {
+               var response =  JSON.parse(xhr.responseText);
+                if (href.match("remove-must")){
                     href =href.replace("remove-must", "create-must");
                     link.addClass("remust-link");
                     link.text("ReMUST");
@@ -23,9 +31,8 @@ document.addEventListener("DOMContentLoaded", function(){
                     link.text("UnMUST");
                     link.attr("href", href);
                }
-               showMessage(data.Status);
+               showMessage(response.Status);
             }
-         });
-        });
-    }
+        };
+    })};
 });
