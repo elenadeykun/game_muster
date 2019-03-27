@@ -33,12 +33,16 @@ def must(request):
     user = User.objects.get(username=request.user)
     must_games = [str(elem.game_id) for elem in Must.objects.filter(owner=user)]
     games = igdb.get_games({'id': must_games}) if must_games else None
-    return render(request, "api/must.html", locals())
+    return render(request, "api/must.html", {'games': games})
 
 
 @login_required(login_url='/#login-modal')
 def create_must(request, game_id):
     user = User.objects.get(username=request.user)
+    must_game = list(Must.objects.filter(owner=user, game_id=game_id))
+    if must_game:
+        return JsonResponse({'Status': 'This must already exist'})
+
     must_game = Must(owner=user, game_id=game_id)
     must_game.save()
     return JsonResponse({'Status': 'OK'})
@@ -55,20 +59,21 @@ def remove_must(request, game_id):
 def game_description(request, game_id):
     result = igdb.get_game(game_id)
     game = result[0] if result else None
-    return render(request, "api/game.html", locals())
+    return render(request, "api/game.html", {'game': game})
 
 
-def search(request):
-    games = igdb.get_games(search_name=request.GET.get('search_string'))
+def search(request, search_string):
+    games = igdb.get_games(search_name=search_string)
     return JsonResponse({'games': games})
 
 
 def filtered_games(request):
     games_filter = {
-        'platforms': request.GET.getlist("platforms"),
-        'genres': request.GET.getlist("genres"),
-        'rating': request.GET.get("rating")
+        'platforms': request.POST.getlist("platforms"),
+        'genres': request.POST.getlist("genres"),
+        'rating': request.POST.get("rating")
     }
+
     games = igdb.get_games(games_filter)
     return JsonResponse({"games": games})
 

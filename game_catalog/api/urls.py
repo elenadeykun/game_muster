@@ -13,6 +13,6 @@ urlpatterns = [
     url('^create-must/(?P<game_id>[0-9]+)/$', views.create_must, name="create-must"),
     url('^remove-must/(?P<game_id>[0-9]+)/$', views.remove_must, name="remove-must"),
     url('^get-particle-games/(?P<offset>[0-9]+)/$', views.get_particle_games, name="get-particle-games"),
-    url('^search$', views.search, name="search")
+    url('^search/(?P<search_string>[^/]+)$', views.search, name="search")
 ]
 
