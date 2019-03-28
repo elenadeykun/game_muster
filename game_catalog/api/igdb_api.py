@@ -22,7 +22,7 @@ class IgdbApi:
 
         return json.loads(requests.post(url, headers=self.__query_header, data=data).text)
 
-    def get_games(self, filter_dict={}, offset=1, limit=30,  search_name=''):
+    def get_games(self, filter_dict={}, offset=0, limit=30,  search_name=''):
         url = self.__api_url + "games/"
         fields = ['name', 'screenshots.url']
         data = "fields " + ",".join(fields) + "; "
@@ -37,7 +37,8 @@ class IgdbApi:
         if search_name:
             data += ' search "{name}";'.format(name=search_name)
         else:
-            data += " sort release_dates.date desc; limit {limit}; offset {offset};".format(limit=limit, offset=offset)
+            data += " sort release_dates.date desc; limit {limit}; offset {offset};".format(limit=limit,
+                                                                                            offset=offset*limit)
 
         return json.loads(requests.post(url, headers=self.__query_header, data=data).text)
 
