@@ -1,0 +1,367 @@
+@import 'reset';
+
+$background: rgb(7, 71, 166);
+$font-style: 'Source Sans Pro', sans-serif;
+
+body {
+    font-family: $font-style;
+}
+
+header {
+  background: $background;
+  padding: 5px;
+}
+
+main {
+  width: 60%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.logo {
+  color: white;
+  font-size: 30px;
+  display: table-caption;
+  width: 210px;
+}
+
+.icon {
+     background-image: url('/static/media/icon.png');
+     background-size: contain;
+     height: 40px;
+     width: 40px;
+     display: inline-block;
+}
+
+.username {
+    color: white;
+    font-size: 15px;
+    position: absolute;
+    right: 2%;
+    margin-top: 15px;
+    margin-right: 20px;
+    display: inline;
+    opacity: 0.7;
+}
+
+.profile-circle {
+    background: rgb(70, 110, 171);
+    border-radius: 50%;
+    padding: 10px;
+    padding-top: 5px;
+    position: absolute;
+    right: 0;
+    display: block;
+}
+
+.profile__icon {
+    background-image: url('/static/media/user-icon.png');
+    background-size: contain;
+    height: 20px;
+    width: 20px;
+    display: block;
+}
+
+.unstyled-link {
+  text-decoration: none;
+}
+
+.dropdown-menu {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+
+    &:hover .dropdown-menu__container {
+        display: block;
+    }
+    &__container {
+        display: none;
+        background-color: white;
+        width: 100%;
+        margin-top: 40px;
+
+        .dropdown-menu__item:hover {
+            color: $background;
+        }
+
+    &__item {
+        color: black;
+        padding: 10px;
+        text-decoration: none;
+        display: block;
+        background: rgba(70, 110, 171, 0.10);
+
+        &:hover {
+            background: rgba(70, 110, 171, 0.20);
+
+        }
+}
+
+
+.filter-container {
+    align-items: center;
+    text-align: center;
+
+    &__icon {
+      background-image: url('/static/media/filter-icon.png');
+      background-size: contain;
+      height: 30px;
+      width: 30px;
+      display: inline-block;
+      position: absolute;
+      left: 77%;
+    }
+}
+
+.search-field {
+    border: 0;
+    border-bottom: 2px solid $background;
+    text-align: center;
+    font-size: 20px;
+    display: inline-block;
+}
+
+.game {
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   justify-content: center;
+
+   &__container {
+      display: block;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      overflow: hidden;
+      min-height: 100px;
+      min-width: 100px;
+      max-height: 200px;
+      max-width: 200px;
+      margin: 20px;
+   }
+
+   &__img {
+     width: 100%;
+     height: auto;
+     width: 150px;
+     height: 150px;
+   }
+
+   &__body {
+     position: absolute;
+     left: 0;
+     top: 60%;
+     width: 100%;
+     height: 40%;
+     background-color: rgba(0, 0, 0, 0.74);
+     color: #fff;
+     text-align: center;
+     opacity: 1;
+     transition: all .5s;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     overflow: hidden;
+     padding-top: 12%;
+
+     &:hover {
+         height: 100%;
+         top: 0;
+         padding:0;
+     }
+   }
+
+   &__title {
+     margin-top:  15px;
+     margin-bottom: 20px;
+   }
+
+   &__link {
+     text-decoration: none;
+     background: #ffffff;
+     color: black;
+     padding: 5px;
+     border-radius: 30%;
+     display: inline-table;
+
+     &:hover {
+       transform: scale(1.1);
+     }
+   }
+}
+
+
+.must-link {
+  border-radius: 10%;
+  font-size: 15px;
+  margin-top: 10px;
+
+  &:hover {
+      background: rgb(255, 92, 92);
+  }
+}
+
+.remust-link {
+  border-radius: 10%;
+  font-size: 15px;
+  margin-top: 10px;
+
+  &:hover {
+    background:  #84f37ccf;
+  }
+}
+
+.link {
+    text-decoration: none;
+    color: #777793;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: block;
+    font-size: 18px;
+
+    &:hover {
+      color: rgb(70, 110, 171);
+    }
+}
+
+
+.unstyled {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+}
+
+.message-box {
+    position: fixed;
+    background: $background;
+    right: 20px;
+    bottom: 20px;
+    padding: 20px;
+    color: white;
+    font-family:  $font-style, cursive;
+    opacity: 0.8;
+    border-radius: 5%;
+}
+
+.error {
+    color: red;
+    padding-top: 10px;
+}
+
+
+.search-icon {
+    background: url('/static/media/search-icon.png');
+    background-size: contain;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+
+.hidden {
+    display: none;
+}
+
+.select {
+    padding-left: 10px;
+    padding-right: 10px;
+
+    &__container {
+      position: relative;
+    }
+
+    &__container select {
+      width: 100%;
+    }
+
+    &__checkboxes {
+        display: none;
+        border: 1px #dadada solid;
+    }
+
+    &__label {
+        display: block;
+
+        &:hover{
+            background-color:  rgba(70, 110, 171, 0.16);
+        }
+    }
+}
+
+.bookmarks {
+    padding: 10px;
+    position: fixed;
+    left: 30px;
+    bottom: 30px;
+    background: rgba(7, 71, 166, 0.12);
+    border-radius: 50%;
+
+    &:hover {
+      background: rgba(7, 71, 166, 0.3);
+      transform: scale(1.1);
+    }
+
+    &__icon {
+        background: url('/static/media/bookmark-icon.png');
+        background-size: contain;
+        height: 20px;
+        width: 20px;
+        display: inline-block;
+    }
+}
+
+@media only screen and (max-width : 1824px) {
+    .username {
+        right: 4%;
+    }
+
+}
+
+@media only screen and (max-width : 1224px) {
+
+    main {
+        width: 90%;
+    }
+
+     .username {
+        right: 5%;
+    }
+
+}
+
+@media only screen and (max-width : 890px) {
+    main {
+        width: 100%;
+    }
+
+    .username {
+        right: 7%;
+    }
+}
+
+
+@media only screen and (max-width : 480px)  {
+    main {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width : 321px)  {
+    main {
+        width: 100%;
+    }
+
+}
+
+@media only screen and (max-width : 320px) {
+
+    main {
+        width: 100%;
+    }
+
+    .logo {
+        font-size: 25px;
+    }
+}

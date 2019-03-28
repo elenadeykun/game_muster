@@ -1,0 +1,119 @@
+$link-background: rgba(110, 154, 253, 0.38);
+$tweet-background: rgba(141, 176, 255, 0.17);
+$rating-background: rgba(32, 247, 98, 0.16);
+$critics-background: rgba(247, 211, 32, 0.16);
+$background: rgb(7, 71, 166);
+
+.game-article  {
+    padding: 20px;
+
+    &__header {
+      font-size: 25px;
+      display: inline;
+      font-weight: bold;
+    }
+
+    &__description {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    &__toast {
+      padding: 5px;
+      background: $link-background;
+      border-radius: 10%;
+      margin-left: 15px;
+    }
+}
+
+.screen-img {
+  max-width: 100%;
+  height: auto;
+  width: 150px;
+  height: 150px;
+  margin: 5px;
+}
+
+.game-description {
+  display: flex;
+  flex-wrap: wrap;
+
+  &__section {
+    padding-right: 20px;
+    min-width: 180px;
+    flex: 1;
+  }
+
+  &__title {
+     font-size: 20px;
+     font-weight: bold;
+     margin-top: 20px;
+     margin-bottom: 20px;
+  }
+
+  &__rating {
+    padding: 8px;
+    padding-top: 5px;
+    padding-top: 5px;
+    background: $rating-background;
+    border-radius: 5%;
+    margin-bottom: 5px;
+  }
+
+  &__title_right {
+    float: right;
+  }
+}
+
+.main-game-section {
+  flex: 3;
+  min-width: 350px;
+}
+
+.critics-rating {
+  background: $critics-background;
+}
+
+.toast {
+  padding: 8px;
+  padding-top: 5px;
+  padding-top: 5px;
+  margin-bottom:10px;
+  background: $link-background;
+  border-radius: 10%;
+  display: inline-block;
+}
+
+.tweet {
+  background: $tweet-background;
+  border-radius: 2%;
+  padding: 10px;
+  margin-bottom: 10px;
+
+  &__title {
+    font-size: 12px;
+    &:hover {
+      color: $background;
+    }
+  }
+
+  &__text {
+    margin-bottom: 10px;
+  }
+}
+
+
+@media only screen and (max-width : 320px) {
+
+    .main-game-section {
+        min-width: 150px;
+    }
+
+    .game-article {
+        padding: 0;
+    }
+
+    .game-description__section {
+        min-width: 150px;
+    }
+}
