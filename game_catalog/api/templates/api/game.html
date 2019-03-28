@@ -8,7 +8,7 @@
 {% block content %}
 <main class="game-article">
     <h3 class="game-article__header">{{game.name}}</h3>
-    <button action="{% url 'create-must' game.id %}" name="create" class="unstyled">
+    <button data-action="{% url 'create-must' game.id %}" name="create" class="unstyled">
         <span class="game-article__toast">MUST</span>
     </button>
     <p class="game-article__description">arcade oldschool</p>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Muster</title>
+    {% load staticfiles %}
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet"/>
+    <link href="{% static 'css/account.css' %}" rel="stylesheet"/>
+
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+
+<main>
+    <div class="blackout" id="login-modal">
+        <div class="modal-window login-form">
+            <div class="profile-circle form__icon">
+                <i class="profile__icon"></i>
+            </div>
+            <p class="error" id="login-errors">{% if Errors %}{{ Errors }}{% endif %}</p>
+            <form name="login-form" method="POST" action="login">
+                {% csrf_token %}
+                <div class="form__field-group">
+                    <div class="form__field-container">
+                        <input name="username" class="form__field" placeholder="Login..."/>
+                    </div>
+                    <div class="form__field-container">
+                        <input name="password" type="password" class="form__field" placeholder="Password..."/>
+                    </div>
+                    <div class="form__field-container">
+                        <button class="form__field submit-button" type="submit">Log in</button>
+                    </div>
+                </div>
+            </form>
+            <a href="/registration" class="link">Create account</a>
+        </div>
+    </div>
+</main>
+</body>

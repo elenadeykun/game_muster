@@ -283,6 +283,28 @@ main {
     background-color:  rgba(70, 110, 171, 0.16);
 }
 
+.bookmarks {
+    padding: 10px;
+    position: fixed;
+    left: 30px;
+    bottom: 30px;
+    background: rgba(7, 71, 166, 0.12);
+    border-radius: 50%;
+}
+
+.bookmarks:hover {
+     background: rgba(7, 71, 166, 0.3);
+     transform: scale(1.1);
+}
+
+.bookmarks__icon {
+    background: url('/static/media/bookmark-icon.png');
+    background-size: contain;
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+}
+
 
 @media only screen and (max-width : 1824px) {
     .username {

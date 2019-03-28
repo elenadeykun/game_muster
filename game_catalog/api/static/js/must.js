@@ -2,37 +2,30 @@
 
 document.addEventListener("DOMContentLoaded", function(){
 
-    var removeLinks = document.querySelectorAll("a[name=remove]");
+    var removeLinks = document.querySelectorAll("button[name=remove]");
 
     for (var i = 0; i < removeLinks.length; i++) {
         removeLinks[i].addEventListener("click", function(event){
             event.preventDefault();
 
-            var link = $(this);
-            var href = this.href;
+            var action = this.dataset.action;
 
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", this.href, true);
-            xhr.send();
+            createQuery("GET", action, function(response){
 
-            xhr.onreadystatechange = function() {
-            if (xhr.readyState != 4) {return;}
-
-            if (xhr.status == 200) {
-               var response =  JSON.parse(xhr.responseText);
-                if (href.match("remove-must")){
-                    href =href.replace("remove-must", "create-must");
-                    link.addClass("remust-link");
-                    link.text("ReMUST");
-                    link.attr("href", href);
+                var link = document.querySelector("button[data-action='" + action + "']");
+                if (action.match("remove-must")){
+                    action = action.replace("remove-must", "create-must");
+                    link.classList.add("remust-link");
+                    link.innerText = "ReMUST";
+                    link.dataset.action =  action;
                } else {
-                    href =href.replace("create-must", "remove-must");
-                    link.removeClass("remust-link");
-                    link.text("UnMUST");
-                    link.attr("href", href);
+                    action = action.replace("create-must", "remove-must");
+                    link.classList.remove("remust-link");
+                    link.innerText = "UnMUST";
+                    link.dataset.action = action;
                }
                showMessage(response.Status);
-            }
-        };
-    })};
+            })
+        });
+    }
 });

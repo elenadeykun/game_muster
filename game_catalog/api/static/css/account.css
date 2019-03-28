@@ -1,0 +1,138 @@
+.profile__icon {
+    background-image: url('/static/media/user-icon.png');
+    background-size: contain;
+    height: 20px;
+    width: 20px;
+    display: block;
+}
+
+.error {
+    color: red;
+}
+
+.blackout {
+      background: rgba(0, 0, 0, 0.58);
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+}
+
+.blackout:target {
+      display: block;
+}
+
+.modal-window {
+      width: 18%;
+      height: 25%;
+      text-align: center;
+      padding: 15px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      background: white;
+      border-radius:2%;
+      min-height: 300px;
+      min-width: 250px;
+}
+
+.login-form {
+    height: 35%;
+    width: 15%;
+}
+
+.registration-form {
+    height:60%;
+    min-height: 550px;
+
+}
+
+.profile-form {
+    height: 40%;
+    min-height: 350px;
+}
+
+.filter-form__body {
+    padding: 20px;
+}
+
+.filter-form__label {
+    text-align: left;
+    padding: 5px;
+}
+
+.form__field-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form__field-container {
+    font-size: 14px;
+    height: 51.5833px;
+    line-height: 0px;
+    margin-bottom: 10px;
+    position: relative;
+    text-align: center;
+    max-width: 272px;
+    min-width: 150px;
+    min-height: 30px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+.form__field {
+    background-color: #00000036;
+    border-radius: 6.85px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #000000e3;
+    font-family: Poppins, sans-serif;
+    font-size: 12px;
+    height: 51.5833px;
+    padding: 15px;
+    font-size: 15px;
+    position: relative;
+    width: 236px;
+}
+
+.form__icon {
+    background: rgb(70, 110, 171);
+    border-radius: 50%;
+    padding: 10px;
+    padding-top: 5px;
+    right: 0;
+    height: 20px;
+    width: 20px;
+
+    position: relative;
+    margin: auto;
+    display: block;
+}
+
+.submit-button {
+    color: white;
+    background-color: rgb(70, 110, 171);
+}
+
+.submit-button:hover {
+    background-color: rgb(7, 71, 166);
+}
+
+.link {
+    text-decoration: none;
+    color: #777793;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: block;
+    font-size: 18px;
+}
+
+.link:hover {
+    color: rgb(70, 110, 171);
+}

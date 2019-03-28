@@ -29,13 +29,13 @@
         </div>
         <nav class="dropdown-menu__container">
             {% if user.is_authenticated %}
-                <a href="#login-modal" name="login-link" class="dropdown-menu__item hidden" >Log in</a>
-                <a href="#register-modal" name="register-link" class="dropdown-menu__item hidden">Sign up</a>
+                <a href="{% url 'login' %}" name="login-link" class="dropdown-menu__item hidden" >Log in</a>
+                <a href="{% url 'registration' %}" name="register-link" class="dropdown-menu__item hidden">Sign up</a>
                 <a href="#profile-modal" name="profile-link" class="dropdown-menu__item">Profile</a>
                 <a name="logout" class="dropdown-menu__item">Sign out</a>
             {% else %}
-                <a href="#login-modal" name="login-link" class="dropdown-menu__item" >Log in</a>
-                <a href="#register-modal" name="register-link" class="dropdown-menu__item">Sign up</a>
+                <a href="{% url 'login' %}" name="login-link" class="dropdown-menu__item" >Log in</a>
+                <a href="{% url 'registration' %}" name="register-link" class="dropdown-menu__item">Sign up</a>
                 <a href="#profile-modal" name="profile-link" class="dropdown-menu__item hidden">Profile</a>
                 <a name="logout" class="dropdown-menu__item hidden">Sign out</a>
             {% endif %}
@@ -46,11 +46,15 @@
 {% block content %}
 {% endblock %}
 
+{% if user.is_authenticated %}
+    <a class="bookmarks" href="{% url 'must'%}">
+        <i class="bookmarks__icon"></i>
+    </a>
+{% endif %}
+
 
 {% include 'includes/filter.html' %}
 {% include 'includes/profile.html' %}
-{% include 'includes/login.html' %}
-{% include 'includes/registration.html' %}
 
 </body>
 
