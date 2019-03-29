@@ -3,19 +3,25 @@
 window.onscroll = function() {
     if(window.pageYOffset + window.innerHeight >= document.body.clientHeight){
         var gamesContainer = document.getElementById("games");
-        var page = parseInt(gamesContainer.dataset.page);
 
-        createQuery("GET","/get-particle-games/" + page, function(response){
-            var games = response.games;
-            if(games){
-                var fragment = document.createDocumentFragment();
-                games.forEach(function(elem, i){
-                    var game = createGameElement(elem);
-                    fragment.appendChild(game);
-                })
-                gamesContainer.appendChild(fragment);
-            }
-        });
+        if (gamesContainer.dataset.filter === "true"){
+            sendFilterQuery();
+        } else {
+            var page = parseInt(gamesContainer.dataset.page);
+
+
+            createQuery("GET","/get-particle-games/" + page, function(response){
+                var games = response.games;
+                if(games){
+                    var fragment = document.createDocumentFragment();
+                    games.forEach(function(elem, i){
+                        var game = createGameElement(elem);
+                        fragment.appendChild(game);
+                    })
+                    gamesContainer.appendChild(fragment);
+                }
+            });
+        }
 
         gamesContainer.dataset.page = page + 1;
     }

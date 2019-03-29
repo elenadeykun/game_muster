@@ -13,20 +13,34 @@ document.addEventListener("DOMContentLoaded", function(){
 
     document.querySelector("form[name=filter-form").addEventListener("submit", function(event){
         event.preventDefault();
-        createQuery("POST", "/filter/", function(response){
+        document.getElementById("games").dataset.filter = true;
+        sendFilterQuery();
+    });
+});
+
+function sendFilterQuery(){
+
+    createQuery("POST", "/filter/", function(response){
             var games = response.games;
             var gamesContainer = document.getElementById("games");
-            gamesContainer.innerHTML= "";
+            if (parseInt(document.querySelector('input[name=filter-page]').value) === 0 ){
+                gamesContainer.innerHTML= "";
+            }
             var fragment = document.createDocumentFragment();
-            for(var i = 0; i < games.length; i++){
-                var game = createGameElement(games[i]);
-                fragment.appendChild(game);
+            if(games){
+                for(var i = 0; i < games.length; i++){
+                    var game = createGameElement(games[i]);
+                    fragment.appendChild(game);
+                }
             }
             gamesContainer.appendChild(fragment);
             document.querySelector("a[name=close]").click();
-        }, new FormData(this));
-    });
-});
+        }, new FormData(document.querySelector("form[name=filter-form")));
+
+    var filterPage = document.querySelector('input[name=filter-page]');
+    filterPage.value = parseInt(filterPage.value) + 1;
+}
+
 
 function changeMenuVisibility(){
     if (document.querySelector("a[name=logout]").classList.contains("hidden")){
