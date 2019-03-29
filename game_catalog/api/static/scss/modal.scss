@@ -1,12 +1,12 @@
 $font-style: Poppins, sans-serif;
-$font-color: #000000e3;
-$background: rgb(7, 71, 166);
-$light-blue: rgb(70, 110, 171);
-$blackout: rgba(0, 0, 0, 0.58);
-$field-background:  #00000036;
+$color-gray: rgba(0, 0, 0, 0.89);
+$color-dark-blue: rgb(7, 71, 166);
+$color-light-blue: rgb(70, 110, 171);
+$color-transparent-gray: rgba(0, 0, 0, 0.58);
+$color-light-gray:  rgba(0, 0, 0, 0.21);
 
 .blackout {
-      background: $blackout;
+      background: $color-transparent-gray;
       width: 100%;
       height: 100%;
       position: absolute;
@@ -63,16 +63,6 @@ $field-background:  #00000036;
       }
 }
 
-.login-form {
-    height: 32%;
-    width: 15%;
-}
-
-.registration-form {
-    height:60%;
-    min-height: 550px;
-}
-
 .profile-form {
     height: 40%;
     min-height: 350px;
@@ -111,11 +101,11 @@ $field-background:  #00000036;
   }
 
   &__field {
-      background-color: $field-background;
+      background-color: $color-light-gray;
       border-radius: 6.85px;
       border-style: none;
       box-sizing: border-box;
-      color: $font-color;
+      color: $color-gray;
       font-family: $font-style;
       font-size: 12px;
       height: 51.5833px;
@@ -126,7 +116,7 @@ $field-background:  #00000036;
   }
 
   &__icon {
-      background: $light-blue;
+      background: $color-light-blue;
       border-radius: 50%;
       padding: 10px;
       padding-top: 5px;
@@ -141,9 +131,9 @@ $field-background:  #00000036;
 
 .submit-button {
     color: white;
-    background-color: $light-blue;
+    background-color: $color-light-blue;
 
     &:hover {
-        background-color: $background;
+        background-color: $color-dark-blue;
     }
 }

@@ -1,8 +1,8 @@
-$link-background: rgba(110, 154, 253, 0.38);
-$tweet-background: rgba(141, 176, 255, 0.17);
-$rating-background: rgba(32, 247, 98, 0.16);
-$critics-background: rgba(247, 211, 32, 0.16);
-$background: rgb(7, 71, 166);
+$color-light-blue: rgba(110, 154, 253, 0.38);
+$color-transparent-blue: rgba(141, 176, 255, 0.17);
+$color-light-green: rgba(32, 247, 98, 0.16);
+$color-light-orange: rgba(247, 211, 32, 0.16);
+$color-dark-blue: rgb(7, 71, 166);
 
 .game-article  {
     padding: 20px;
@@ -20,7 +20,7 @@ $background: rgb(7, 71, 166);
 
     &__toast {
       padding: 5px;
-      background: $link-background;
+      background: $color-light-blue;
       border-radius: 10%;
       margin-left: 15px;
     }
@@ -55,7 +55,7 @@ $background: rgb(7, 71, 166);
     padding: 8px;
     padding-top: 5px;
     padding-top: 5px;
-    background: $rating-background;
+    background: $color-light-green;
     border-radius: 5%;
     margin-bottom: 5px;
   }
@@ -71,7 +71,7 @@ $background: rgb(7, 71, 166);
 }
 
 .critics-rating {
-  background: $critics-background;
+  background: $color-light-orange;
 }
 
 .toast {
@@ -79,13 +79,13 @@ $background: rgb(7, 71, 166);
   padding-top: 5px;
   padding-top: 5px;
   margin-bottom:10px;
-  background: $link-background;
+  background: $color-light-blue;
   border-radius: 10%;
   display: inline-block;
 }
 
 .tweet {
-  background: $tweet-background;
+  background: $color-transparent-blue;
   border-radius: 2%;
   padding: 10px;
   margin-bottom: 10px;
@@ -93,7 +93,7 @@ $background: rgb(7, 71, 166);
   &__title {
     font-size: 12px;
     &:hover {
-      color: $background;
+      color: $color-dark-blue;
     }
   }
 

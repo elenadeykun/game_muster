@@ -1,9 +1,5 @@
-$background-color: rgb(7, 71, 166);
-$blackout: rgba(0, 0, 0, 0.58);
-$field-background:  #00000036;
-$font-color: #000000e3;
-$light-blue: rgb(70, 110, 171);
-$link-color: #777793;
+$color-light-blue: rgb(70, 110, 171);
+$color-transparent-gray: rgb(119, 119, 147);
 
 .profile {
     &__icon {
@@ -20,35 +16,9 @@ $link-color: #777793;
 }
 
 .blackout {
-      background: $blackout;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
       display: block;
-
-      &:target{
-        display: block;
-      }
 }
 
-.modal-window {
-      width: 18%;
-      height: 25%;
-      text-align: center;
-      padding: 15px;
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      margin: auto;
-      background: white;
-      border-radius:2%;
-      min-height: 300px;
-      min-width: 250px;
-}
 
 .login-form {
     height: 35%;
@@ -61,93 +31,16 @@ $link-color: #777793;
 
 }
 
-.profile-form {
-    height: 40%;
-    min-height: 350px;
-}
-
-
-.filter-form {
-    &__body {
-        padding: 20px;
-    }
-
-    &__label {
-        text-align: left;
-        padding: 5px;
-    }
-}
-
-.form {
-    &__field-group {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    &__field-container {
-        font-size: 14px;
-        height: 51.5833px;
-        line-height: 0px;
-        margin-bottom: 10px;
-        position: relative;
-        text-align: center;
-        max-width: 272px;
-        min-width: 150px;
-        min-height: 30px;
-        margin: auto;
-        margin-top: 20px;
-    }
-
-    &__field {
-        background-color: $field-background;
-        border-radius: 6.85px;
-        border-style: none;
-        box-sizing: border-box;
-        color: $font-color;
-        font-family: Poppins, sans-serif;
-        font-size: 12px;
-        height: 51.5833px;
-        padding: 15px;
-        font-size: 15px;
-        position: relative;
-        width: 236px;
-    }
-
-    &__icon {
-        background: $light-blue;
-        border-radius: 50%;
-        padding: 10px;
-        padding-top: 5px;
-        right: 0;
-        height: 20px;
-        width: 20px;
-
-        position: relative;
-        margin: auto;
-        display: block;
-    }
-}
-
-
-.submit-button {
-    color: white;
-    background-color: $light-blue;
-
-    &:hover{
-      background-color: $background-color;
-    }
-}
 
 .link {
     text-decoration: none;
-    color: $link-color;
+    color: $color-transparent-gray;
     padding-top: 10px;
     padding-bottom: 10px;
     display: block;
     font-size: 18px;
 
     &:hover{
-      color: $light-blue;
+      color: $color-light-blue;
     }
 }
