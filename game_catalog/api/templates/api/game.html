@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block head %}
-    <link href="{% static 'css/details.css' %}" rel="stylesheet">
+    {% load compile_static %}
+
+    <link rel="stylesheet" href="{% static '/css/details.css' %}" />
     <script src="{% static 'js/game.js' %}"></script>
 {% endblock%}
 
@@ -39,12 +41,10 @@
             {% for genre in game.genres %}
                 <span class="toast">{{ genre.name }}</span>
             {% endfor %}
-            <!--<span class="toast">Action</span>-->
             <h4 class="game-description__title">Platforms</h4>
             {% for platform in game.platforms %}
                 <span class="toast">{{ platform.abbreviation }} </span>
             {% endfor %}
-            <!--<span class="toast">PC4</span>-->
         </div>
         <div class="game-description__section tweets">
             <h4 class="game-description__title">#Pacman Tweets</h4>
@@ -60,4 +60,5 @@
     </div>
 </main>
 {% endblock %}
+
 

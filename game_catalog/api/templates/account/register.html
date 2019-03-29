@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Game Muster</title>
-    {% load staticfiles %}
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet"/>
-    <link href="{% static 'css/account.css' %}" rel="stylesheet"/>
-    {% block head %}
-    {% endblock %}
-</head>
-<body>
+{% extends "account_base.html" %}
+{% block content %}
 <main>
     <div class="blackout" id="register-modal">
         <div class="modal-window registration-form">
@@ -21,41 +11,29 @@
                 {% csrf_token %}
 
                 <div class="form__field-container">
-                    {% for error in form.username.errors %}
-                        <p class="error">{{ error }}</p>
-                    {% endfor %}
+                    {% include 'includes/error.html' with errors=form.username.errors %}
                     <input name="{{ form.username.name }}" class="form__field" placeholder="Username..."/>
                 </div>
                 <div class="form__field-container">
-                    {% for error in form.email.errors %}
-                        <p class="error">{{ error }}</p>
-                    {% endfor %}
+                    {% include 'includes/error.html' with errors=form.email.errors %}
                     <input name="{{ form.email.name }}" class="form__field" type="email"
                            placeholder="Email..."/>
                 </div>
                 <div class="form__field-container">
-                    {% for error in form.first_name.errors %}
-                        <p class="error">{{ error }}</p>
-                    {% endfor %}
+                    {% include 'includes/error.html' with errors=form.first_name.errors %}
                     <input name="{{ form.first_name.name }}" class="form__field" placeholder="First name..."/>
                 </div>
                 <div class="form__field-container">
-                    {% for error in form.last_name.errors %}
-                        <p class="error">{{ error }}</p>
-                    {% endfor %}
+                    {% include 'includes/error.html' with errors=form.last_name.errors %}
                     <input name="{{ form.last_name.name }}" class="form__field" placeholder="Last name..."/>
                 </div>
                 <div class="form__field-container">
-                    {% for error in form.password1.errors %}
-                        <p class="error">{{ error }}</p>
-                    {% endfor %}
+                    {% include 'includes/error.html' with errors=form.password1.errors %}
                     <input name="{{ form.password1.name }}" class="form__field" minlength="5" type="password"
                            placeholder="Password...">
                 </div>
                 <div class="form__field-container">
-                    {% for error in form.password2.errors %}
-                        <p class="error">{{ error }}</p>
-                    {% endfor %}
+                    {% include 'includes/error.html' with errors=form.password2.errors %}
                     <input name="{{ form.password2.name }}" class="form__field" minlength="5" type="password"
                            placeholder="Confirm password...">
                 </div>
@@ -63,8 +41,9 @@
                     <button class="form__field submit-button" type="submit">Sign me up</button>
                 </div>
             </form>
-            <a href="/login" class="link">Already have an account?</a>
+            <a href="{% url 'login'%}" class="link">Already have an account?</a>
         </div>
     </div>
 </main>
-</body>
+{% endblock %}
+

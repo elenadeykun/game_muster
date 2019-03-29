@@ -6,8 +6,10 @@
         <form name="filter-form">
             {% csrf_token %}
             <div class="form__field-group filter-form__body">
+                <input type="hidden" name="filter-page" value="0"/>
+
                 <div class="select">
-                    <div class="select__container">
+                    <div class="select__container" onclick="showCheckboxes()">
                         <select>
                             <option>Choose platforms...</option>
                         </select>

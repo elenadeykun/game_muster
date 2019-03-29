@@ -1,24 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Game Muster</title>
-    {% load staticfiles %}
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet"/>
-    <link href="{% static 'css/account.css' %}" rel="stylesheet"/>
-
-    {% block head %}
-    {% endblock %}
-</head>
-<body>
-
+{% extends "account_base.html" %}
+{% block content %}
 <main>
     <div class="blackout" id="login-modal">
         <div class="modal-window login-form">
             <div class="profile-circle form__icon">
                 <i class="profile__icon"></i>
             </div>
-            <p class="error" id="login-errors">{% if Errors %}{{ Errors }}{% endif %}</p>
+            {% include 'includes/error.html' with errors=Errors %}
             <form name="login-form" method="POST" action="login">
                 {% csrf_token %}
                 <div class="form__field-group">
@@ -33,8 +21,8 @@
                     </div>
                 </div>
             </form>
-            <a href="/registration" class="link">Create account</a>
+            <a href="{% url 'registration' %}" class="link">Create account</a>
         </div>
     </div>
 </main>
-</body>
+{% endblock %}

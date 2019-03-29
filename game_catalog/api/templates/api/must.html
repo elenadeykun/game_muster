@@ -17,7 +17,7 @@
                    <p>Action</p>
                    <p>Users added: 25</p>
                    <p>
-                      <button data-action="remove-must/{{ game.id }}" name="remove" class="game__link must-link">UnMUST</button>
+                      <button data-action="{% url 'remove-must' game.id %}" name="remove" class="game__link must-link">UnMUST</button>
                    </p>
                  </span>
            {% if game.screenshots %}
@@ -30,4 +30,5 @@
     </div>
 </main>
 {% endblock %}
+
 
