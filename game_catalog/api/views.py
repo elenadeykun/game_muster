@@ -1,17 +1,22 @@
-import json
-
 from django.conf import settings
 from django.contrib import auth
-from django.contrib.auth import authenticate, forms
+from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count, Q, Prefetch
-from django.http import JsonResponse, HttpResponseRedirect
-from django.shortcuts import render, render_to_response, redirect
+from django.http import (
+    JsonResponse,
+    HttpResponseRedirect
+)
+from django.shortcuts import (
+    render,
+    redirect
+)
 
 from .forms import UserCreationForm
 from .igdb_api import IgdbApi
-from .models import Must, User
-
+from .models import (
+    Must,
+    User
+)
 
 igdb = IgdbApi(settings.USER_KEY)
 
@@ -24,27 +29,22 @@ def home(request):
 
 
 def get_particle_games(request, offset):
-    if int(offset) <= 5:
-        games = igdb.get_games(offset=int(offset))
+    games = igdb.get_games(offset=int(offset))
     return JsonResponse({'games': games})
 
 
-@login_required(login_url='/#login-modal')
+@login_required(login_url='/login')
 def must(request):
     user = User.objects.get(username=request.user)
-    must_games = [str(elem.game_id) for elem in Must.objects.filter(owner=user)]
-
-    parts = ((lambda array, n=10: [array[i:i + n] for i in range(0, len(array), n)])(list(must_games)) if must_games
-             else [])
-
+    games_parts = user.get_separated_musts()
     games = []
-    for part in parts:
+    for part in games_parts:
         games += igdb.get_games({'id': part})
 
     return render(request, "api/must.html", {'games': games})
 
 
-@login_required(login_url='/#login-modal')
+@login_required(login_url='/login')
 def create_must(request, game_id):
     user = User.objects.get(username=request.user)
     must_game = list(Must.objects.filter(owner=user, game_id=game_id))
@@ -56,7 +56,7 @@ def create_must(request, game_id):
     return JsonResponse({'Status': 'OK'})
 
 
-@login_required(login_url='/#login-modal')
+@login_required(login_url='/login')
 def remove_must(request, game_id):
     user = User.objects.get(username=request.user)
     must_game = Must.objects.filter(owner=user, game_id=game_id)
@@ -81,8 +81,8 @@ def filtered_games(request):
         'genres': request.POST.getlist("genres"),
         'rating': request.POST.get("rating")
     }
-
-    games = igdb.get_games(games_filter)
+    offset = int(request.POST.get("filter-page"))
+    games = igdb.get_games(filter_dict=games_filter, offset=int(offset))
     return JsonResponse({"games": games})
 
 
@@ -97,7 +97,7 @@ def login(request):
 
                 return HttpResponseRedirect("/")
 
-        return render(request, "account/login.html", {'Errors': 'Password or login are incorrect'})
+        return render(request, "account/login.html", {'Errors': ['Password or login are incorrect']})
 
     return render(request, "account/login.html")
 
@@ -120,4 +120,3 @@ def registration(request):
     else:
         form = UserCreationForm()
     return render(request, 'account/register.html', {'form': form})
-

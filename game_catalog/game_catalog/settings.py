@@ -25,6 +25,9 @@ USER_KEY = os.environ.get("USER_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# in config
+SUCCESS_STATUS = 200
+
 ALLOWED_HOSTS = []
 
 

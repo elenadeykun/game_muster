@@ -1,6 +1,11 @@
 from django.conf import settings
-from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.base_user import (
+    AbstractBaseUser,
+    BaseUserManager
+)
 from django.db import models
+
+from .utils import split
 
 
 class UserManager(BaseUserManager):
@@ -57,8 +62,17 @@ class User(AbstractBaseUser):
     def is_staff(self):
         return self.is_admin
 
+    def get_separated_musts(self):
+        PART_LENGTH = 10
+
+        must_games = [str(elem.game_id) for elem in self.musts.filter(owner=self)]
+        parts = split(list(must_games), PART_LENGTH) if must_games else []
+
+        return parts
+
 
 class Must(models.Model):
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='musts')
     game_id = models.IntegerField(null=False)
+
 

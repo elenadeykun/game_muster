@@ -1,5 +1,6 @@
 import json
 import requests
+from django.conf import settings
 
 
 class IgdbApi:
@@ -20,7 +21,9 @@ class IgdbApi:
         data = "fields " + ",".join(fields) + "; "
         data += IgdbApi.__get_parameter('id', game_id)
 
-        return json.loads(requests.post(url, headers=self.__query_header, data=data).text)
+        response = requests.post(url, headers=self.__query_header, data=data)
+
+        return json.loads(response.text) if response.status_code is settings.SUCCESS_STATUS else None
 
     def get_games(self, filter_dict={}, offset=0, limit=30,  search_name=''):
         url = self.__api_url + "games/"
@@ -40,16 +43,22 @@ class IgdbApi:
             data += " sort release_dates.date desc; limit {limit}; offset {offset};".format(limit=limit,
                                                                                             offset=offset*limit)
 
-        return json.loads(requests.post(url, headers=self.__query_header, data=data).text)
+        response = requests.post(url, headers=self.__query_header, data=data)
+
+        return json.loads(response.text) if response.status_code is settings.SUCCESS_STATUS else None
 
     def get_platforms(self):
         url = self.__api_url + "platforms/"
         data = "fields abbreviation;"
-        return json.loads(requests.post(url, headers=self.__query_header, data=data).text)
+        response = requests.post(url, headers=self.__query_header, data=data)
+
+        return json.loads(response.text) if response.status_code is settings.SUCCESS_STATUS else None
 
     def get_genres(self):
         url = self.__api_url + "genres/"
         data = "fields name;"
-        return json.loads(requests.post(url, headers=self.__query_header, data=data).text)
+        response = requests.post(url, headers=self.__query_header, data=data)
+
+        return json.loads(response.text) if response.status_code is settings.SUCCESS_STATUS else None
 
 
