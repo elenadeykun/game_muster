@@ -1,9 +1,6 @@
+@import 'colors';
+@import 'mixins';
 $font-style: Poppins, sans-serif;
-$color-gray: rgba(0, 0, 0, 0.89);
-$color-dark-blue: rgb(7, 71, 166);
-$color-light-blue: rgb(70, 110, 171);
-$color-transparent-gray: rgba(0, 0, 0, 0.58);
-$color-light-gray:  rgba(0, 0, 0, 0.21);
 
 .blackout {
       background: $color-transparent-gray;
@@ -30,17 +27,10 @@ $color-light-gray:  rgba(0, 0, 0, 0.21);
       bottom: 0;
       left: 0;
       margin: auto;
-      background: white;
+      background: $color-white;
       border-radius:2%;
       min-height: 300px;
       min-width: 250px;
-}
-
-@mixin transform($rotate) {
-  -webkit-transform: rotate($rotate);
-     -moz-transform: rotate($rotate);
-      -ms-transform: rotate($rotate);
-          transform: rotate($rotate);
 }
 
 .close {
@@ -130,7 +120,7 @@ $color-light-gray:  rgba(0, 0, 0, 0.21);
 }
 
 .submit-button {
-    color: white;
+    color: $color-white;
     background-color: $color-light-blue;
 
     &:hover {

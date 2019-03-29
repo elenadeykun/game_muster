@@ -1,10 +1,4 @@
-$color-dark-blue: rgb(7, 71, 166);
-$color-transparent-blue: rgba(70, 110, 171, 0.10);
-$color-transparent-middle-blue: rgba(70, 110, 171, 0.20);
-$color-dark-gray: rgba(0, 0, 0, 0.74);
-$color-red: rgb(255, 92, 92);
-$color-green: rgb(132,243,124);
-$color-transparent-light-blue : rgba(7, 71, 166, 0.3);
+@import 'colors';
 
 .dropdown-menu {
     position: absolute;
@@ -18,7 +12,7 @@ $color-transparent-light-blue : rgba(7, 71, 166, 0.3);
 
     &__container {
         display: none;
-        background-color: white;
+        background-color: $color-white;
         width: 100%;
         margin-top: 40px;
 
@@ -28,7 +22,7 @@ $color-transparent-light-blue : rgba(7, 71, 166, 0.3);
      }
 
     &__item {
-        color: black;
+        color: $color-dark-gray;
         padding: 10px;
         text-decoration: none;
         display: block;
@@ -74,7 +68,7 @@ $color-transparent-light-blue : rgba(7, 71, 166, 0.3);
      width: 100%;
      height: 40%;
      background-color: $color-dark-gray;
-     color: white;
+     color: $color-white;
      text-align: center;
      opacity: 1;
      transition: all .5s;
@@ -99,7 +93,7 @@ $color-transparent-light-blue : rgba(7, 71, 166, 0.3);
    &__link {
      text-decoration: none;
      background: white;
-     color: black;
+     color: $color-dark-gray;
      padding: 5px;
      border-radius: 30%;
      display: inline-table;

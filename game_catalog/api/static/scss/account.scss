@@ -1,5 +1,4 @@
-$color-light-blue: rgb(70, 110, 171);
-$color-transparent-gray: rgb(119, 119, 147);
+@import 'colors';
 
 .profile {
     &__icon {
@@ -12,7 +11,7 @@ $color-transparent-gray: rgb(119, 119, 147);
 }
 
 .error {
-    color: red;
+    color: $color-red;
 }
 
 .blackout {
@@ -34,13 +33,13 @@ $color-transparent-gray: rgb(119, 119, 147);
 
 .link {
     text-decoration: none;
-    color: $color-transparent-gray;
+    color: $color-gray;
     padding-top: 10px;
     padding-bottom: 10px;
     display: block;
     font-size: 18px;
 
     &:hover{
-      color: $color-light-blue;
+      color: $color-middle-blue;
     }
 }

@@ -1,15 +1,5 @@
 @import 'reset';
-
-$color-dark-blue: rgb(7, 71, 166);
-$color-middle-blue: rgb(70, 110, 171);
-$color-transparent-blue: rgba(70, 110, 171, 0.10);
-$color-transparent-middle-blue: rgba(70, 110, 171, 0.20);
-$color-dark-gray: rgba(0, 0, 0, 0.74);
-$color-red: rgb(255, 92, 92);
-$color-green: rgb(132,243,124);
-$color-gray: rgb(119,119,147);
-$color-transparent-light-blue : rgba(7, 71, 166, 0.3);
-
+@import 'colors';
 $font-style: 'Source Sans Pro', sans-serif;
 
 body {
@@ -28,7 +18,7 @@ main {
 }
 
 .logo {
-  color: white;
+  color: $color-white;
   font-size: 30px;
   display: table-caption;
   width: 210px;
@@ -43,7 +33,7 @@ main {
 }
 
 .username {
-    color: white;
+    color: $color-white;
     font-size: 15px;
     position: absolute;
     right: 2%;
@@ -128,14 +118,14 @@ main {
     right: 20px;
     bottom: 20px;
     padding: 20px;
-    color: white;
+    color: $color-white;
     font-family:  $font-style, cursive;
     opacity: 0.8;
     border-radius: 5%;
 }
 
 .error {
-    color: red;
+    color: $color-red;
     padding-top: 10px;
 }
 
@@ -151,7 +141,6 @@ main {
 .hidden {
     display: none;
 }
-
 
 .article-header {
     font-size: 25px;
@@ -210,5 +199,3 @@ main {
         font-size: 25px;
     }
 }
-
-

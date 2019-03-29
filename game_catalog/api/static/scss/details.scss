@@ -1,8 +1,4 @@
-$color-light-blue: rgba(110, 154, 253, 0.38);
-$color-transparent-blue: rgba(141, 176, 255, 0.17);
-$color-light-green: rgba(32, 247, 98, 0.16);
-$color-light-orange: rgba(247, 211, 32, 0.16);
-$color-dark-blue: rgb(7, 71, 166);
+@import 'colors';
 
 .game-article  {
     padding: 20px;
@@ -85,7 +81,7 @@ $color-dark-blue: rgb(7, 71, 166);
 }
 
 .tweet {
-  background: $color-transparent-blue;
+  background: $color-transparent-dark-blue;
   border-radius: 2%;
   padding: 10px;
   margin-bottom: 10px;
