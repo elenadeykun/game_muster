@@ -1,15 +1,14 @@
 {% extends "account_base.html" %}
+{% block title %} Log in {% endblock %}
 {% block content %}
 <main>
     <div class="blackout" id="login-modal">
         <div class="modal-window login-form">
-            <div class="profile-circle form__icon">
-                <i class="profile__icon"></i>
-            </div>
-            {% include 'includes/error.html' with errors=Errors %}
+            <h2>Log in</h2>
             <form name="login-form" method="POST" action="login">
                 {% csrf_token %}
                 <div class="form__field-group">
+                    {% include 'includes/error.html' with errors=Errors %}
                     <div class="form__field-container">
                         <input name="username" class="form__field" placeholder="Login..."/>
                     </div>

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% block title %}Musts -{% endblock %}
 {% block head %}
     <script src="{% static 'js/must.js' %}"></script>
 {% endblock%}
@@ -13,18 +14,19 @@
         {% for game in games %}
         <div class="game__container">
                 <span class="game__body">
-                   <h4>{{game.name}}</h4>
-                   <p>Action</p>
-                   <p>Users added: 25</p>
+                   <h4 class="game__title">{{game.name}}</h4>
+                   <p class="game__added">Users added: 25</p>
                    <p>
                       <button data-action="{% url 'remove-must' game.id %}" name="remove" class="game__link must-link">UnMUST</button>
                    </p>
+                    <a href="{% url 'game' game.id %}" class="game__link">Open</a>
                  </span>
            {% if game.screenshots %}
                 <img data-url="{{ game.screenshots.0.url }}" class="game__img"/>
             {% else %}
                 <img src="{% static 'media/no-image.png' %}" class="game__img" alt="no image"/>
             {% endif %}
+
         </div>
         {% endfor %}
     </div>
