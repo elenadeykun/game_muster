@@ -1,17 +1,18 @@
 @import 'colors';
+@import 'mixins';
 
 .profile {
     &__icon {
-      background-image: url('/static/media/user-icon.png');
-      background-size: contain;
-      height: 20px;
-      width: 20px;
-      display: block;
+      @include icon-style($image: url('/static/media/user-icon.png'));
   }
 }
 
 .error {
-    color: $color-red;
+    color: $color-error;
+    padding-top: 10px;
+    font-size: 15px;
+    width: 350px;
+    text-align: left;
 }
 
 .blackout {
@@ -20,26 +21,26 @@
 
 
 .login-form {
-    height: 35%;
+    height: 38%;
     width: 15%;
 }
 
 .registration-form {
-    height:60%;
+    height:75%;
     min-height: 550px;
-
 }
 
 
 .link {
     text-decoration: none;
-    color: $color-gray;
+    color: $color-link;
     padding-top: 10px;
     padding-bottom: 10px;
     display: block;
     font-size: 18px;
 
     &:hover{
-      color: $color-middle-blue;
+      color: $color-hover-link;
     }
 }
+

@@ -1,9 +1,10 @@
 @import 'colors';
+@import 'mixins';
 
 .dropdown-menu {
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 1px;
+    top: 12px;
     cursor: pointer;
 
     &:hover .dropdown-menu__container {
@@ -12,7 +13,7 @@
 
     &__container {
         display: none;
-        background-color: $color-white;
+        background-color: $color-menu-container;
         width: 100%;
         margin-top: 40px;
 
@@ -22,15 +23,15 @@
      }
 
     &__item {
-        color: $color-dark-gray;
+        color: $color-menu-item-text;
         padding: 10px;
         text-decoration: none;
         display: block;
-        background: $color-transparent-blue;
+        background: $color-menu-item;
+        transition: all .5s;
 
         &:hover {
-            background: $color-transparent-middle-blue;
-
+            background: $color-menu-hover-item;
         }
     }
 }
@@ -67,7 +68,7 @@
      top: 60%;
      width: 100%;
      height: 40%;
-     background-color: $color-dark-gray;
+     background-color: $color-game-body;
      color: $color-white;
      text-align: center;
      opacity: 1;
@@ -76,99 +77,85 @@
      flex-direction: column;
      justify-content: center;
      overflow: hidden;
-     padding-top: 12%;
+     padding-top: 10%;
 
      &:hover {
          height: 100%;
          top: 0;
          padding:0;
+
+         & .game__must {
+            margin-top: 10px;
+         }
+
+         & .game__header {
+            margin-top: 5px;
+         }
+
+         & .game__title {
+            margin-top: 5px;
+         }
      }
    }
 
    &__title {
-     margin-top:  15px;
-     margin-bottom: 20px;
+     transition: all .5s;
+     margin-top: 40px;
    }
 
    &__link {
      text-decoration: none;
-     background: white;
-     color: $color-dark-gray;
+     color: white;
      padding: 5px;
-     border-radius: 30%;
-     display: inline-table;
 
      &:hover {
        transform: scale(1.1);
      }
    }
+
+   &__header {
+     margin-top: 55px;
+     transition: all .5s;
+   }
+
+   &__added {
+     margin-top: 5px;
+     font-size: 15px;
+   }
+
+   &__must {
+      @include link-style($font-size: 18px, $background-color: $color-game-must, $margin-top: 30px);
+
+      padding: 5px;
+      color: $color-white;
+
+   }
 }
 
 
 .must-link {
-  border-radius: 10%;
-  font-size: 15px;
-  margin-top: 10px;
-
-  &:hover {
-      background: $color-red;
-  }
+  @include link-style();
 }
 
 .remust-link {
-  border-radius: 10%;
-  font-size: 15px;
-  margin-top: 10px;
-
-  &:hover {
-    background: $color-green;
-  }
+  @include link-style($background-color: $color-remust-link);
 }
 
-.select {
-    padding-left: 10px;
-    padding-right: 10px;
-
-    &__container {
-      position: relative;
-    }
-
-    &__container select {
-      width: 100%;
-    }
-
-    &__checkboxes {
-        display: none;
-        border: 1px #dadada solid;
-    }
-
-    &__label {
-        display: block;
-
-        &:hover{
-            background-color:  $color-transparent-middle-blue;
-        }
-    }
-}
 
 .bookmarks {
     padding: 10px;
     position: fixed;
     left: 30px;
     bottom: 30px;
-    background: $color-transparent-blue;
+    background: $color-bookmark;
     border-radius: 50%;
 
     &:hover {
-      background: $color-transparent-light-blue;
+      background: $color-hover-bookmark;
       transform: scale(1.1);
     }
 
     &__icon {
-        background: url('/static/media/bookmark-icon.png');
-        background-size: contain;
-        height: 20px;
-        width: 20px;
-        display: inline-block;
+        @include icon-style($image: url('/static/media/bookmark-icon.png'), $display: inline-block);
     }
 }

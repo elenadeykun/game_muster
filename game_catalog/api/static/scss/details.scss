@@ -16,7 +16,7 @@
 
     &__toast {
       padding: 5px;
-      background: $color-light-blue;
+      background: $color-toast;
       border-radius: 10%;
       margin-left: 15px;
     }
@@ -50,14 +50,25 @@
   &__rating {
     padding: 8px;
     padding-top: 5px;
-    padding-top: 5px;
-    background: $color-light-green;
+    background: $color-users-rating;
     border-radius: 5%;
     margin-bottom: 5px;
   }
 
   &__title_right {
     float: right;
+    max-width: 50%;
+    margin-top: 3px;
+    overflow: hidden;
+  }
+
+  &__views {
+    float: right;
+  }
+
+  &__tweets {
+     max-height: 800px;
+     overflow: auto;
   }
 }
 
@@ -67,21 +78,21 @@
 }
 
 .critics-rating {
-  background: $color-light-orange;
+  background: $color-critics-rating;
 }
 
 .toast {
   padding: 8px;
   padding-top: 5px;
-  padding-top: 5px;
   margin-bottom:10px;
-  background: $color-light-blue;
-  border-radius: 10%;
+  background: $color-toast;
+  border-radius: 5%;
   display: inline-block;
 }
 
+
 .tweet {
-  background: $color-transparent-dark-blue;
+  background: $color-tweets;
   border-radius: 2%;
   padding: 10px;
   margin-bottom: 10px;
@@ -113,3 +124,4 @@
         min-width: 150px;
     }
 }
+

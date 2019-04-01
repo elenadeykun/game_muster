@@ -8,6 +8,10 @@ document.addEventListener("DOMContentLoaded", function(){
             showMessage(response.Status);
             document.querySelector(".username").innerText = "";
             changeMenuVisibility();
+
+            if(window.location.href.indexOf("must") > -1) {
+                window.location = "/";
+            }
         });
     });
 
@@ -53,5 +57,6 @@ function changeMenuVisibility(){
         document.querySelector("a[name=register-link]").classList.remove("hidden");
         document.querySelector("a[name=profile-link]").classList.add("hidden");
         document.querySelector("a[name=logout]").classList.add("hidden");
+        document.querySelector(".bookmarks").classList.add("hidden");
     }
 }

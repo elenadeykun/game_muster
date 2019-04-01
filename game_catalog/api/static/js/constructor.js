@@ -42,7 +42,7 @@ function createGameElement(gameData){
     description.classList.add("game__body");
 
     var title = document.createElement("h4");
-    title.classList.add("game__title")
+    title.classList.add("game__header")
     title.textContent = gameData.name;
 
     var linkContainer = document.createElement("p");
@@ -50,9 +50,8 @@ function createGameElement(gameData){
     link.classList.add("game__link");
     link.href = "game/" + gameData.id;
     link.textContent = "Open";
-    linkContainer.appendChild(link);
     var mustLink = document.createElement("button");
-    mustLink.classList.add("game__link");
+    mustLink.classList.add("game__must");
     mustLink.dataset.action = "/create-must/" + gameData.id ;
     mustLink.textContent = "Must";
     mustLink.name = "create";
@@ -63,6 +62,7 @@ function createGameElement(gameData){
 
     description.appendChild(title);
     description.appendChild(linkContainer);
+    description.appendChild(link);
     game.appendChild(description);
     var img = document.createElement("img");
     img.classList.add("game__img");
@@ -85,7 +85,6 @@ function createMust(must){
 
 var expanded = false;
 function showCheckboxes(){
-    var checkboxes = document.getElementById("checkboxes");
     if (!expanded){
         checkboxes.style.display = "block";
         expanded = true;
@@ -94,3 +93,4 @@ function showCheckboxes(){
         expanded = false;
     }
 }
+

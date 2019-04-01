@@ -3,7 +3,7 @@
 $font-style: Poppins, sans-serif;
 
 .blackout {
-      background: $color-transparent-gray;
+      background: $color-blackout;
       width: 100%;
       height: 100%;
       position: absolute;
@@ -27,7 +27,7 @@ $font-style: Poppins, sans-serif;
       bottom: 0;
       left: 0;
       margin: auto;
-      background: $color-white;
+      background: $color-modal-window;
       border-radius:2%;
       min-height: 300px;
       min-width: 250px;
@@ -45,11 +45,8 @@ $font-style: Poppins, sans-serif;
       }
 
       &__icon {
-          background-image: url('/static/media/close-icon.png');
-          background-size: contain;
-          height: 30px;
-          width: 30px;
-          display: block;
+          @include icon-style($image: url('/static/media/close-icon.png'), $width: 30px,
+                        $height: 30px);
       }
 }
 
@@ -91,11 +88,11 @@ $font-style: Poppins, sans-serif;
   }
 
   &__field {
-      background-color: $color-light-gray;
+      background-color: $color-form-field;
       border-radius: 6.85px;
       border-style: none;
       box-sizing: border-box;
-      color: $color-gray;
+      color: $color-dark-gray;
       font-family: $font-style;
       font-size: 12px;
       height: 51.5833px;
@@ -106,7 +103,7 @@ $font-style: Poppins, sans-serif;
   }
 
   &__icon {
-      background: $color-light-blue;
+      background: $color-form-icon;
       border-radius: 50%;
       padding: 10px;
       padding-top: 5px;
@@ -121,9 +118,10 @@ $font-style: Poppins, sans-serif;
 
 .submit-button {
     color: $color-white;
-    background-color: $color-light-blue;
+    background-color: $color-submit-button;
 
     &:hover {
-        background-color: $color-dark-blue;
+        background-color: $color-hover-submit-button;
     }
 }
+
