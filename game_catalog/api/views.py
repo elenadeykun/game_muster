@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import authenticate
@@ -13,6 +14,7 @@ from django.shortcuts import (
 
 from .forms import UserCreationForm
 from .igdb_api import IgdbApi
+from .twitter_api import TwitterApi
 from .models import (
     Must,
     User
@@ -66,8 +68,17 @@ def remove_must(request, game_id):
 
 def game_description(request, game_id):
     result = igdb.get_game(game_id)
-    game = result[0] if result else None
-    return render(request, "api/game.html", {'game': game})
+    if result:
+        game = result[0]
+        twitter_api = TwitterApi(settings.CONSUMER_KEY, settings.CONSUMER_SECRET,
+                                 settings.ACCESS_TOKEN, settings.ACCESS_TOKEN_SECRET)
+
+        tweets = twitter_api.search(game['name'])
+        tweets = [{'text': tweet['full_text'], 'user': tweet['user']['screen_name'],
+                   'date': datetime.strptime(tweet['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%m.%d.%y %H:%M')}
+                  for tweet in tweets] if tweets else None
+
+    return render(request, "api/game.html", {'game': game, 'tweets': tweets})
 
 
 def search(request, search_string):
@@ -120,3 +131,4 @@ def registration(request):
     else:
         form = UserCreationForm()
     return render(request, 'account/register.html', {'form': form})
+

@@ -22,10 +22,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get("SECRET_KEY")
 USER_KEY = os.environ.get("USER_KEY")
 
+CONSUMER_KEY = os.environ.get("CONSUMER_KEY")
+CONSUMER_SECRET = os.environ.get("CONSUMER_SECRET")
+ACCESS_TOKEN = os.environ.get("ACCESS_TOKEN")
+ACCESS_TOKEN_SECRET = os.environ.get("ACCESS_TOKEN_SECRET")
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# in config
 SUCCESS_STATUS = 200
 
 ALLOWED_HOSTS = []
