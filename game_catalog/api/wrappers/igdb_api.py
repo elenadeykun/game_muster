@@ -16,8 +16,10 @@ class IgdbApi:
 
     def get_game(self, game_id):
         url = self.__api_url + "games/"
-        fields = ['name', 'screenshots.url', 'summary', 'release_dates', 'rating', 'aggregated_rating',
-                  'genres.name', 'platforms.abbreviation', 'rating_count', 'tags', 'updated_at']
+        fields = ['name', 'screenshots.url', 'summary', 'release_dates.date', 'rating', 'aggregated_rating',
+                  'genres.name', 'platforms.abbreviation', 'rating_count', 'tags', 'updated_at',
+                  'aggregated_rating_count']
+
         data = "fields " + ",".join(fields) + "; "
         data += IgdbApi.__get_parameter('id', game_id)
 
@@ -25,7 +27,7 @@ class IgdbApi:
 
         return json.loads(response.text) if response.status_code is settings.SUCCESS_STATUS else None
 
-    def get_games(self, filter_dict={}, offset=0, limit=30,  search_name=''):
+    def get_games(self, filter_dict={}, offset=0, limit=settings.RECORDS_LIMIT,  search_name=''):
         url = self.__api_url + "games/"
         fields = ['name', 'screenshots.url']
         data = "fields " + ",".join(fields) + "; "
@@ -40,8 +42,7 @@ class IgdbApi:
         if search_name:
             data += ' search "{name}";'.format(name=search_name)
         else:
-            data += " sort release_dates.date desc; limit {limit}; offset {offset};".format(limit=limit,
-                                                                                            offset=offset*limit)
+            data += " sort popularity desc; limit {limit}; offset {offset};".format(limit=limit, offset=offset*limit)
 
         response = requests.post(url, headers=self.__query_header, data=data)
 
@@ -60,5 +61,8 @@ class IgdbApi:
         response = requests.post(url, headers=self.__query_header, data=data)
 
         return json.loads(response.text) if response.status_code is settings.SUCCESS_STATUS else None
+
+
+
 
 
