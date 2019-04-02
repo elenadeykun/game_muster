@@ -15,7 +15,7 @@
         <div class="game__container">
                 <span class="game__body">
                    <h4 class="game__title">{{game.name}}</h4>
-                   <p class="game__added">Users added: 25</p>
+                   <p class="game__added">Users added: {{game.count}}</p>
                    <p>
                       <button data-action="{% url 'remove-must' game.id %}" name="remove" class="game__link must-link">UnMUST</button>
                    </p>

@@ -1,5 +1,6 @@
-@import 'colors';
+@import 'theme';
 @import 'mixins';
+
 
 .profile {
     &__icon {
@@ -44,3 +45,16 @@
     }
 }
 
+.continue-link {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    color:$color-continue-link;
+    text-decoration: none;
+    text-decoration: none;
+
+    &:hover {
+        color: $color-hover-continue-link;
+    }
+}

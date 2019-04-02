@@ -1,4 +1,5 @@
-@import 'colors';
+@import 'theme';
+
 
 .game-article  {
     padding: 20px;
@@ -57,7 +58,7 @@
 
   &__title_right {
     float: right;
-    max-width: 50%;
+    max-width: 40%;
     margin-top: 3px;
     overflow: hidden;
   }
@@ -100,7 +101,7 @@
   &__title {
     font-size: 12px;
     &:hover {
-      color: $color-dark-blue;
+      color: $color-message-box;
     }
   }
 
@@ -124,4 +125,3 @@
         min-width: 150px;
     }
 }
-

@@ -1,5 +1,5 @@
 <div class="blackout" id="filter">
-    <div class="modal-window">
+    <div class="modal-window filter">
         <a href="#" class="close" name="close" id="close-filter">
             <i class="close__icon"></i>
         </a>
@@ -8,30 +8,37 @@
             <div class="form__field-group filter-form__body">
                 <input type="hidden" name="filter-page" value="0"/>
 
-                <div class="select">
-                    <div class="select__container" onclick="showCheckboxes()">
-                        <select class="select__s">
-                        </select>
-                    </div>
-                    <div id="checkboxes" class="select__checkboxes">
-                        <label for="one" class="select__label"><input type="checkbox" id="one" name="platform">One</label>
-                        <label for="one1" class="select__label"><input type="checkbox" id="one1" name="platform">One</label>
-                        <label for="one2" class="select__label"><input type="checkbox" id="one2" name="platform">One</label>
-                    </div>
-                </div>
-                <label for="platforms" class="filter-form__label">Platforms</label>
-                <select id="platforms" name="platforms" multiple size="4">
+                <label class="filter-form__label">Platforms</label>
+
+                <div class="platforms">
                     {% for platform in platforms %}
-                      <option value="{{ platform.id }}">{{ platform.abbreviation }}</option>
+                    <div class="ch">
+                        <input class="checkbox" type="checkbox" id="{{platform.id}}" style="display: none;">
+                        <label for="{{platform.id}}" class="check">
+                          <svg width="18px" height="18px" viewBox="0 0 18 18">
+                            <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                            <polyline points="1 9 7 14 15 4"></polyline>
+                          </svg> <span class="text">{{platform.abbreviation}}</span>
+                        </label>
+                    </div>
                     {% endfor %}
-                </select>
+                </div>
 
                 <label for="genres" class="filter-form__label">Genres</label>
-                <select id="genres" name="genres" multiple size="4">
+                <div class="platforms">
                     {% for genre in genres %}
-                        <option value="{{genre.id}}">{{genre.name}}</option>
+                    <div class="ch">
+                        <input class="checkbox" type="checkbox" id="{{genre.id}}" style="display: none;">
+                        <label for="{{genre.id}}" class="check">
+                          <svg width="18px" height="18px" viewBox="0 0 18 18">
+                            <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                            <polyline points="1 9 7 14 15 4"></polyline>
+                          </svg> <span class="text">{{genre.name}}</span>
+                        </label>
+                    </div>
                     {% endfor %}
-                </select>
+                </div>                
+                <label for="" class="filter-form__label">Rating</label>
                 <div class="value">0</div>
                 <input type="range" class="range" min="0" max="100" step="0.1" value="50">
                 <button type="submit" class="form__field submit-button">Apply</button>

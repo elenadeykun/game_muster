@@ -24,7 +24,7 @@
             {% endif %}
             {% if game.release_dates %}
                 <h4 class="game-description__title">Release Date</h4>
-                <p>{{ game.release_dates.0|date:"SHORT_DATE_FORMAT"  }}</p>{{ '18:30:00' }}
+                <p>{{ game.date|date:"F d, Y" }}</p>
             {% endif %}
             {% if game.screenshots %}
                 <h4 class="game-description__title">Screenshots</h4>
@@ -73,7 +73,7 @@
                         {% for tweet in tweets %}
                             <div class="tweet">
                                 <p class="tweet__text">{{ tweet.text }}</p>
-                                <span class="tweet__title">{{ tweet.date }}</span>
+                                <span class="tweet__title">{{ tweet.date|date:"d.m.Y H:i" }}</span>
                                 <span class="tweet__title game-description__title_right" title="{{ tweet.user }}">@{{ tweet.user}}</span>
                             </div>
                         {% endfor %}
@@ -83,6 +83,5 @@
     </div>
 </main>
 {% endblock %}
-
 
 

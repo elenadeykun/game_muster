@@ -1,4 +1,5 @@
-@import 'colors';
+@import 'theme';
+
 @import 'mixins';
 
 .dropdown-menu {
@@ -18,7 +19,7 @@
         margin-top: 40px;
 
         .dropdown-menu__item:hover {
-            color: $color-dark-blue;
+            color: $color-menu-background;
         }
      }
 
@@ -105,7 +106,7 @@
 
    &__link {
      text-decoration: none;
-     color: white;
+     color: $color-text;
      padding: 5px;
 
      &:hover {
@@ -127,7 +128,7 @@
       @include link-style($font-size: 18px, $background-color: $color-game-must, $margin-top: 30px);
 
       padding: 5px;
-      color: $color-white;
+      color: $color-text;
 
    }
 }

@@ -2,7 +2,10 @@
 
 document.addEventListener("DOMContentLoaded", function(){
 
-    document.querySelector("a[name=logout]").addEventListener("click", function(event){
+   var logout = document.querySelector("a[name=logout]");
+
+   if (logout){
+        logout.addEventListener("click", function(event){
 
         createQuery("GET", "/logout", function(response){
             showMessage(response.Status);
@@ -14,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function(){
             }
         });
     });
+  }
 
     document.querySelector("form[name=filter-form").addEventListener("submit", function(event){
         event.preventDefault();
@@ -47,16 +51,23 @@ function sendFilterQuery(){
 
 
 function changeMenuVisibility(){
-    if (document.querySelector("a[name=logout]").classList.contains("hidden")){
-         document.querySelector("a[name=login-link]").classList.add("hidden");
-         document.querySelector("a[name=register-link]").classList.add("hidden");
-         document.querySelector("a[name=profile-link]").classList.remove("hidden");
-         document.querySelector("a[name=logout]").classList.remove("hidden");
-    } else {
-        document.querySelector("a[name=login-link]").classList.remove("hidden");
-        document.querySelector("a[name=register-link]").classList.remove("hidden");
-        document.querySelector("a[name=profile-link]").classList.add("hidden");
-        document.querySelector("a[name=logout]").classList.add("hidden");
-        document.querySelector(".bookmarks").classList.add("hidden");
-    }
+
+   document.querySelector('a[name=logout]').remove();
+   document.querySelector('a[name=profile-link').remove();
+   document.querySelector('.bookmarks').remove();
+
+   var menu = document.querySelector('.dropdown-menu__container');
+
+   var loginLink = document.createElement("a");
+   loginLink.classList.add("dropdown-menu__item");
+   loginLink.name = "login-link";
+   loginLink.href = "/login";
+   loginLink.innerText = "Log in";
+
+   var registerLink = loginLink.cloneNode();
+   registerLink.href = "/registration";
+   registerLink.innerText = "Sign up";
+
+   menu.appendChild(loginLink);
+   menu.appendChild(registerLink);
 }
