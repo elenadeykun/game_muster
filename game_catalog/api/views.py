@@ -47,11 +47,12 @@ def must(request):
     user = User.objects.get(username=request.user)
     games_parts = Must.get_annotated_user_musts(user)
     games = []
-    for part in games_parts:
-        games_part = igdb.get_games({'id': [str(elem['game_id']) for elem in part]})
-        for i in range(len(part)):
-            games_part[i]['count'] = part[i]['count']
-        games += games_part
+    if games_parts:
+        for part in games_parts:
+            games_part = igdb.get_games({'id': [str(elem['game_id']) for elem in part]})
+            for i in range(len(part)):
+                games_part[i]['count'] = part[i]['count']
+            games += games_part
 
     return render(request, "api/must.html", {'games': games})
 
@@ -84,7 +85,9 @@ def game_description(request, game_id):
                         if 'release_dates' in game else None)
 
         tweets = twitter_api.search(game['name'])
-
+    else:
+        return render(request, "message_page.html",
+                      {'message': 'This game does not exist.'})
     return render(request, "api/game.html", {'game': game, 'tweets': tweets})
 
 
@@ -97,8 +100,9 @@ def filtered_games(request):
     games_filter = {
         'platforms': request.POST.getlist("platforms"),
         'genres': request.POST.getlist("genres"),
-        'rating': request.POST.get("rating")
+        'rating': [request.POST.get("rating")]
     }
+
     offset = int(request.POST.get("filter-page"))
     games = igdb.get_games(filter_dict=games_filter, offset=int(offset))
     return JsonResponse({"games": games})

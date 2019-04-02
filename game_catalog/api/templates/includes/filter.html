@@ -10,37 +10,39 @@
 
                 <label class="filter-form__label">Platforms</label>
 
-                <div class="platforms">
+                <div class="select">
                     {% for platform in platforms %}
-                    <div class="ch">
-                        <input class="checkbox" type="checkbox" id="{{platform.id}}" style="display: none;">
-                        <label for="{{platform.id}}" class="check">
-                          <svg width="18px" height="18px" viewBox="0 0 18 18">
-                            <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-                            <polyline points="1 9 7 14 15 4"></polyline>
-                          </svg> <span class="text">{{platform.abbreviation}}</span>
+                    <div class="select__container">
+                        <input name="platforms" value="{{platform.id}}" class="select__field" type="checkbox" id="{{platform.id}}" style="display: none;">
+                        <label for="{{platform.id}}" class="select__label">
+                          <svg class="select__svg" width="18px" height="18px" viewBox="0 0 18 18">
+                            <path class="select__path" d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                            <polyline class="select__polyline" points="1 9 7 14 15 4"></polyline>
+                          </svg> <span class="select__text">{{platform.abbreviation}}</span>
                         </label>
                     </div>
                     {% endfor %}
                 </div>
 
-                <label for="genres" class="filter-form__label">Genres</label>
-                <div class="platforms">
+                <label class="filter-form__label">Genres</label>
+                
+                <div class="select">
                     {% for genre in genres %}
-                    <div class="ch">
-                        <input class="checkbox" type="checkbox" id="{{genre.id}}" style="display: none;">
-                        <label for="{{genre.id}}" class="check">
-                          <svg width="18px" height="18px" viewBox="0 0 18 18">
-                            <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
-                            <polyline points="1 9 7 14 15 4"></polyline>
+                    <div class="select__container">
+                        <input name="genres" value="{{genre.id}}" class="select__field" type="checkbox" id="{{genre.id}}g" style="display: none;">
+                        <label for="{{genre.id}}g" class="select__label">
+                          <svg class="select__svg" width="18px" height="18px" viewBox="0 0 18 18">
+                            <path class="select__path" d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
+                            <polyline class="select__polyline" points="1 9 7 14 15 4"></polyline>
                           </svg> <span class="text">{{genre.name}}</span>
                         </label>
                     </div>
                     {% endfor %}
                 </div>                
-                <label for="" class="filter-form__label">Rating</label>
-                <div class="value">0</div>
-                <input type="range" class="range" min="0" max="100" step="0.1" value="50">
+                <label class="filter-form__label">Rating</label>
+                
+                <div class="value">50</div>
+                <input name="rating" type="range" class="range" min="0" max="100" step="0.1" value="50">
                 <button type="submit" class="form__field submit-button">Apply</button>
             </div>
         </form>

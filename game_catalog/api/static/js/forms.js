@@ -31,6 +31,7 @@ function sendFilterQuery(){
     createQuery("POST", "/filter/", function(response){
             var games = response.games;
             var gamesContainer = document.getElementById("games");
+            console.log(parseInt(document.querySelector('input[name=filter-page]').value));
             if (parseInt(document.querySelector('input[name=filter-page]').value) === 0 ){
                 gamesContainer.innerHTML= "";
             }
@@ -43,10 +44,9 @@ function sendFilterQuery(){
             }
             gamesContainer.appendChild(fragment);
             document.querySelector("a[name=close]").click();
+            var filterPage = document.querySelector('input[name=filter-page]');
+            filterPage.value = parseInt(filterPage.value) + 1;
         }, new FormData(document.querySelector("form[name=filter-form")));
-
-    var filterPage = document.querySelector('input[name=filter-page]');
-    filterPage.value = parseInt(filterPage.value) + 1;
 }
 
 

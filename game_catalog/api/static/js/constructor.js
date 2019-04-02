@@ -78,9 +78,13 @@ function createGameElement(gameData){
 }
 
 function createMust(must){
-    createQuery("GET", must.dataset.action, function(response){
-        showMessage(response.Status);
-    });
+    if (must.dataset.action.localeCompare("/login") === 0){
+        window.location = must.dataset.action;
+    } else {
+        createQuery("GET", must.dataset.action, function(response){
+            showMessage(response.Status);
+        });
+    }
 }
 
 var expanded = false;
