@@ -2,7 +2,6 @@ import json
 from datetime import datetime
 
 import requests
-import six
 from django.conf import settings
 from requests_oauthlib import OAuth1
 

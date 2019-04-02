@@ -61,8 +61,3 @@ class IgdbApi:
         response = requests.post(url, headers=self.__query_header, data=data)
 
         return json.loads(response.text) if response.status_code is settings.SUCCESS_STATUS else None
-
-
-
-
-

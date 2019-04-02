@@ -14,4 +14,4 @@ class UserCreationForm(UserCreationForm):
         user = super(UserCreationForm, self).save(commit=False)
         if commit:
             user.save()
-            return user
+        return user

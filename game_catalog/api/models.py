@@ -4,6 +4,7 @@ from django.contrib.auth.base_user import (
     BaseUserManager
 )
 from django.db import models
+from django.db.models import Count
 
 from .utils import split
 
@@ -62,17 +63,21 @@ class User(AbstractBaseUser):
     def is_staff(self):
         return self.is_admin
 
-    def get_separated_musts(self):
-        PART_LENGTH = 10
-
-        must_games = [str(elem.game_id) for elem in self.musts.filter(owner=self)]
-        parts = split(list(must_games), PART_LENGTH) if must_games else []
-
-        return parts
-
 
 class Must(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='musts')
     game_id = models.IntegerField(null=False)
 
+    @staticmethod
+    def get_annotated_user_musts(user):
+        PART_LENGTH = 10
 
+        user_musts = Must.objects.filter(owner=user)
+        if user_musts:
+            game_ids = [elem.game_id for elem in user_musts]
+            must_games = (Must.objects.all().values('game_id').annotate(count=Count('game_id'))\
+                          .filter(game_id__in=game_ids))
+
+            parts = split(list(must_games), PART_LENGTH) if must_games else []
+            return parts
+        return None
