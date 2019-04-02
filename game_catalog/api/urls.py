@@ -1,19 +1,20 @@
 from django.conf.urls import url
+from django.urls import path
 
 from . import views
 
 urlpatterns = [
-    url('^must$', views.must, name="must"),
-    url('^game/(?P<game_id>[0-9]+)/$', views.game_description, name="game"),
-    url('^$', views.home, name="home"),
-    url('^login$', views.login, name="login"),
-    url('^logout$', views.logout, name="logout"),
-    url('^registration$', views.registration, name="registration"),
-    url('^filter/$', views.filtered_games, name="filter"),
-    url('^create-must/(?P<game_id>[0-9]+)/$', views.create_must, name="create-must"),
-    url('^remove-must/(?P<game_id>[0-9]+)/$', views.remove_must, name="remove-must"),
-    url('^get-particle-games/(?P<offset>[0-9]+)/$', views.get_particle_games, name="get-particle-games"),
-    url('^search/(?P<search_string>[^/]+)$', views.search, name="search"),
-    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        views.activate, name='activate'),
+    path('must/', views.must, name="must"),
+    path('game/<int:game_id>/', views.game_description, name="game"),
+    path('', views.home, name="home"),
+    path('login', views.login, name="login"),
+    path('logout', views.logout, name="logout"),
+    path('registration', views.registration, name="registration"),
+    path('filter/', views.filtered_games, name="filter"),
+    path('create-must/<int:game_id>/', views.create_must, name="create-must"),
+    path('remove-must/<int:game_id>/', views.remove_must, name="remove-must"),
+    path('get-particle-games/<int:offset>/', views.get_particle_games, name="get-particle-games"),
+    path('search/<str:search_string>/', views.search, name="search"),
+    path(r'activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',
+         views.activate, name='activate'),
 ]
