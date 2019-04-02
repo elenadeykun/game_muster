@@ -20,17 +20,29 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
-USER_KEY = os.environ.get("USER_KEY")
 
-CONSUMER_KEY = os.environ.get("CONSUMER_KEY")
-CONSUMER_SECRET = os.environ.get("CONSUMER_SECRET")
-ACCESS_TOKEN = os.environ.get("ACCESS_TOKEN")
-ACCESS_TOKEN_SECRET = os.environ.get("ACCESS_TOKEN_SECRET")
+IGDB_API_KEYS = {
+    'USER_KEY': os.environ.get("USER_KEY")
+}
+
+TWITTER_API_KEYS = {
+    'CONSUMER_KEY': os.environ.get("CONSUMER_KEY"),
+    'CONSUMER_SECRET': os.environ.get("CONSUMER_SECRET"),
+    'ACCESS_TOKEN': os.environ.get("ACCESS_TOKEN"),
+    'ACCESS_TOKEN_SECRET': os.environ.get("ACCESS_TOKEN_SECRET")
+}
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = 587
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 SUCCESS_STATUS = 200
+RECORDS_LIMIT = 30
 
 ALLOWED_HOSTS = []
 
@@ -142,4 +154,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-

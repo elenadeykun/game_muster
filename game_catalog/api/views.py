@@ -1,26 +1,33 @@
-from datetime import datetime
+import datetime
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
 from django.http import (
     JsonResponse,
     HttpResponseRedirect
 )
-from django.shortcuts import (
-    render,
-    redirect
-)
+from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 from .forms import UserCreationForm
-from .igdb_api import IgdbApi
-from .twitter_api import TwitterApi
 from .models import (
     Must,
     User
 )
+from .tokens import account_activation_token
+from .wrappers.igdb_api import IgdbApi
+from .wrappers.twitter_api import TwitterApi
 
-igdb = IgdbApi(settings.USER_KEY)
+igdb = IgdbApi(settings.IGDB_API_KEYS['USER_KEY'])
+twitter_api = TwitterApi(settings.TWITTER_API_KEYS['CONSUMER_KEY'],
+                         settings.TWITTER_API_KEYS['CONSUMER_SECRET'],
+                         settings.TWITTER_API_KEYS['ACCESS_TOKEN'],
+                         settings.TWITTER_API_KEYS['ACCESS_TOKEN_SECRET'])
 
 
 def home(request):
@@ -38,10 +45,13 @@ def get_particle_games(request, offset):
 @login_required(login_url='/login')
 def must(request):
     user = User.objects.get(username=request.user)
-    games_parts = user.get_separated_musts()
+    games_parts = Must.get_annotated_user_musts(user)
     games = []
     for part in games_parts:
-        games += igdb.get_games({'id': part})
+        games_part = igdb.get_games({'id': [str(elem['game_id']) for elem in part]})
+        for i in range(len(part)):
+            games_part[i]['count'] = part[i]['count']
+        games += games_part
 
     return render(request, "api/must.html", {'games': games})
 
@@ -70,13 +80,10 @@ def game_description(request, game_id):
     result = igdb.get_game(game_id)
     if result:
         game = result[0]
-        twitter_api = TwitterApi(settings.CONSUMER_KEY, settings.CONSUMER_SECRET,
-                                 settings.ACCESS_TOKEN, settings.ACCESS_TOKEN_SECRET)
+        game['date'] = (datetime.datetime.fromtimestamp(game['release_dates'][-1]['date'])
+                        if 'release_dates' in game else None)
 
         tweets = twitter_api.search(game['name'])
-        tweets = [{'text': tweet['full_text'], 'user': tweet['user']['screen_name'],
-                   'date': datetime.strptime(tweet['created_at'], '%a %b %d %H:%M:%S %z %Y').strftime('%m.%d.%y %H:%M')}
-                  for tweet in tweets] if tweets else None
 
     return render(request, "api/game.html", {'game': game, 'tweets': tweets})
 
@@ -123,12 +130,39 @@ def registration(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=password)
-            auth.login(request, user)
-            return redirect('/')
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            current_site = get_current_site(request)
+            message = render_to_string('account/activate_mail.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+                'token': account_activation_token.make_token(user),
+            })
+            mail_subject = 'Activate your account.'
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(mail_subject, message, to=[to_email])
+            email.send()
+            return render(request, "message_page.html",
+                          {'message': 'Please confirm your email address to complete the registration'})
+
     else:
         form = UserCreationForm()
     return render(request, 'account/register.html', {'form': form})
 
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        auth.login(request, user)
+        return redirect('/')
+    else:
+        return render(request, "message_page.html", {'message': 'Activation link is invalid!'})
