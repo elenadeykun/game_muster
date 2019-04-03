@@ -8,13 +8,7 @@ document.addEventListener("DOMContentLoaded", function(){
         logout.addEventListener("click", function(event){
 
         createQuery("GET", "/logout", function(response){
-            showMessage(response.Status);
-            document.querySelector(".username").innerText = "";
-            changeMenuVisibility();
-
-            if(window.location.href.indexOf("must") > -1) {
-                window.location = "/";
-            }
+            document.location.reload(true);
         });
     });
   }
@@ -48,27 +42,4 @@ function sendFilterQuery(){
             var filterPage = document.querySelector('input[name=filter-page]');
             filterPage.value = parseInt(filterPage.value) + 1;
         }, new FormData(document.querySelector("form[name=filter-form")));
-}
-
-
-function changeMenuVisibility(){
-
-   document.querySelector('a[name=logout]').remove();
-   document.querySelector('a[name=profile-link').remove();
-   document.querySelector('a[name=must-link]').remove();
-
-   var menu = document.querySelector('.dropdown-menu__container');
-
-   var loginLink = document.createElement("a");
-   loginLink.classList.add("dropdown-menu__item");
-   loginLink.name = "login-link";
-   loginLink.href = "/login";
-   loginLink.innerText = "Log in";
-
-   var registerLink = loginLink.cloneNode();
-   registerLink.href = "/registration";
-   registerLink.innerText = "Sign up";
-
-   menu.appendChild(loginLink);
-   menu.appendChild(registerLink);
 }
