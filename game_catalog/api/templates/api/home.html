@@ -24,8 +24,7 @@
                 <span class="game__body">
                    <h4 class="game__header">{{ game.name }}</h4>
                    <p>
-                      <button {% if user.is_authenticated %} data-action="{% url 'create-must' game.id %}" {% else %}
-                        data-action="{% url 'login' %}" {% endif %} name="create" class="game__must">Must</button>
+                       {% include 'includes/must_game.html' %}
                    </p>
                     <a href="{% url 'game' game.id %}" class="game__link">Open</a>
                  </span>

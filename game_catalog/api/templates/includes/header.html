@@ -10,6 +10,7 @@
         </div>
         <nav class="dropdown-menu__container">
             {% if user.is_authenticated %}
+                <a href="{% url 'must'%}" name="must-link" class="dropdown-menu__item" >Musts</a>
                 <a href="#profile-modal" name="profile-link" class="dropdown-menu__item">Profile</a>
                 <a name="logout" class="dropdown-menu__item">Sign out</a>
             {% else %}

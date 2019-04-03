@@ -19,8 +19,9 @@ document.addEventListener("DOMContentLoaded", function(){
     });
   }
 
-    document.querySelector("form[name=filter-form").addEventListener("submit", function(event){
+    document.querySelector("form[name=filter-form]").addEventListener("submit", function(event){
         event.preventDefault();
+        document.querySelector('input[name=filter-page]').value = 0;
         document.getElementById("games").dataset.filter = true;
         sendFilterQuery();
     });
@@ -31,7 +32,7 @@ function sendFilterQuery(){
     createQuery("POST", "/filter/", function(response){
             var games = response.games;
             var gamesContainer = document.getElementById("games");
-            console.log(parseInt(document.querySelector('input[name=filter-page]').value));
+            document.querySelector("input[name=filter-search-string]").value = document.getElementById("search-field").value;
             if (parseInt(document.querySelector('input[name=filter-page]').value) === 0 ){
                 gamesContainer.innerHTML= "";
             }
@@ -54,7 +55,7 @@ function changeMenuVisibility(){
 
    document.querySelector('a[name=logout]').remove();
    document.querySelector('a[name=profile-link').remove();
-   document.querySelector('.bookmarks').remove();
+   document.querySelector('a[name=must-link]').remove();
 
    var menu = document.querySelector('.dropdown-menu__container');
 

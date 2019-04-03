@@ -17,7 +17,7 @@
                    <h4 class="game__title">{{game.name}}</h4>
                    <p class="game__added">Users added: {{game.count}}</p>
                    <p>
-                      <button data-action="{% url 'remove-must' game.id %}" name="remove" class="game__link must-link">UnMUST</button>
+                      <button data-action="{% url 'remove-must' game.id %}" name="create" class="game__link must-link">UnMUST</button>
                    </p>
                     <a href="{% url 'game' game.id %}" class="game__link">Open</a>
                  </span>

@@ -2,7 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", function(){
 
-    var removeLinks = document.querySelectorAll("button[name=remove]");
+    var removeLinks = document.querySelectorAll("button[name=create]");
 
     for (var i = 0; i < removeLinks.length; i++) {
         removeLinks[i].addEventListener("click", function(event){
@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function(){
                } else {
                     action = action.replace("create-must", "remove-must");
                     link.classList.remove("remust-link");
+                    link.classList.add("must-link");
                     link.innerText = "UnMUST";
                     link.dataset.action = action;
                }

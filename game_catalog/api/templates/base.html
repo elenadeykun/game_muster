@@ -15,6 +15,7 @@
     <script src="{% static 'js/ajax.js' %}"></script>
     <script src="{% static 'js/constructor.js' %}"></script>
     <script src="{% static 'js/forms.js' %}"></script>
+    <script src="{% static 'js/must.js' %}"></script>
     {% block head %}
     {% endblock %}
 </head>
@@ -23,12 +24,6 @@
 
 {% block content %}
 {% endblock %}
-
-{% if user.is_authenticated %}
-    <a class="bookmarks" href="{% url 'must'%}">
-        <i class="bookmarks__icon"></i>
-    </a>
-{% endif %}
 
 
 {% include 'includes/filter.html' %}

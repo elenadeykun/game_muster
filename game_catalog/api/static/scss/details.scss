@@ -16,10 +16,8 @@
     }
 
     &__toast {
-      padding: 5px;
-      background: $color-toast;
-      border-radius: 10%;
-      margin-left: 15px;
+        display: inline-block;
+
     }
 }
 

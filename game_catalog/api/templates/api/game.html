@@ -12,7 +12,7 @@
 <main class="game-article">
     <h3 class="game-article__header">{{game.name}}</h3>
     <button data-action="{% url 'create-must' game.id %}" name="create" class="unstyled">
-        <span class="game-article__toast">MUST</span>
+        <p class="game-article__toast">{% include 'includes/must_game.html' %}</p>
     </button>
     <div class="game-description">
         <div class="game-description__section main-game-section">

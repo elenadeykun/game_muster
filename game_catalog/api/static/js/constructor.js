@@ -9,14 +9,6 @@ document.addEventListener("DOMContentLoaded", function(){
             gameImages[i].src = gameImages[i].dataset.url;
         }
     }
-
-    var createLinks = document.querySelectorAll("button[name=create]");
-
-    for (var i = 0; i < createLinks.length; i++) {
-        createLinks[i].addEventListener("click", function(event){
-             createMust(this);
-        });
-    }
 });
 
 function showMessage(text){
@@ -37,7 +29,7 @@ function showMessage(text){
 
 function createGameElement(gameData){
     var game = document.createElement("div");
-    game.classList.add("game__container");
+    game.classList.add("game__container");    
     var description = document.createElement("span");
     description.classList.add("game__body");
 
@@ -84,16 +76,5 @@ function createMust(must){
         createQuery("GET", must.dataset.action, function(response){
             showMessage(response.Status);
         });
-    }
-}
-
-var expanded = false;
-function showCheckboxes(){
-    if (!expanded){
-        checkboxes.style.display = "block";
-        expanded = true;
-    } else {
-        checkboxes.style.display = "none";
-        expanded = false;
     }
 }
