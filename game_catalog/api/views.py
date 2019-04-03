@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import authenticate
@@ -34,6 +34,9 @@ def home(request):
     games = igdb.get_games()
     platforms = igdb.get_platforms()
     genres = igdb.get_genres()
+    user = User.objects.get(username=request.user)
+    user.get_musts()
+
     return render(request, "api/home.html", locals())
 
 
@@ -46,6 +49,7 @@ def get_particle_games(request, offset):
 def must(request):
     user = User.objects.get(username=request.user)
     games_parts = Must.get_annotated_user_musts(user)
+
     games = []
     if games_parts:
         for part in games_parts:
@@ -81,14 +85,14 @@ def game_description(request, game_id):
     result = igdb.get_game(game_id)
     if result:
         game = result[0]
-        game['date'] = (datetime.datetime.fromtimestamp(game['release_dates'][-1]['date'])
+        game['date'] = (datetime.fromtimestamp(game['release_dates'][-1]['date'])
                         if 'release_dates' in game else None)
 
         tweets = twitter_api.search(game['name'])
     else:
         return render(request, "message_page.html",
                       {'message': 'This game does not exist.'})
-    return render(request, "api/game.html", {'game': game, 'tweets': tweets})
+    return render(request, "api/game.html", {'game': game, 'tweets': tweets, 'user_games': user_games})
 
 
 def search(request, search_string):
@@ -103,8 +107,10 @@ def filtered_games(request):
         'rating': [request.POST.get("rating")]
     }
 
+    search_string = request.POST.get("filter-search-string")
     offset = int(request.POST.get("filter-page"))
-    games = igdb.get_games(filter_dict=games_filter, offset=int(offset))
+    games = igdb.get_games(filter_dict=games_filter, offset=int(offset),
+                           search_name=search_string if search_string else '')
     return JsonResponse({"games": games})
 
 

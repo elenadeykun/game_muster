@@ -32,6 +32,9 @@ class IgdbApi:
         fields = ['name', 'screenshots.url']
         data = "fields " + ",".join(fields) + "; "
 
+        if search_name:
+            data += 'search "{name}"; '.format(name=search_name)
+
         for key in filter_dict:
             value = ",".join(filter_dict[key]) if filter_dict[key] else None
             value = '(' + value + ')' if filter_dict[key] and len(filter_dict[key]) > 1 else value
@@ -39,9 +42,7 @@ class IgdbApi:
             data += (IgdbApi.__get_parameter(key, value, '>') if key is "rating"
                      else IgdbApi.__get_parameter(key, value))
 
-        if search_name:
-            data += ' search "{name}";'.format(name=search_name)
-        else:
+        if not search_name:
             data += " sort popularity desc; limit {limit}; offset {offset};".format(limit=limit, offset=offset*limit)
 
         response = requests.post(url, headers=self.__query_header, data=data)

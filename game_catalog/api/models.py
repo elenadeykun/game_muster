@@ -63,10 +63,18 @@ class User(AbstractBaseUser):
     def is_staff(self):
         return self.is_admin
 
+    def get_musts(self):
+        user_musts = self.musts.all()
+        return user_musts
+
 
 class Must(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='musts')
     game_id = models.IntegerField(null=False)
+
+    @property
+    def count(self):
+        return Must.objects.filter(game_id=self.game_id).count()
 
     @staticmethod
     def get_annotated_user_musts(user):
@@ -75,7 +83,7 @@ class Must(models.Model):
         user_musts = Must.objects.filter(owner=user)
         if user_musts:
             game_ids = [elem.game_id for elem in user_musts]
-            must_games = (Must.objects.all().values('game_id').annotate(count=Count('game_id'))\
+            must_games = (Must.objects.all().values('game_id').annotate(count=Count('game_id'))
                           .filter(game_id__in=game_ids))
 
             parts = split(list(must_games), PART_LENGTH) if must_games else []
