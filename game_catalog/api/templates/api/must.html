@@ -9,7 +9,7 @@
     <h3 class="article-header">My MUST</h3>
     <div class="game">
         {% if not games %}
-            <p>Collection is empty.</p>
+            <h1 class="message__text">Collection is empty.</h1>
         {% endif %}
         {% for game in games %}
         <div class="game__container">
@@ -32,5 +32,4 @@
     </div>
 </main>
 {% endblock %}
-
 

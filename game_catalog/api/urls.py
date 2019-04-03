@@ -15,6 +15,6 @@ urlpatterns = [
     path('remove-must/<int:game_id>/', views.remove_must, name="remove-must"),
     path('get-particle-games/<int:offset>/', views.get_particle_games, name="get-particle-games"),
     path('search/<str:search_string>/', views.search, name="search"),
-    path(r'activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',
-         views.activate, name='activate'),
+    url(r'activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',
+        views.activate, name='activate'),
 ]

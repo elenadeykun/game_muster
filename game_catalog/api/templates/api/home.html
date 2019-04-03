@@ -3,7 +3,7 @@
 {% block head %}
     {% load staticfiles %}
     {% load compile_static %}
-    <link rel="stylesheet" href="{% static '/css/filter_components.css' %}" />
+    <link rel="stylesheet" href="{% static '/scss/filter_components.scss'|compile %}" />
     <script src="{% static 'js/home.js' %}"></script>
 {% endblock%}
 
@@ -40,6 +40,5 @@
     </div>
 </main>
 {% endblock %}
-
 
 

@@ -22,29 +22,28 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 IGDB_API_KEYS = {
-    'USER_KEY': os.environ.get("USER_KEY")
+    'USER_KEY': os.environ.get('USER_KEY')
 }
 
 TWITTER_API_KEYS = {
-    'CONSUMER_KEY': os.environ.get("CONSUMER_KEY"),
-    'CONSUMER_SECRET': os.environ.get("CONSUMER_SECRET"),
-    'ACCESS_TOKEN': os.environ.get("ACCESS_TOKEN"),
-    'ACCESS_TOKEN_SECRET': os.environ.get("ACCESS_TOKEN_SECRET")
+    'CONSUMER_KEY': os.environ.get('CONSUMER_KEY'),
+    'CONSUMER_SECRET': os.environ.get('CONSUMER_SECRET'),
+    'ACCESS_TOKEN': os.environ.get('ACCESS_TOKEN'),
+    'ACCESS_TOKEN_SECRET': os.environ.get('ACCESS_TOKEN_SECRET')
 }
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 SUCCESS_STATUS = 200
 RECORDS_LIMIT = 30
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -108,9 +107,9 @@ WSGI_APPLICATION = 'game_catalog.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get("DB_USER"),
-        'USER': os.environ.get("DB_USER"),
-        'PASSWORD': os.environ.get("DB_PASS"),
+        'NAME': os.environ.get("DB_NAME"),
+        'USER': os.environ.get("DB_NAME"),
+        'PASSWORD': os.environ.get("DB_PASSWORD"),
         'HOST': 'dumbo.db.elephantsql.com',
         'POST': '5432'
     }

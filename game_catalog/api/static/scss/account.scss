@@ -10,10 +10,9 @@
 
 .error {
     color: $color-error;
-    padding-top: 10px;
+    display: inline;
     font-size: 15px;
-    width: 350px;
-    text-align: left;
+    width: auto;
 }
 
 .blackout {
@@ -22,7 +21,7 @@
 
 
 .login-form {
-    height: 38%;
+    height: 42%;
     width: 15%;
 }
 

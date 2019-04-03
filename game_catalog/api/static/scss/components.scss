@@ -4,6 +4,7 @@
 
 .dropdown-menu {
     position: absolute;
+    z-index: 10;
     right: 1px;
     top: 12px;
     cursor: pointer;

@@ -97,4 +97,3 @@ function showCheckboxes(){
         expanded = false;
     }
 }
-

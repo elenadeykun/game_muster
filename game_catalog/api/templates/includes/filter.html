@@ -25,7 +25,7 @@
                 </div>
 
                 <label class="filter-form__label">Genres</label>
-                
+
                 <div class="select">
                     {% for genre in genres %}
                     <div class="select__container">
@@ -34,13 +34,12 @@
                           <svg class="select__svg" width="18px" height="18px" viewBox="0 0 18 18">
                             <path class="select__path" d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
                             <polyline class="select__polyline" points="1 9 7 14 15 4"></polyline>
-                          </svg> <span class="text">{{genre.name}}</span>
+                          </svg> <span class="select__text">{{genre.name}}</span>
                         </label>
                     </div>
                     {% endfor %}
-                </div>                
+                </div>
                 <label class="filter-form__label">Rating</label>
-                
                 <div class="value">50</div>
                 <input name="rating" type="range" class="range" min="0" max="100" step="0.1" value="50">
                 <button type="submit" class="form__field submit-button">Apply</button>

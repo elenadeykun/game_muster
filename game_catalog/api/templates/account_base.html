@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <title>{% block title %} {% endblock %} - Game Muster</title>
     {% load staticfiles %}
+    <link rel="icon" href="{% static '/media/favicon.ico' %}" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet"/>
     {% load compile_static %}
-    <link rel="stylesheet" href="{% static '/css/modal.css' %}" />
-    <link rel="stylesheet" href="{% static '/css/account.css' %}" />
+    <link rel="stylesheet" href="{% static '/scss/modal.scss'|compile %}" />
+    <link rel="stylesheet" href="{% static '/scss/account.scss'|compile %}" />
 </head>
 <body>
 {% block content %}

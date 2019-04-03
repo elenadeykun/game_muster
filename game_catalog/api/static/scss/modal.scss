@@ -1,5 +1,4 @@
 @import 'theme';
-
 @import 'mixins';
 $font-style: Poppins, sans-serif;
 
@@ -62,8 +61,9 @@ $font-style: Poppins, sans-serif;
   }
 
   &__label {
-      text-align: left;
+      text-align: center;
       padding: 5px;
+      font-size: 20px;
   }
 }
 
@@ -120,6 +120,7 @@ $font-style: Poppins, sans-serif;
 .submit-button {
     color: $color-text;
     background-color: $color-submit-button;
+    margin: auto;
 
     &:hover {
         background-color: $color-hover-submit-button;

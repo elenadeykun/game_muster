@@ -61,12 +61,20 @@ function getGamesBySearch(){
             var games = response.games;
             var gamesContainer = document.getElementById("games");
             gamesContainer.innerHTML= "";
-            var fragment = document.createDocumentFragment();
-            for (var i = 0; i < games.length; i++){
-                var game = createGameElement(games[i]);
-                fragment.appendChild(game);
+
+            if (games.length > 0){
+                var fragment = document.createDocumentFragment();
+                for (var i = 0; i < games.length; i++){
+                    var game = createGameElement(games[i]);
+                    fragment.appendChild(game);
+                }
+                gamesContainer.appendChild(fragment);
+            } else {
+                var message = document.createElement("h1");
+                message.innerText = "Not found.";
+                message.classList.add("message__text");
+                gamesContainer.appendChild(message);
             }
-            gamesContainer.appendChild(fragment);
         });
      }
 }
