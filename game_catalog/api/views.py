@@ -1,10 +1,10 @@
 from datetime import datetime
+
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import EmailMessage
 from django.http import (
     JsonResponse,
     HttpResponseRedirect
@@ -20,6 +20,7 @@ from .models import (
     User
 )
 from .tokens import account_activation_token
+from .utils import send_mail
 from .wrappers.igdb_api import IgdbApi
 from .wrappers.twitter_api import TwitterApi
 
@@ -34,8 +35,6 @@ def home(request):
     games = igdb.get_games()
     platforms = igdb.get_platforms()
     genres = igdb.get_genres()
-    user = User.objects.get(username=request.user)
-    user.get_musts()
 
     return render(request, "api/home.html", locals())
 
@@ -92,7 +91,7 @@ def game_description(request, game_id):
     else:
         return render(request, "message_page.html",
                       {'message': 'This game does not exist.'})
-    return render(request, "api/game.html", {'game': game, 'tweets': tweets, 'user_games': user_games})
+    return render(request, "api/game.html", {'game': game, 'tweets': tweets})
 
 
 def search(request, search_string):
@@ -143,6 +142,7 @@ def registration(request):
             user = form.save(commit=False)
             user.is_active = False
             user.save()
+
             current_site = get_current_site(request)
             message = render_to_string('account/activate_mail.html', {
                 'user': user,
@@ -151,9 +151,8 @@ def registration(request):
                 'token': account_activation_token.make_token(user),
             })
             mail_subject = 'Activate your account.'
-            to_email = form.cleaned_data.get('email')
-            email = EmailMessage(mail_subject, message, to=[to_email])
-            email.send()
+
+            send_mail(form.cleaned_data.get('email'), mail_subject, message)
             return render(request, "message_page.html",
                           {'message': 'Please confirm your email address to complete the registration'})
 
