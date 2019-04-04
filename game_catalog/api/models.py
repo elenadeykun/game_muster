@@ -68,9 +68,38 @@ class User(AbstractBaseUser):
         return user_musts
 
 
+class Game(models.Model):
+    name = models.CharField(max_length=250)
+    description = models.TextField(max_length=1000, null=True)
+    release_date = models.DateField(null=True)
+
+
+class Genre(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    games = models.ManyToManyField(Game, related_name="genres")
+
+
+class Rating(models.Model):
+    users_rating = models.FloatField(null=True)
+    users_views = models.IntegerField(null=True)
+    critics_rating = models.FloatField(null=True)
+    critics_views = models.IntegerField(null=True)
+    game = models.ForeignKey(Game, related_name="rating", on_delete=models.CASCADE)
+
+
+class Platform(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    games = models.ManyToManyField(Game, related_name="platforms")
+
+
+class Image(models.Model):
+    url = models.URLField()
+    game = models.ForeignKey(Game, related_name="image", on_delete=models.CASCADE)
+
+
 class Must(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='musts')
-    game_id = models.IntegerField(null=False)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, null=True)
 
     @property
     def count(self):
@@ -89,3 +118,4 @@ class Must(models.Model):
             parts = split(list(must_games), PART_LENGTH) if must_games else []
             return parts
         return None
+

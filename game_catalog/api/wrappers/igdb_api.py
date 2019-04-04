@@ -4,6 +4,10 @@ from django.conf import settings
 
 
 class IgdbApi:
+    FIELDS = ['name', 'screenshots.url', 'summary', 'release_dates.date', 'rating', 'aggregated_rating',
+              'genres.name', 'platforms.abbreviation', 'rating_count', 'tags', 'updated_at',
+              'aggregated_rating_count']
+
     def __init__(self, user_key):
         self.__api_url = "https://api-v3.igdb.com/"
         self.__query_header = {'user-key': user_key}
@@ -16,11 +20,8 @@ class IgdbApi:
 
     def get_game(self, game_id):
         url = self.__api_url + "games/"
-        fields = ['name', 'screenshots.url', 'summary', 'release_dates.date', 'rating', 'aggregated_rating',
-                  'genres.name', 'platforms.abbreviation', 'rating_count', 'tags', 'updated_at',
-                  'aggregated_rating_count']
 
-        data = "fields " + ",".join(fields) + "; "
+        data = "fields " + ",".join(self.FIELDS) + "; "
         data += IgdbApi.__get_parameter('id', game_id)
 
         response = requests.post(url, headers=self.__query_header, data=data)
@@ -29,8 +30,7 @@ class IgdbApi:
 
     def get_games(self, filter_dict={}, offset=0, limit=settings.RECORDS_LIMIT,  search_name=''):
         url = self.__api_url + "games/"
-        fields = ['name', 'screenshots.url']
-        data = "fields " + ",".join(fields) + "; "
+        data = "fields " + ",".join(self.FIELDS) + "; "
 
         if search_name:
             data += 'search "{name}"; '.format(name=search_name)
