@@ -14,11 +14,12 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
+from api.tasks import save_games
 from .forms import UserCreationForm
 from .models import (
     Must,
-    User
-)
+    User,
+    Game, Genre, Platform)
 from .tokens import account_activation_token
 from .utils import send_mail
 from .wrappers.igdb_api import IgdbApi
@@ -32,32 +33,24 @@ twitter_api = TwitterApi(settings.TWITTER_API_KEYS['CONSUMER_KEY'],
 
 
 def home(request):
-    games = igdb.get_games()
-    platforms = igdb.get_platforms()
-    genres = igdb.get_genres()
-
+    games = Game.objects.all().values('id', 'name', 'image__url').distinct()[:settings.RECORDS_LIMIT]
+    platforms = Platform.objects.all()
+    genres = Genre.objects.all()
     return render(request, "api/home.html", locals())
 
 
 def get_particle_games(request, offset):
-    games = igdb.get_games(offset=int(offset))
-    return JsonResponse({'games': games})
+    offset *= settings.RECORDS_LIMIT
+    games = Game.objects.all().values('id', 'name', 'image__url').distinct()[offset:offset + settings.RECORDS_LIMIT]
+    return JsonResponse({'games': [game for game in games]})
 
 
 @login_required(login_url='/login')
 def must(request):
     user = User.objects.get(username=request.user)
-    games_parts = Must.get_annotated_user_musts(user)
 
-    games = []
-    if games_parts:
-        for part in games_parts:
-            games_part = igdb.get_games({'id': [str(elem['game_id']) for elem in part]})
-            for i in range(len(part)):
-                games_part[i]['count'] = part[i]['count']
-            games += games_part
-
-    return render(request, "api/must.html", {'games': games})
+    musts = Must.objects.filter(owner=user).values('game', 'game__name', 'game__image__url').distinct('game__name')
+    return render(request, "api/must.html", {'musts': musts})
 
 
 @login_required(login_url='/login')
@@ -81,36 +74,42 @@ def remove_must(request, game_id):
 
 
 def game_description(request, game_id):
-    result = igdb.get_game(game_id)
-    if result:
-        game = result[0]
-        game['date'] = (datetime.fromtimestamp(game['release_dates'][-1]['date'])
-                        if 'release_dates' in game else None)
+    game = Game.objects.get(pk=game_id)
 
-        tweets = twitter_api.search(game['name'])
+    if game:
+        tweets = twitter_api.search(game.name)
+        return render(request, "api/game.html", {'game': game, 'tweets': tweets})
     else:
         return render(request, "message_page.html",
                       {'message': 'This game does not exist.'})
-    return render(request, "api/game.html", {'game': game, 'tweets': tweets})
 
 
 def search(request, search_string):
-    games = igdb.get_games(search_name=search_string)
-    return JsonResponse({'games': games})
+    games = Game.objects.filter(name__icontains=search_string).values('name', 'image__url').distinct('name')
+    return JsonResponse({'games': [game for game in games]})
 
 
 def filtered_games(request):
-    games_filter = {
-        'platforms': request.POST.getlist("platforms"),
-        'genres': request.POST.getlist("genres"),
-        'rating': [request.POST.get("rating")]
-    }
-
     search_string = request.POST.get("filter-search-string")
     offset = int(request.POST.get("filter-page"))
-    games = igdb.get_games(filter_dict=games_filter, offset=int(offset),
-                           search_name=search_string if search_string else '')
-    return JsonResponse({"games": games})
+    platforms = request.POST.getlist("platforms")
+    genres = request.POST.getlist("genres")
+
+    games = Game.objects.filter(users_rating__gte=float(request.POST.get('rating')))
+
+    if platforms:
+        games = games.filter(platforms__id__in=[int(platform) for platform in platforms])
+
+    if genres:
+        games = games.filter(genres__id__in=[int(genre) for genre in genres])
+
+    if search_string:
+        games = games.filter(name__icontains=search_string)
+
+    offset *= settings.RECORDS_LIMIT
+    games = games.values('id', 'name', 'image__url').distinct('name')[offset:offset + settings.RECORDS_LIMIT]
+
+    return JsonResponse({"games": [game for game in games]})
 
 
 def login(request):
@@ -147,7 +146,7 @@ def registration(request):
             message = render_to_string('account/activate_mail.html', {
                 'user': user,
                 'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': account_activation_token.make_token(user),
             })
             mail_subject = 'Activate your account.'
