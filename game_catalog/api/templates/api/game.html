@@ -17,54 +17,54 @@
     <div class="game-description">
         <div class="game-description__section main-game-section">
             <h4 class="game-description__title">Description</h4>
-            {% if game.summary %}
-                <p> {{game.summary }} </p>
+            {% if game.description %}
+                <p> {{game.description }} </p>
             {% else %}
                 <p> No information available yet.</p>
             {% endif %}
-            {% if game.release_dates %}
+            {% if game.release_date %}
                 <h4 class="game-description__title">Release Date</h4>
-                <p>{{ game.date|date:"F d, Y" }}</p>
+                <p>{{ game.release_date|date:"F d, Y" }}</p>
             {% endif %}
-            {% if game.screenshots %}
+            <!-- {% if game.screenshots %}
                 <h4 class="game-description__title">Screenshots</h4>
                 <div>
                     {% for img in game.screenshots %}
                          <img data-url="{{img.url}}" class="screen-img" alt="pacman"/>
                     {% endfor %}
                 </div>
-            {% endif %}
+            {% endif %}-->
         </div>
         <div class="game-description__section">
-            {% if game.rating or game.aggregated_rating %}
+            {% if game.users_rating or game.critics_rating %}
                 <h4 class="game-description__title">Rating</h4>
             {% endif %}
-            {% if game.rating %}
+            {% if game.users_rating %}
                 <div class="game-description__rating">
                     <span>Users</span>
-                    <span class="game-description__views">{{game.rating|floatformat  }}
-                        {% if game.rating_count %}( {{game.rating_count}} views) {% endif %}</span>
+                    <span class="game-description__views">{{game.users_rating|floatformat  }}
+                        {% if game.users_views %}( {{game.users_views}} views) {% endif %}</span>
                 </div>
             {% endif %}
-            {% if game.aggregated_rating%}
+            {% if game.critics_rating%}
                 <div class="game-description__rating critics-rating">
                     <span>Critics</span>
-                    <span class="game-description__views">{{ game.aggregated_rating|floatformat  }}
-                        {% if game.aggregated_rating_count %} ({{game.aggregated_rating_count}} views) {% endif %}</span>
+                    <span class="game-description__views">{{ game.critics_rating|floatformat  }}
+                        {% if game.critics_views %} ({{game.critics_views}} views) {% endif %}</span>
                 </div>
             {% endif %}
-            {% if game.genres %}
+            <!--{% if game.genress %}
                 <h4 class="game-description__title">Genres</h4>
                 {% for genre in game.genres %}
                     <span class="toast">{{ genre.name }}</span>
                 {% endfor %}
             {% endif %}
-            {% if game.platforms %}
+            {% if game.platformss %}
                 <h4 class="game-description__title">Platforms</h4>
                 {% for platform in game.platforms %}
                     <span class="toast">{{ platform.abbreviation }} </span>
                 {% endfor %}
-            {% endif %}
+            {% endif %}-->
         </div>
         {% if tweets %}
             <div class="game-description__section">
@@ -83,4 +83,3 @@
     </div>
 </main>
 {% endblock %}
-

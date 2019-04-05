@@ -29,7 +29,7 @@ function showMessage(text){
 
 function createGameElement(gameData){
     var game = document.createElement("div");
-    game.classList.add("game__container");    
+    game.classList.add("game__container");
     var description = document.createElement("span");
     description.classList.add("game__body");
 
@@ -59,8 +59,8 @@ function createGameElement(gameData){
     var img = document.createElement("img");
     img.classList.add("game__img");
 
-    if(!!gameData.screenshots){
-       img.src = gameData.screenshots[0].url;
+    if(!!gameData.image__url){
+       img.src = gameData.image__url;
     } else {
        img.src = "/static/media/no-image.png";
     }

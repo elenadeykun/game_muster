@@ -17,7 +17,7 @@
                         <input name="platforms" value="{{platform.id}}" class="select__field" type="checkbox" id="{{platform.id}}" style="display: none;">
                         <label for="{{platform.id}}" class="select__label">
                           {% include 'includes/checkmark.html' %}
-                            <span class="select__text">{{platform.abbreviation}}</span>
+                            <span class="select__text">{{platform.name}}</span>
                         </label>
                     </div>
                     {% endfor %}

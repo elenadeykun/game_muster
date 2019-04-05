@@ -28,8 +28,8 @@
                    </p>
                     <a href="{% url 'game' game.id %}" class="game__link">Open</a>
                  </span>
-            {% if game.screenshots %}
-                <img data-url="{{ game.screenshots.0.url }}" class="game__img"/>
+            {% if game.image__url %}
+                <img data-url="{{ game.image__url }}" class="game__img"/>
             {% else %}
                 <img src="{% static 'media/no-image.png' %}" class="game__img" alt="no image"/>
             {% endif %}
@@ -39,5 +39,3 @@
     </div>
 </main>
 {% endblock %}
-
-
