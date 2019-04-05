@@ -69,22 +69,18 @@ class User(AbstractBaseUser):
 
 
 class Game(models.Model):
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=250, unique=True)
     description = models.TextField(max_length=1000, null=True)
     release_date = models.DateField(null=True)
+    users_rating = models.FloatField(null=True)
+    users_views = models.IntegerField(null=True)
+    critics_rating = models.FloatField(null=True)
+    critics_views = models.IntegerField(null=True)
 
 
 class Genre(models.Model):
     name = models.CharField(max_length=100, unique=True)
     games = models.ManyToManyField(Game, related_name="genres")
-
-
-class Rating(models.Model):
-    users_rating = models.FloatField(null=True)
-    users_views = models.IntegerField(null=True)
-    critics_rating = models.FloatField(null=True)
-    critics_views = models.IntegerField(null=True)
-    game = models.ForeignKey(Game, related_name="rating", on_delete=models.CASCADE)
 
 
 class Platform(models.Model):
@@ -103,19 +99,5 @@ class Must(models.Model):
 
     @property
     def count(self):
-        return Must.objects.filter(game_id=self.game_id).count()
-
-    @staticmethod
-    def get_annotated_user_musts(user):
-        PART_LENGTH = 10
-
-        user_musts = Must.objects.filter(owner=user)
-        if user_musts:
-            game_ids = [elem.game_id for elem in user_musts]
-            must_games = (Must.objects.all().values('game_id').annotate(count=Count('game_id'))
-                          .filter(game_id__in=game_ids))
-
-            parts = split(list(must_games), PART_LENGTH) if must_games else []
-            return parts
-        return None
+        return Must.objects.filter(game_id=self.game).count()
 
