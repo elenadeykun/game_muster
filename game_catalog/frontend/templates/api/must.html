@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Musts -{% endblock %}
+{% block head %}
+    <script src="{% static 'js/must.js' %}"></script>
+{% endblock%}
+{% block content %}
+<main>
+    <h3 class="article-header">My MUST</h3>
+    <div class="game">
+        {% if not musts %}
+            <h1 class="message__text">Collection is empty.</h1>
+        {% endif %}
+        {% for must in musts %}
+        <div class="game__container">
+                <span class="game__body">
+                   <h4 class="game__title">{{must.game__name}}</h4>
+                   <p class="game__added">Users added: {{game.count}}</p>
+                   <p>
+                      <button data-action="{% url 'remove-must' must.game %}" name="create" class="game__link must-link">UnMUST</button>
+                   </p>
+                    <a href="{% url 'game' must.game %}" class="game__link">Open</a>
+                 </span>
+           {% if must.game__image__url %}
+                <img data-url="{{ must.game__image__url }}" class="game__img"/>
+            {% else %}
+                <img src="{% static 'media/no-image.png' %}" class="game__img" alt="no image"/>
+            {% endif %}
+
+        </div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

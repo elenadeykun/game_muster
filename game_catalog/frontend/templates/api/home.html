@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {% load staticfiles %}
+    {% load compile_static %}
+    <link rel="stylesheet" href="{% static '/scss/filter_components.scss'|compile %}" />
+    <script src="{% static 'js/home.js' %}"></script>
+{% endblock%}
+
+{% block content %}
+<main>
+    <div class="filter-container">
+      <a href="#filter" class="unstyled-link" id="close">
+          <i class="filter-container__icon"></i>
+      </a>
+      <input type="text" class="search-field" id="search-field" placeholder="Search..."/>
+      <button class="unstyled" name="search">
+          <i class="search-icon"></i>
+      </button>
+    </div>
+    <div class="game" id="games" data-page="1">
+        {% for game in games %}
+        <div class="game__container">
+                <span class="game__body">
+                   <h4 class="game__header">{{ game.name }}</h4>
+                   <p>
+                       {% include 'includes/must_game.html' %}
+                   </p>
+                    <a href="{% url 'game' game.id %}" class="game__link">Open</a>
+                 </span>
+            {% if game.image__url %}
+                <img data-url="{{ game.image__url }}" class="game__img"/>
+            {% else %}
+                <img src="{% static 'media/no-image.png' %}" class="game__img" alt="no image"/>
+            {% endif %}
+
+        </div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %} Game Muster</title>
+    {% load staticfiles %}
+    <link rel="icon" href="{% static '/media/favicon.ico' %}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet"/>
+
+    {% load compile_static %}
+    <link rel="stylesheet" href="{% static '/scss/components.scss'|compile %}" />
+    <link rel="stylesheet" href="{% static '/scss/style.scss'|compile %}" />
+    <link rel="stylesheet" href="{% static '/scss/modal.scss'|compile %}" />
+
+    <script src="{% static 'js/ajax.js' %}"></script>
+    <script src="{% static 'js/constructor.js' %}"></script>
+    <script src="{% static 'js/forms.js' %}"></script>
+    <script src="{% static 'js/must.js' %}"></script>
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+{% include 'includes/header.html' %}
+
+<main id="app"></main>
+
+{% include 'includes/filter.html' %}
+{% include 'includes/profile.html' %}
+
+</body>

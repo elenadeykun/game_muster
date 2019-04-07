@@ -1,0 +1,58 @@
+@import 'theme';
+@import 'mixins';
+
+
+.profile {
+    &__icon {
+      @include icon-style($image: url('/static/media/user-icon.png'));
+  }
+}
+
+.error {
+    color: $color-error;
+    display: inline;
+    font-size: 15px;
+    width: auto;
+}
+
+.blackout {
+      display: block;
+}
+
+
+.login-form {
+    height: 42%;
+    width: 15%;
+}
+
+.registration-form {
+    height:75%;
+    min-height: 550px;
+}
+
+
+.link {
+    text-decoration: none;
+    color: $color-link;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: block;
+    font-size: 18px;
+
+    &:hover{
+      color: $color-hover-link;
+    }
+}
+
+.continue-link {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    color:$color-continue-link;
+    text-decoration: none;
+
+    &:hover {
+        color: $color-hover-continue-link;
+    }
+}

@@ -1,0 +1,128 @@
+@import 'theme';
+@import 'mixins';
+$font-style: Poppins, sans-serif;
+
+.blackout {
+      background: $color-blackout;
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: none;
+
+      &:target {
+        display: block;
+      }
+}
+
+.modal-window {
+      width: 18%;
+      height: 25%;
+      text-align: center;
+      padding: 15px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      background: $color-modal-window;
+      border-radius:2%;
+      min-height: 300px;
+      min-width: 250px;
+}
+
+.close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      display: inline-block;
+      cursor: pointer;
+
+      &:hover {
+        @include transform(25deg);
+      }
+
+      &__icon {
+          @include icon-style($image: url('/static/media/close-icon.png'), $width: 30px,
+                        $height: 30px);
+      }
+}
+
+.profile-form {
+    height: 40%;
+    min-height: 350px;
+}
+
+.filter-form {
+  &__body {
+    padding: 20px;
+  }
+
+  &__label {
+      text-align: center;
+      padding: 5px;
+      font-size: 20px;
+  }
+}
+
+.form {
+  &__field-group {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+  }
+
+  &__field-container {
+      font-size: 14px;
+      height: 50px;
+      line-height: 0px;
+      margin-bottom: 10px;
+      position: relative;
+      text-align: center;
+      max-width: 272px;
+      min-width: 150px;
+      min-height: 30px;
+      margin: auto;
+      margin-top: 20px;
+  }
+
+  &__field {
+      background-color: $color-form-field;
+      border-radius: 6.85px;
+      border-style: none;
+      box-sizing: border-box;
+      color: $color-menu-item-text;
+      font-family: $font-style;
+      font-size: 12px;
+      height: 51.5833px;
+      padding: 15px;
+      font-size: 15px;
+      position: relative;
+      width: 236px;
+  }
+
+  &__icon {
+      background: $color-form-icon;
+      border-radius: 50%;
+      padding: 10px;
+      padding-top: 5px;
+      right: 0;
+      height: 20px;
+      width: 20px;
+      position: relative;
+      margin: auto;
+      display: block;
+  }
+}
+
+.submit-button {
+    color: $color-text;
+    background-color: $color-submit-button;
+    margin: auto;
+
+    &:hover {
+        background-color: $color-hover-submit-button;
+    }
+}
