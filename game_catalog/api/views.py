@@ -1,9 +1,6 @@
-from datetime import datetime
-
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth import authenticate
-from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import (
     JsonResponse,
@@ -13,13 +10,17 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from rest_framework import permissions, generics, status
+from rest_framework.decorators import permission_classes
 
-from api.tasks import save_games
+from api.models import Game, Platform, Genre
+from api.serializers import GameSerializer, MustSerializer, UserSerializer, PlatformSerializer, \
+    GenreSerializer, GameDetailSerializer
 from .forms import UserCreationForm
 from .models import (
     Must,
-    User,
-    Game, Genre, Platform)
+    User
+)
 from .tokens import account_activation_token
 from .utils import send_mail
 from .wrappers.igdb_api import IgdbApi
@@ -33,83 +34,63 @@ twitter_api = TwitterApi(settings.TWITTER_API_KEYS['CONSUMER_KEY'],
 
 
 def home(request):
-    games = Game.objects.all().values('id', 'name', 'image__url').distinct()[:settings.RECORDS_LIMIT]
-    platforms = Platform.objects.all()
-    genres = Genre.objects.all()
+    games = igdb.get_games()
+    platforms = igdb.get_platforms()
+    genres = igdb.get_genres()
+
     return render(request, "api/home.html", locals())
 
 
-def get_particle_games(request, offset):
-    offset *= settings.RECORDS_LIMIT
-    games = Game.objects.all().values('id', 'name', 'image__url').distinct()[offset:offset + settings.RECORDS_LIMIT]
-    return JsonResponse({'games': [game for game in games]})
+@permission_classes((permissions.AllowAny,))
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
-@login_required(login_url='/login')
-def must(request):
-    user = User.objects.get(username=request.user)
-
-    musts = Must.objects.filter(owner=user).values('game', 'game__name', 'game__image__url').distinct('game__name')
-    return render(request, "api/must.html", {'musts': musts})
+@permission_classes((permissions.AllowAny,))
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
-@login_required(login_url='/login')
-def create_must(request, game_id):
-    user = User.objects.get(username=request.user)
-    must_game = list(Must.objects.filter(owner=user, game_id=game_id))
-    if must_game:
-        return JsonResponse({'Status': 'This must already exist'})
-
-    must_game = Must(owner=user, game_id=game_id)
-    must_game.save()
-    return JsonResponse({'Status': 'OK'})
+@permission_classes((permissions.AllowAny,))
+class GameList(generics.ListAPIView):
+    queryset = Game.objects.all()
+    serializer_class = GameSerializer
 
 
-@login_required(login_url='/login')
-def remove_must(request, game_id):
-    user = User.objects.get(username=request.user)
-    must_game = Must.objects.filter(owner=user, game_id=game_id)
-    must_game.delete()
-    return JsonResponse({'Status': 'OK'})
+@permission_classes((permissions.AllowAny,))
+class GameDetail(generics.RetrieveAPIView):
+    queryset = Game.objects.all()
+    serializer_class = GameDetailSerializer
 
 
-def game_description(request, game_id):
-    game = Game.objects.get(pk=game_id)
-
-    if game:
-        tweets = twitter_api.search(game.name)
-        return render(request, "api/game.html", {'game': game, 'tweets': tweets})
-    else:
-        return render(request, "message_page.html",
-                      {'message': 'This game does not exist.'})
+@permission_classes((permissions.AllowAny,))
+class PlatformList(generics.ListAPIView):
+    queryset = Platform.objects.all()
+    serializer_class = PlatformSerializer
 
 
-def search(request, search_string):
-    games = Game.objects.filter(name__icontains=search_string).values('name', 'image__url').distinct('name')
-    return JsonResponse({'games': [game for game in games]})
+@permission_classes((permissions.AllowAny,))
+class GenreList(generics.ListAPIView):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
 
 
-def filtered_games(request):
-    search_string = request.POST.get("filter-search-string")
-    offset = int(request.POST.get("filter-page"))
-    platforms = request.POST.getlist("platforms")
-    genres = request.POST.getlist("genres")
+class MustList(generics.ListCreateAPIView):
+    queryset = Must.objects.all()
+    serializer_class = MustSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
-    games = Game.objects.filter(users_rating__gte=float(request.POST.get('rating')))
+    def get_queryset(self):
+        return Must.objects.filter(owner=self.request.user)
 
-    if platforms:
-        games = games.filter(platforms__id__in=[int(platform) for platform in platforms])
-
-    if genres:
-        games = games.filter(genres__id__in=[int(genre) for genre in genres])
-
-    if search_string:
-        games = games.filter(name__icontains=search_string)
-
-    offset *= settings.RECORDS_LIMIT
-    games = games.values('id', 'name', 'image__url').distinct('name')[offset:offset + settings.RECORDS_LIMIT]
-
-    return JsonResponse({"games": [game for game in games]})
+    def perform_create(self, serializer):
+        must = Must.objects.filter(owner=self.request.user, game=serializer.validated_data['game']).first()
+        if must:
+            return status.HTTP_409_CONFLICT
+        else:
+            serializer.save(owner=self.request.user)
 
 
 def login(request):
@@ -146,7 +127,7 @@ def registration(request):
             message = render_to_string('account/activate_mail.html', {
                 'user': user,
                 'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
                 'token': account_activation_token.make_token(user),
             })
             mail_subject = 'Activate your account.'
@@ -174,3 +155,4 @@ def activate(request, uidb64, token):
         return redirect('/')
     else:
         return render(request, "message_page.html", {'message': 'Activation link is invalid!'})
+

@@ -90,7 +90,7 @@ class Platform(models.Model):
 
 class Image(models.Model):
     url = models.URLField()
-    game = models.ForeignKey(Game, related_name="image", on_delete=models.CASCADE)
+    game = models.ForeignKey(Game, related_name="images", on_delete=models.CASCADE)
 
 
 class Must(models.Model):
