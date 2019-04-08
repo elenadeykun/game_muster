@@ -1,19 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router';
+import PropTypes from 'prop-types';
 
-function createGameElement(game){
+function CreateGameElement(game){
   return (
-    <div class="game__container">
-        <span class="game__body">
-        <h4 class="game__header">{ game.name }</h4>
+    <div className="game__container" key={game.id}>
+        <span className="game__body">
+        <h4 className="game__header">{ game.name }</h4>
         <p>
-          <button  data-action="" name="create" class="game__must">Must</button>
+         <Link to={'/games/' + game.id}>Link</Link>
+          <button  data-action="" name="create" className="game__must">Must</button>
         </p>
-        <a href="" class="game__link">Open</a>
+        <a href="" className="game__link">Open</a>
       </span>
-      {game.images ? (<img data-url={game.images[0].url} class="game__img"/>
+      {game.images.length > 0 ? (<img data-url={game.images[0].url} className="game__img"/>
       ) : (
-          <img src="static/media/no-image.png" class="game__img" alt="no image"/>
+          <img src="static/media/no-image.png" className="game__img" alt="no image"/>
       )}
    </div>
   );
@@ -21,8 +23,8 @@ function createGameElement(game){
 
 export default function(props) {
   return (
-    <div class="game" id="games" data-page="1">
-        {props.games.map(game => createGameElement(game))}
+    <div className="game" id="games" data-page="1">
+        {props.games.map(game => CreateGameElement(game))}
     </div>
   );
 }

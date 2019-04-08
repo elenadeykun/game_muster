@@ -1,26 +1,28 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
+import { connect } from 'react-redux';
 import GameList from '../views/game-list';
 import * as gameApi from '../../api/game-api';
+import PropTypes from 'prop-types';
+import store from '../../store';
 
 class GameListContainer extends React.Component {
-  constructor(props) {
-   super(props);
-   this.state = {games: []};
- }
-
   componentDidMount () {
-    let component = this;
-    gameApi.getGames().then(function(games){
-      component.setState({games: games});
-    });
+    gameApi.getGames();
   }
 
   render () {
     return (
-      <GameList games={this.state.games} />
+      <GameList games={this.props.games}/>
     );
   }
 }
 
-export default GameListContainer;
+const mapStateToProps = function(store) {
+  return {
+    games: store.gameState.games,
+    user: store.userState.user,
+  };
+};
+
+
+export default connect(mapStateToProps)(GameListContainer);

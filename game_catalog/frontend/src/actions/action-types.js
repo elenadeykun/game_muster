@@ -1,0 +1,3 @@
+export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
+
+export const GET_GAMES_SUCCESS = 'GET_GAMES_SUCCESS';
