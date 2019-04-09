@@ -14,7 +14,7 @@ from rest_framework import permissions, generics, status
 from rest_framework.decorators import permission_classes
 
 from api.models import Game, Platform, Genre
-from api.serializers import GameSerializer, MustSerializer, UserSerializer, PlatformSerializer, \
+from api.serializers import GameSerializer, MustSerializer, PlatformSerializer, \
     GenreSerializer, GameDetailSerializer
 from .forms import UserCreationForm
 from .models import (
@@ -39,18 +39,6 @@ def home(request):
     genres = igdb.get_genres()
 
     return render(request, "api/home.html", locals())
-
-
-@permission_classes((permissions.AllowAny,))
-class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-@permission_classes((permissions.AllowAny,))
-class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
 
 @permission_classes((permissions.AllowAny,))

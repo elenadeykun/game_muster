@@ -8,10 +8,8 @@ urlpatterns = [
     path('games/', views.GameList.as_view()),
     path(r'games/<int:pk>/', views.GameDetail.as_view()),
     path('musts/', views.MustList.as_view()),
-    path(r'users/', views.UserList.as_view()),
     path(r'genres/', views.GenreList.as_view()),
     path(r'platforms/', views.PlatformList.as_view()),
-    path(r'users/<int:pk>/', views.UserDetail.as_view()),
 
     path('login', views.login, name="login"),
     path('logout', views.logout, name="logout"),
