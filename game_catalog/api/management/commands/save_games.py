@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from api.utils.games_dowloader import GamesDownloader
+from api.utils.games_downloader import GamesDownloader
 
 
 class Command(BaseCommand):
