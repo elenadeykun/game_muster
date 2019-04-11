@@ -1,0 +1,9 @@
+{% if user.is_authenticated %}
+    {% if musts and game.id in musts or in_must %}
+        <button  data-action="{% url 'remove-must' game.id %}" name="create" class="game__must must-link">UnMust</button>
+    {% else %}
+        <button  data-action="{% url 'create-must' game.id %}" name="create" class="game__must">Must</button>
+    {% endif %}
+{% else %}
+    <button  data-action="{% url 'login' %}" name="create" class="game__must">Must</button>
+{% endif %}

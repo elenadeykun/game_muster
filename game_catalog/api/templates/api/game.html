@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Game -{% endblock %}
+{% block head %}
+    {% load compile_static %}
+
+    <link rel="stylesheet" href="{% static '/scss/details.scss'|compile %}" />
+    <script src="{% static 'js/game.js' %}"></script>
+{% endblock%}
+
+{% block content %}
+<main class="game-article">
+    <h3 class="game-article__header">{{game.name}}</h3>
+    <button data-action="{% url 'create-must' game.id %}" name="create" class="unstyled">
+        {% include 'includes/must_button.html' %}
+    </button>
+    <div class="game-description">
+        <div class="game-description__section main-game-section">
+            <h4 class="game-description__title">Description</h4>
+            {% if game.description %}
+                <p> {{game.description }} </p>
+            {% else %}
+                <p> No information available yet.</p>
+            {% endif %}
+            {% if game.release_date %}
+                <h4 class="game-description__title">Release Date</h4>
+                <p>{{ game.release_date|date:"F d, Y" }}</p>
+            {% endif %}
+            {% if images %}
+                <h4 class="game-description__title">Screenshots</h4>
+                <div>
+                    {% for img in images %}
+                         <img data-url="{{img}}" class="screen-img" alt="pacman"/>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="game-description__section">
+            {% if game.users_rating or game.critics_rating %}
+                <h4 class="game-description__title">Rating</h4>
+            {% endif %}
+            {% if game.users_rating %}
+                <div class="game-description__rating">
+                    <span>Users</span>
+                    <span class="game-description__views">{{game.users_rating|floatformat  }}
+                        {% if game.users_views %}( {{game.users_views}} views) {% endif %}</span>
+                </div>
+            {% endif %}
+            {% if game.critics_rating%}
+                <div class="game-description__rating critics-rating">
+                    <span>Critics</span>
+                    <span class="game-description__views">{{ game.critics_rating|floatformat  }}
+                        {% if game.critics_views %} ({{game.critics_views}} views) {% endif %}</span>
+                </div>
+            {% endif %}
+            {% if genres %}
+                <h4 class="game-description__title">Genres</h4>
+                {% for genre in genres %}
+                    <span class="toast">{{ genre }}</span>
+                {% endfor %}
+            {% endif %}
+            {% if platforms %}
+                <h4 class="game-description__title">Platforms</h4>
+                {% for platform in platforms %}
+                    <span class="toast">{{ platform }} </span>
+                {% endfor %}
+            {% endif %}
+        </div>
+        {% if tweets %}
+            <div class="game-description__section">
+                <h4 class="game-description__title">#Tweets</h4>
+                <div class="game-description__tweets">
+                        {% for tweet in tweets %}
+                            <div class="tweet">
+                                <p class="tweet__text">{{ tweet.text }}</p>
+                                <span class="tweet__title">{{ tweet.date|date:"d.m.Y H:i" }}</span>
+                                <span class="tweet__title game-description__title_right" title="{{ tweet.user }}">@{{ tweet.user}}</span>
+                            </div>
+                        {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

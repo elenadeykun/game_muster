@@ -1,0 +1,46 @@
+<div class="blackout" id="filter">
+    <div class="modal-window filter">
+        <a href="#" class="close" name="close" id="close-filter">
+            <i class="close__icon"></i>
+        </a>
+        <form name="filter-form">
+            {% csrf_token %}
+            <div class="form__field-group filter-form__body">
+                <input type="hidden" name="filter-page" value="0"/>
+                <input type="hidden" name="filter-search-string"/>
+
+                <label class="filter-form__label">Platforms</label>
+
+                <div class="select">
+                    {% for platform in platforms %}
+                    <div class="select__container">
+                        <input name="platforms" value="{{platform.id}}" class="select__field" type="checkbox" id="{{platform.id}}" style="display: none;">
+                        <label for="{{platform.id}}" class="select__label">
+                          {% include 'includes/checkmark.html' %}
+                            <span class="select__text">{{platform.name}}</span>
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <label class="filter-form__label">Genres</label>
+
+                <div class="select">
+                    {% for genre in genres %}
+                    <div class="select__container">
+                        <input name="genres" value="{{genre.id}}" class="select__field" type="checkbox" id="{{genre.id}}g" style="display: none;">
+                        <label for="{{genre.id}}g" class="select__label">
+                          {% include 'includes/checkmark.html' %}
+                            <span class="select__text">{{genre.name}}</span>
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+                <label class="filter-form__label">Rating</label>
+                <div class="value">50</div>
+                <input name="rating" type="range" class="range" min="0" max="100" step="0.1" value="50">
+                <button type="submit" class="form__field submit-button">Apply</button>
+            </div>
+        </form>
+    </div>
+</div>
