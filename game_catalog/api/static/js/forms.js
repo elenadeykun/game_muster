@@ -27,6 +27,7 @@ function sendFilterQuery(){
             var games = response.games;
             var gamesContainer = document.getElementById("games");
             document.querySelector("input[name=filter-search-string]").value = document.getElementById("search-field").value;
+
             if (parseInt(document.querySelector('input[name=filter-page]').value) === 0 ){
                 gamesContainer.innerHTML= "";
             }

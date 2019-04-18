@@ -1,9 +1,17 @@
 "use strict";
 
 window.onscroll = function() {
+
+    var blackout = document.querySelectorAll(".blackout:target");
+    if (blackout.length > 0){
+        document.body.style.overflow = "hidden";
+    } else {
+        document.body.style.overflow = "auto";
+    }
+
     if(window.pageYOffset + window.innerHeight >= document.body.clientHeight){
         var gamesContainer = document.getElementById("games");
-        
+
         if (gamesContainer.dataset.filter === "true"){
             sendFilterQuery();
         } else {
@@ -17,7 +25,7 @@ window.onscroll = function() {
                     games.forEach(function(elem, i){
                         var game = createGameElement(elem);
                         fragment.appendChild(game);
-                    })
+                    });
                     gamesContainer.appendChild(fragment);
                 }
             });
@@ -25,7 +33,7 @@ window.onscroll = function() {
 
         gamesContainer.dataset.page = page + 1;
     }
-}
+};
 
 document.addEventListener("DOMContentLoaded", function(){
 
@@ -48,9 +56,10 @@ document.addEventListener("DOMContentLoaded", function(){
       var newValue = elem.value;
       var target = document.querySelector('.value');
       target.innerHTML = newValue;
-    }
+    };
 
     elem.addEventListener("input", rangeValue);
+
 });
 
 function getGamesBySearch(){

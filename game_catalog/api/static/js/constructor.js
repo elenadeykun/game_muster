@@ -23,7 +23,7 @@ function createGameElement(gameData){
     description.classList.add("game__body");
 
     var title = document.createElement("h4");
-    title.classList.add("game__header")
+    title.classList.add("game__header");
     title.textContent = gameData.name;
 
     var linkContainer = document.createElement("p");
