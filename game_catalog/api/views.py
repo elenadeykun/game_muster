@@ -3,6 +3,7 @@ from django.contrib import auth
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
+from django.db.models import Q
 from django.http import (
     JsonResponse,
     HttpResponseRedirect)
@@ -30,7 +31,9 @@ twitter_api = TwitterApi(settings.TWITTER_API_KEYS['CONSUMER_KEY'],
 
 
 def home(request):
-    games = Game.objects.all().values('id', 'name', 'images__url').distinct()[:settings.RECORDS_LIMIT]
+    games = (Game.objects.all().values('id', 'name', 'images__url').order_by('name', 'users_rating')
+             .distinct('name')[:settings.RECORDS_LIMIT])
+
     platforms = Platform.objects.all()
     genres = Genre.objects.all()
     if request.user.is_authenticated:
@@ -41,14 +44,21 @@ def home(request):
 
 def get_particle_games(request, offset):
     offset *= settings.RECORDS_LIMIT
-    games = Game.objects.all().values('id', 'name', 'images__url').distinct()[offset:offset + settings.RECORDS_LIMIT]
+    games = (Game.objects.all().values('id', 'name', 'images__url').order_by('name', 'users_rating')
+                 .distinct('name')[offset:offset + settings.RECORDS_LIMIT])
     return JsonResponse({'games': [game for game in games]})
 
 
 @login_required(login_url='/login')
 def must(request):
     user = User.objects.get(username=request.user)
-    musts = Must.objects.filter(owner=user).values('game', 'game__name', 'game__images__url').distinct('game__name')
+    musts = []
+    for must in Must.objects.filter(owner=user).order_by('game__name', 'game__user_rating').distinct('game__name'):
+        musts.append({'id': must.game.id,
+                      'name': must.game.name,
+                      'image': must.game.images.all()[0].url if must.game.images.all() else None,
+                      'count': must.count})
+
     return render(request, "api/must.html", {'musts': musts})
 
 
@@ -90,7 +100,8 @@ def game_description(request, game_id):
 
 
 def search(request, search_string):
-    games = Game.objects.filter(name__icontains=search_string).values('id', 'name', 'images__url').distinct('name')
+    games = (Game.objects.filter(name__icontains=search_string).values('id', 'name', 'images__url')
+             .order_by('name', 'users_rating').distinct('name'))
     return JsonResponse({'games': [game for game in games]})
 
 
@@ -100,19 +111,21 @@ def filtered_games(request):
     platforms = request.POST.getlist("platforms")
     genres = request.POST.getlist("genres")
 
-    games = Game.objects.filter(users_rating__gte=float(request.POST.get('rating')))
-
-    if platforms:
-        games = games.filter(platforms__id__in=[int(platform) for platform in platforms])
-
-    if genres:
-        games = games.filter(genres__id__in=[int(genre) for genre in genres])
+    filters = Q(users_rating__gte=float(request.POST.get('rating')))
 
     if search_string:
-        games = games.filter(name__icontains=search_string)
+        filters.add(Q(name__icontains=search_string), Q.AND)
 
+    if platforms:
+        filters.add(Q(platforms__id__in=[int(platform) for platform in platforms]), Q.AND)
+
+    if genres:
+        filters.add(Q(genres__id__in=[int(genre) for genre in genres]), Q.AND)
+
+    games = Game.objects.filter(filters)
     offset *= settings.RECORDS_LIMIT
-    games = games.values('id', 'name', 'images__url').distinct('name')[offset:offset + settings.RECORDS_LIMIT]
+    games = (games.values('id', 'name', 'images__url').order_by('name', 'users_rating')
+             .distinct('name')[offset:offset + settings.RECORDS_LIMIT])
 
     return JsonResponse({"games": [game for game in games]})
 
@@ -128,9 +141,9 @@ def login(request):
 
                 return HttpResponseRedirect("/")
 
-        return render(request, "account/login.html", {'Errors': ['Password or login are incorrect']})
+        return render(request, "api/account/login.html", {'Errors': ['Password or login are incorrect']})
 
-    return render(request, "account/login.html")
+    return render(request, "api/account/login.html")
 
 
 def logout(request):
@@ -148,7 +161,7 @@ def registration(request):
             user.save()
 
             current_site = get_current_site(request)
-            message = render_to_string('account/activate_mail.html', {
+            message = render_to_string('api/account/activate_mail.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -162,7 +175,7 @@ def registration(request):
 
     else:
         form = UserCreationForm()
-    return render(request, 'account/register.html', {'form': form})
+    return render(request, 'api/account/register.html', {'form': form})
 
 
 def activate(request, uidb64, token):
