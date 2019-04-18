@@ -1,4 +1,5 @@
 @import 'theme';
+@import 'mixins';
 
 
 .game-article  {
@@ -8,6 +9,7 @@
       font-size: 25px;
       display: inline;
       font-weight: bold;
+      margin-right: 10px;
     }
 
     &__description {
@@ -22,11 +24,12 @@
 }
 
 .screen-img {
-  max-width: 100%;
-  height: auto;
-  width: 150px;
   height: 150px;
   margin: 5px;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .game-description {
@@ -106,6 +109,49 @@
   &__text {
     margin-bottom: 10px;
   }
+}
+
+.gallery {
+    &__background {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: $color-blackout;
+      top: 0;
+      left: 0;
+      display: none;
+      text-align: center;
+    }
+
+    &__image-body {
+        display: flex;
+        width: 70%;
+        margin: auto;
+    }
+
+    &__scroll-img {
+        display: flex;
+        margin: auto;
+
+        &:hover {
+           transform: scale(1.6);
+        }
+    }
+
+    &__image {
+      height: 100%;
+    }
+
+    &__next {
+        @include icon-style($image: url('/static/media/next.png'), $width: 30px,
+                        $height: 30px);
+    }
+
+    &__prev {
+        @include icon-style($image: url('/static/media/prev.png'), $width: 30px,
+                        $height: 30px);
+    }
+
 }
 
 

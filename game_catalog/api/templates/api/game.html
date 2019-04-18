@@ -6,14 +6,13 @@
 
     <link rel="stylesheet" href="{% static '/scss/details.scss'|compile %}" />
     <script src="{% static 'js/game.js' %}"></script>
+    <script src="{% static 'js/gallery.js' %}"></script>
 {% endblock%}
 
 {% block content %}
 <main class="game-article">
     <h3 class="game-article__header">{{game.name}}</h3>
-    <button data-action="{% url 'create-must' game.id %}" name="create" class="unstyled">
-        {% include 'includes/must_button.html' %}
-    </button>
+    {% include 'includes/must_button.html' %}
     <div class="game-description">
         <div class="game-description__section main-game-section">
             <h4 class="game-description__title">Description</h4>
@@ -30,7 +29,8 @@
                 <h4 class="game-description__title">Screenshots</h4>
                 <div>
                     {% for img in images %}
-                         <img data-url="{{img}}" class="screen-img" alt="pacman"/>
+                         <img data-url="{{img}}" class="screen-img game__screen" alt="pacman"/>
+
                     {% endfor %}
                 </div>
             {% endif %}
@@ -80,6 +80,17 @@
                 </div>
             </div>
         {% endif %}
+    </div>
+    <div class="gallery__background">
+        <div class="gallery__image-body">
+             <div name="prev" class="gallery__scroll-img">
+                 <i class="gallery__prev"></i>
+            </div>
+            <img class="gallery__image"/>
+            <div name="next" class="gallery__scroll-img">
+                <i class="gallery__next"></i>
+            </div>
+        </div>
     </div>
 </main>
 {% endblock %}
