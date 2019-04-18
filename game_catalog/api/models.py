@@ -40,7 +40,7 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
+    REQUIRED_FIELDS = ['email', 'last_name', 'first_name']
 
     objects = UserManager()
 
@@ -73,6 +73,9 @@ class Game(models.Model):
     users_views = models.IntegerField(null=True)
     critics_rating = models.FloatField(null=True)
     critics_views = models.IntegerField(null=True)
+
+    class Meta:
+        ordering = ['-users_rating']
 
 
 class Genre(models.Model):
