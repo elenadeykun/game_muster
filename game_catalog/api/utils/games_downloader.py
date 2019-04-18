@@ -1,4 +1,3 @@
-import logging
 from datetime import datetime
 
 from django.conf import settings
@@ -10,9 +9,9 @@ from api.wrappers.igdb_api import IgdbApi
 class GamesDownloader:
 
     def __init__(self):
-        self.igdb = IgdbApi(settings.IGDB_API_KEYS['USER_KEY'])
+        self._igdb = IgdbApi(settings.IGDB_API_KEYS['USER_KEY'])
 
-    def __save_instance(self, game, model, parameter, value):
+    def _save_instance(self, game, model, parameter, value):
         elements = []
 
         if game.get(parameter):
@@ -23,14 +22,13 @@ class GamesDownloader:
 
         return elements
 
-    def __save_genres(self, game):
-        return self.__save_instance(game, Genre, 'genres', 'name')
+    def _save_genres(self, game):
+        return self._save_instance(game, Genre, 'genres', 'name')
 
-    def __save_platforms(self, game):
-        return self.__save_instance(game, Platform, 'platforms', 'abbreviation')
+    def _save_platforms(self, game):
+        return self._save_instance(game, Platform, 'platforms', 'abbreviation')
 
-    def __save_game(self, game):
-        logging.debug(game.get('release_dates'))
+    def _save_game(self, game):
         release_date = (datetime.fromtimestamp(game['release_dates'][-1]['date'])
                         if 'release_dates' in game and game['release_dates'][-1].get('date') else None)
 
@@ -44,8 +42,8 @@ class GamesDownloader:
                                                           users_views=int(game.get('rating_count', 0)),
                                                           critics_views=int(game.get('aggregated_rating_count', 0)))
 
-            genres = self.__save_genres(game)
-            platforms = self.__save_platforms(game)
+            genres = self._save_genres(game)
+            platforms = self._save_platforms(game)
             if genres:
                 game_db.genres.set(genres)
             if platforms:
@@ -56,13 +54,14 @@ class GamesDownloader:
 
             if game.get('screenshots'):
                 for screen in game.get('screenshots'):
+                    screen['url'] = screen['url'].replace('t_thumb', 't_screenshot_med_2x')
                     screen_db, created = Image.objects.get_or_create(url=screen['url'], game=game_db)
                     screenshots.append(screen_db)
 
     def download(self):
         offset = Game.objects.all().count() // settings.GAMES_DOWNLOAD_LIMIT
 
-        games = self.igdb.get_games(offset=offset, limit=settings.GAMES_DOWNLOAD_LIMIT)
+        games = self._igdb.get_games(offset=offset, limit=settings.GAMES_DOWNLOAD_LIMIT)
         if games:
             for game in games:
-                self.__save_game(game)
+                self._save_game(game)
