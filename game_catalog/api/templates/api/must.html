@@ -14,15 +14,15 @@
         {% for must in musts %}
         <div class="game__container">
                 <span class="game__body">
-                   <h4 class="game__title">{{must.game__name}}</h4>
-                   <p class="game__added">Users added: {{game.count}}</p>
+                   <h4 class="game__title">{{must.name}}</h4>
+                   <p class="game__added">Users added: {{must.count}}</p>
                    <p>
-                      <button data-action="{% url 'remove-must' must.game %}" name="create" class="game__link must-link">UnMUST</button>
+                      <button data-action="{% url 'remove-must' must.id %}" name="create" class="game__link must-link">UnMUST</button>
                    </p>
-                    <a href="{% url 'game' must.game %}" class="game__link">Open</a>
+                    <a href="{% url 'game' must.id %}" class="game__link">Open</a>
                  </span>
-           {% if must.game__images__url %}
-                <img src="{{ must.game__images__url }}" class="game__img"/>
+           {% if must.image %}
+                <img src="{{ must.image }}" class="game__img"/>
             {% else %}
                 <img src="{% static 'media/no-image.png' %}" class="game__img" alt="no image"/>
             {% endif %}

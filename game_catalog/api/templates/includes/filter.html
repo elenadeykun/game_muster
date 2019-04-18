@@ -14,7 +14,7 @@
                 <div class="select">
                     {% for platform in platforms %}
                     <div class="select__container">
-                        <input name="platforms" value="{{platform.id}}" class="select__field" type="checkbox" id="{{platform.id}}" style="display: none;">
+                        <input name="platforms" value="{{platform.id}}" class="select__field" type="checkbox" id="{{platform.id}}">
                         <label for="{{platform.id}}" class="select__label">
                           {% include 'includes/checkmark.html' %}
                             <span class="select__text">{{platform.name}}</span>
@@ -28,7 +28,7 @@
                 <div class="select">
                     {% for genre in genres %}
                     <div class="select__container">
-                        <input name="genres" value="{{genre.id}}" class="select__field" type="checkbox" id="{{genre.id}}g" style="display: none;">
+                        <input name="genres" value="{{genre.id}}" class="select__field" type="checkbox" id="{{genre.id}}g">
                         <label for="{{genre.id}}g" class="select__label">
                           {% include 'includes/checkmark.html' %}
                             <span class="select__text">{{genre.name}}</span>
