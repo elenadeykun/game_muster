@@ -9,26 +9,15 @@
 }
 
 .blackout {
-    display: block;
+   display: flex;
 }
 
 .error {
     color: $color-error;
-    display: inline;
+    display: block;
     font-size: 15px;
     width: auto;
 }
-
-.login-form {
-    height: 42%;
-    width: 15%;
-}
-
-.registration-form {
-    height:75%;
-    min-height: 550px;
-}
-
 
 .link {
     text-decoration: none;

@@ -8,6 +8,7 @@
   height: 5px;
   border-radius: 5px;
   margin: 10px;
+  margin-bottom: 25px;
   outline: 0;
 
   &::-webkit-slider-thumb {
@@ -25,7 +26,6 @@
 
 .filter {
   width: 30%;
-  height: 60%;
 }
 
 .select {
@@ -34,7 +34,9 @@
 
   &__text {
     margin-left: 30px;
-    overflow: hidden;
+    width: 50px;
+    display: inline-block;
+
   }
 
   &__label {
@@ -89,6 +91,9 @@
   }
 
   &__field{
+
+    display: none;
+
     &:checked {
       & + .select__label .select__svg {
         stroke: $color-input;
@@ -106,4 +111,20 @@
       }
     }
   }
+}
+
+
+@media only screen and (max-width : 1824px) {
+    .filter {
+        width: 40%;
+    }
+
+}
+
+
+@media only screen and (max-width : 1224px) {
+    .filter {
+        width: 60%;
+    }
+
 }

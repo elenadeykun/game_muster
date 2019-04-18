@@ -10,9 +10,10 @@ $font-style: Poppins, sans-serif;
       top: 0;
       left: 0;
       display: none;
+      margin: auto;
 
       &:target {
-        display: block;
+        display: flex;
       }
 }
 
@@ -22,8 +23,8 @@ $font-style: Poppins, sans-serif;
       text-align: center;
       padding: 15px;
       position: absolute;
-      top: 0;
       right: 0;
+      top: 0;
       bottom: 0;
       left: 0;
       margin: auto;
@@ -31,6 +32,7 @@ $font-style: Poppins, sans-serif;
       border-radius:2%;
       min-height: 300px;
       min-width: 250px;
+      display: table;
 }
 
 .close {
