@@ -1,9 +1,56 @@
+from datetime import timezone
 from django.conf import settings
 from django.contrib.auth.base_user import (
     AbstractBaseUser,
     BaseUserManager
 )
 from django.db import models
+from django.db.models import QuerySet
+
+
+class SoftDeletionQuerySet(QuerySet):
+    def delete(self):
+        return super(SoftDeletionQuerySet, self).update(deleted_at=timezone.now())
+
+    def hard_delete(self):
+        return super(SoftDeletionQuerySet, self).delete()
+
+    def alive(self):
+        return self.filter(deleted_at=None)
+
+    def dead(self):
+        return self.exclude(deleted_at=None)
+
+
+class SoftDeletionManager(models.Manager):
+    def __init__(self, *args, **kwargs):
+        self.alive_only = kwargs.pop('alive_only', True)
+        super(SoftDeletionManager, self).__init__(*args, **kwargs)
+
+    def get_queryset(self):
+        if self.alive_only:
+            return SoftDeletionQuerySet(self.model).filter(deleted_at=None)
+        return SoftDeletionQuerySet(self.model)
+
+    def hard_delete(self):
+        return self.get_queryset().hard_delete()
+
+
+class SoftDeletionModel(models.Model):
+    deleted_at = models.DateTimeField(blank=True, null=True)
+
+    objects = SoftDeletionManager()
+    all_objects = SoftDeletionManager(alive_only=False)
+
+    class Meta:
+        abstract = True
+
+    def delete(self):
+        self.deleted_at = timezone.now()
+        self.save()
+
+    def hard_delete(self):
+        super(SoftDeletionModel, self).delete()
 
 
 class UserManager(BaseUserManager):
@@ -65,7 +112,7 @@ class User(AbstractBaseUser):
         return user_musts
 
 
-class Game(models.Model):
+class Game(SoftDeletionModel):
     name = models.CharField(max_length=250, unique=True)
     description = models.TextField(max_length=1000, null=True)
     release_date = models.DateField(null=True)
@@ -78,17 +125,17 @@ class Game(models.Model):
         ordering = ['-users_rating']
 
 
-class Genre(models.Model):
+class Genre(SoftDeletionModel):
     name = models.CharField(max_length=100, unique=True)
     games = models.ManyToManyField(Game, related_name="genres")
 
 
-class Platform(models.Model):
+class Platform(SoftDeletionModel):
     name = models.CharField(max_length=100, unique=True)
     games = models.ManyToManyField(Game, related_name="platforms")
 
 
-class Image(models.Model):
+class Image(SoftDeletionModel):
     url = models.URLField()
     game = models.ForeignKey(Game, related_name="images", on_delete=models.CASCADE)
 
