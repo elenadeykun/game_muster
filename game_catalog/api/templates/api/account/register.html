@@ -6,7 +6,7 @@
         <div class="modal-window registration-form">
             <h2>Registration</h2>
 
-            <form name="register-form" method="POST" action="{% url 'registration' %}">
+            <form name="register-form" method="POST">
                 {% csrf_token %}
                 {% include 'includes/error.html' with errors=form.username.errors %}
                 <div class="form__field-container">

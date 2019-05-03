@@ -5,7 +5,7 @@
     <div class="blackout" id="login-modal">
         <div class="modal-window login-form">
             <h2>Log in</h2>
-            <form name="login-form" method="POST" action="login">
+            <form name="login-form" method="POST">
                 {% csrf_token %}
                 <div class="form__field-group">
                     {% include 'includes/error.html' with errors=Errors %}

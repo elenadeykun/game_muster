@@ -83,7 +83,10 @@ def remove_must(request, game_id):
 
 
 def game_description(request, game_id):
-    game = Game.objects.get(pk=game_id)
+    game = Game.objects.filter(pk=game_id).first()
+    if not game:
+        return redirect('/404')
+
     images = [image.url for image in game.images.all()]
     platforms = [platform.name for platform in game.platforms.all()]
     genres = [genre.name for genre in game.genres.all()]
@@ -139,7 +142,7 @@ def login(request):
             if user.is_active:
                 auth.login(request, user)
 
-                return HttpResponseRedirect("/")
+                return redirect("/")
 
         return render(request, "api/account/login.html", {'Errors': ['Password or login are incorrect']})
 

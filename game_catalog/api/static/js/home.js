@@ -9,7 +9,9 @@ window.onscroll = function() {
         document.body.style.overflow = "auto";
     }
 
-    if(window.pageYOffset + window.innerHeight >= document.body.clientHeight){
+    const marginTop = 20;
+
+    if(window.pageYOffset + window.innerHeight >= document.body.clientHeight + marginTop ){
         var gamesContainer = document.getElementById("games");
 
         if (gamesContainer.dataset.filter === "true"){

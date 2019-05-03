@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function(){
             event.preventDefault();
 
             var action = this.dataset.action;
-            if (action.localeCompare('/login') === 0){
+            if (action === ('/login/')){
                 window.location.href = action;
             } else {
                 createQuery("GET", action, function(response){
