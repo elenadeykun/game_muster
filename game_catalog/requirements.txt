@@ -2,7 +2,7 @@ astroid==2.2.5
 certifi==2019.3.9
 chardet==3.0.4
 colorama==0.4.1
-Django==2.1.7
+Django==2.2.13
 django-appconf==1.0.3
 django-sass-processor==0.2.6
 django-scss==0.6.1
